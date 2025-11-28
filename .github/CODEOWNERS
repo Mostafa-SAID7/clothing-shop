@@ -1,0 +1,42 @@
+# Code Owners for Style Haven Clothing Shop
+# These owners will be automatically requested for review when someone opens a pull request
+
+# Default owners for everything in the repo
+* @Mostafa-SAID7
+
+# Frontend components
+/components/ @Mostafa-SAID7
+/app/ @Mostafa-SAID7
+
+# Configuration files
+*.json @Mostafa-SAID7
+*.yml @Mostafa-SAID7
+*.yaml @Mostafa-SAID7
+*.config.* @Mostafa-SAID7
+
+# TypeScript/JavaScript files
+*.ts @Mostafa-SAID7
+*.tsx @Mostafa-SAID7
+*.js @Mostafa-SAID7
+*.jsx @Mostafa-SAID7
+
+# Styling
+*.css @Mostafa-SAID7
+/app/globals.css @Mostafa-SAID7
+tailwind.config.ts @Mostafa-SAID7
+
+# API routes
+/app/api/ @Mostafa-SAID7
+
+# Documentation
+*.md @Mostafa-SAID7
+/docs/ @Mostafa-SAID7
+
+# GitHub workflows and actions
+/.github/ @Mostafa-SAID7
+/.github/workflows/ @Mostafa-SAID7
+
+# Security and dependencies
+/SECURITY.md @Mostafa-SAID7
+package.json @Mostafa-SAID7
+package-lock.json @Mostafa-SAID7

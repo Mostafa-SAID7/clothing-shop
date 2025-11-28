@@ -1,0 +1,59 @@
+# Labeler configuration for automatic PR labeling
+
+# Frontend changes
+'frontend':
+  - 'app/**/*'
+  - 'components/**/*'
+
+# Styling changes
+'styling':
+  - '**/*.css'
+  - 'tailwind.config.ts'
+  - 'postcss.config.js'
+
+# API changes
+'api':
+  - 'app/api/**/*'
+
+# Configuration changes
+'configuration':
+  - '*.json'
+  - '*.yml'
+  - '*.yaml'
+  - '*.config.*'
+  - '.github/**/*'
+
+# Documentation changes
+'documentation':
+  - '**/*.md'
+  - 'docs/**/*'
+
+# Dependencies
+'dependencies':
+  - 'package.json'
+  - 'package-lock.json'
+
+# TypeScript changes
+'typescript':
+  - '**/*.ts'
+  - '**/*.tsx'
+  - 'tsconfig.json'
+
+# Security related
+'security':
+  - 'SECURITY.md'
+  - '.github/workflows/security.yml'
+
+# Utilities and helpers
+'utilities':
+  - 'lib/**/*'
+  - 'hooks/**/*'
+
+# UI Components
+'ui-components':
+  - 'components/ui/**/*'
+
+# Checkout flow
+'checkout':
+  - 'app/checkout/**/*'
+  - 'app/success/**/*'
