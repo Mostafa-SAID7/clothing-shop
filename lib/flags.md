@@ -36,10 +36,10 @@ export default async function MyPage() {
 
 ```typescript
 "use client";
-import { useFeatureGate } from "statsig-react";
+import { useGate } from "@statsig/react-bindings";
 
 export default function MyClientComponent() {
-  const { value: isEnabled } = useFeatureGate("my_feature");
+  const { value: isEnabled } = useGate("my_feature");
   
   return (
     <div>
