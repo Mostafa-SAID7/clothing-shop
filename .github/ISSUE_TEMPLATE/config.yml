@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/Mostafa-SAID7/clothing-shop/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📚 Documentation
+    url: https://github.com/Mostafa-SAID7/clothing-shop/blob/main/README.md
+    about: Read the project documentation
+  - name: 🔒 Security Issue
+    url: https://github.com/Mostafa-SAID7/clothing-shop/security/advisories/new
+    about: Report a security vulnerability privately
