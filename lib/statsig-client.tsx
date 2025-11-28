@@ -1,30 +1,41 @@
 "use client";
 
 import { StatsigProvider } from "@statsig/react-bindings";
+import type { StatsigUser } from "@statsig/client-core";
 import type { ReactNode } from "react";
-
-interface StatsigUser {
-  userID: string;
-  email?: string;
-  custom?: Record<string, unknown>;
-}
 
 interface StatsigClientProviderProps {
   children: ReactNode;
   user?: StatsigUser;
+  sdkKey?: string;
 }
 
 /**
  * Client-side Statsig provider for React components
  * Wrap your client components with this provider to use Statsig hooks
+ * 
+ * @example
+ * ```tsx
+ * import { StatsigClientProvider } from "@/lib/statsig-client";
+ * 
+ * export default function RootLayout({ children }) {
+ *   const sdkKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY!;
+ *   return (
+ *     <StatsigClientProvider sdkKey={sdkKey} user={{ userID: "user-123" }}>
+ *       {children}
+ *     </StatsigClientProvider>
+ *   );
+ * }
+ * ```
  */
 export function StatsigClientProvider(props: StatsigClientProviderProps) {
-  const { children, user = { userID: "anonymous" } } = props;
-  const sdkKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY;
+  const { children, user = { userID: "anonymous" }, sdkKey } = props;
 
   if (!sdkKey) {
-    console.warn("NEXT_PUBLIC_STATSIG_CLIENT_KEY is not set");
-    return children;
+    if (typeof window !== "undefined") {
+      console.warn("Statsig SDK key is not provided");
+    }
+    return <>{children}</>;
   }
 
   return (
@@ -32,7 +43,7 @@ export function StatsigClientProvider(props: StatsigClientProviderProps) {
       sdkKey={sdkKey}
       user={user}
       options={{
-        environment: { tier: process.env.NODE_ENV || "development" },
+        environment: { tier: "development" },
       }}
     >
       {children}

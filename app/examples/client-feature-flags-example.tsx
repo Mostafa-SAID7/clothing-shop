@@ -50,11 +50,24 @@ return <h1>{title}</h1>;`}
       <div className="p-4 bg-blue-50 rounded">
         <h3 className="font-semibold mb-2">Setup Required:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
-          <li>Wrap your app with StatsigClientProvider</li>
           <li>Set NEXT_PUBLIC_STATSIG_CLIENT_KEY in .env.local</li>
+          <li>Wrap your app with StatsigClientProvider in layout.tsx</li>
           <li>Create feature gates in Statsig console</li>
           <li>Use the hooks shown above in your components</li>
         </ol>
+        <pre className="mt-3 bg-white p-2 rounded text-xs">
+{`// app/layout.tsx
+import { StatsigClientProvider } from "@/lib/statsig-client";
+
+export default function RootLayout({ children }) {
+  const sdkKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY!;
+  return (
+    <StatsigClientProvider sdkKey={sdkKey}>
+      {children}
+    </StatsigClientProvider>
+  );
+}`}
+        </pre>
       </div>
 
       {/* Documentation Link */}
