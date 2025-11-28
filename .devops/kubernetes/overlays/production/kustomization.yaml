@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: production
+
+bases:
+  - ../../base
+
+commonLabels:
+  environment: production
+
+replicas:
+  - name: clothing-shop
+    count: 3
+
+images:
+  - name: ghcr.io/mostafa-said7/clothing-shop
+    newTag: latest
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "512Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "500m"
+    target:
+      kind: Deployment
+      name: clothing-shop

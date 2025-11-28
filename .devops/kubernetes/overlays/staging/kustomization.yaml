@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: staging
+
+bases:
+  - ../../base
+
+commonLabels:
+  environment: staging
+
+replicas:
+  - name: clothing-shop
+    count: 2
+
+images:
+  - name: ghcr.io/mostafa-said7/clothing-shop
+    newTag: staging-latest
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "256Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "250m"
+    target:
+      kind: Deployment
+      name: clothing-shop
