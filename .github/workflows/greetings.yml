@@ -1,0 +1,45 @@
+name: Greetings
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet First Time Contributors
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            👋 **Welcome to Style Haven Clothing Shop!**
+            
+            Thank you for opening your first issue! We appreciate you taking the time to contribute to this project.
+            
+            A maintainer will review your issue soon. In the meantime:
+            - Make sure you've provided all the necessary information
+            - Check our [Contributing Guidelines](https://github.com/${{ github.repository }}/blob/main/.github/CONTRIBUTING.md)
+            - Join our [Discussions](https://github.com/${{ github.repository }}/discussions) to connect with the community
+            
+            We're excited to have you here! 🎉
+          pr-message: |
+            🎉 **Congratulations on your first Pull Request!**
+            
+            Thank you for contributing to Style Haven Clothing Shop! We're thrilled to have you as a contributor.
+            
+            Before we review your PR, please ensure:
+            - ✅ Your code follows our style guidelines
+            - ✅ All tests pass
+            - ✅ You've updated documentation if needed
+            - ✅ Your commits follow our [commit message conventions](https://github.com/${{ github.repository }}/blob/main/.github/CONTRIBUTING.md#commit-message-guidelines)
+            
+            A maintainer will review your changes soon. Feel free to ask questions if you need help!
+            
+            Happy coding! 💻✨
