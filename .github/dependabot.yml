@@ -1,0 +1,71 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "Mostafa-SAID7"
+    assignees:
+      - "Mostafa-SAID7"
+    labels:
+      - "dependencies"
+      - "npm"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    # Group updates for better PR management
+    groups:
+      production-dependencies:
+        patterns:
+          - "next*"
+          - "react*"
+          - "stripe*"
+          - "@radix-ui/*"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        patterns:
+          - "eslint*"
+          - "typescript"
+          - "tailwindcss*"
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Ignore specific packages if needed
+    ignore:
+      - dependency-name: "@next/swc-wasm-nodejs"
+        # Keep specific version for compatibility
+      - dependency-name: "autoprefixer"
+        versions: ["11.x"]
+    # Allow both direct and indirect updates
+    versioning-strategy: increase
+    # Rebase strategy for PRs
+    rebase-strategy: auto
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Mostafa-SAID7"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "automated"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
