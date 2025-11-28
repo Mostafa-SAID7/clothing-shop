@@ -2,7 +2,7 @@
   "name": "style-haven-clothing-shop",
   "version": "1.0.0",
   "description": "Modern e-commerce clothing store built with Next.js, React, TypeScript, and Stripe",
-  "author": "Style Haven Team",
+  "author": "Mostafa-SAID7",
   "license": "MIT",
   "private": true,
   "keywords": [
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/clothing-shop"
+    "url": "https://github.com/Mostafa-SAID7/clothing-shop"
   },
   "scripts": {
     "dev": "next dev",
@@ -34,10 +34,10 @@
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-collapsible": "^1.1.0",
-    "@radix-ui/react-context-menu": "^2.2.1",
+    "@radix-ui/react-context-menu": "^2.2.16",
     "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-dropdown-menu": "^2.1.1",
-    "@radix-ui/react-hover-card": "^1.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-hover-card": "^1.1.15",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-menubar": "^1.1.15",
     "@radix-ui/react-navigation-menu": "^1.2.0",
@@ -51,7 +51,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
-    "@radix-ui/react-toast": "^1.2.1",
+    "@radix-ui/react-toast": "^1.2.15",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.2.7",
@@ -65,8 +65,8 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
-    "eslint": "9.0.0",
-    "eslint-config-next": "13.5.8",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.4.2",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.525.0",
     "next": "15.4.2",
@@ -83,7 +83,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.8.2",
+    "typescript": "5.9.2",
     "vaul": "^0.9.9",
     "zod": "^3.25.76"
   }
