@@ -47,6 +47,46 @@
 
 ---
 
+## 📁 Project Structure
+
+```
+clothing-shop/
+├── src/                    # Source code
+│   ├── components/        # React components
+│   │   ├── ui/           # shadcn/ui components
+│   │   ├── features/     # Feature components
+│   │   └── shared/       # Shared components
+│   ├── lib/              # Core utilities
+│   │   ├── features/     # Feature flags (Statsig)
+│   │   ├── hooks/        # Custom hooks
+│   │   ├── types/        # TypeScript types
+│   │   └── utils/        # Utilities
+│   └── data/             # Static data
+├── app/                   # Next.js App Router
+├── docs/                  # Documentation
+├── .devops/              # DevOps configs
+└── .github/              # GitHub configs
+```
+
+## 🔑 Environment Variables
+
+```bash
+# Stripe (Required)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+
+# Statsig - Feature Flags (Optional)
+NEXT_PUBLIC_STATSIG_CLIENT_KEY=client-...
+STATSIG_SERVER_API_KEY=secret-...
+
+# Vercel AI Gateway (Optional)
+AI_GATEWAY_API_KEY=vck_...
+
+# Vercel Edge Config (Optional)
+EXPERIMENTATION_CONFIG=https://edge-config.vercel.com/...
+EXPERIMENTATION_CONFIG_ITEM_KEY=...
+```
+
 ## 🚀 Quick Start
 
 Get up and running in **5 minutes**:
