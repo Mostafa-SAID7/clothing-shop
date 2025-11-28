@@ -1,0 +1,77 @@
+name: Achievement Tracker
+
+on:
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, closed]
+  pull_request:
+    types: [opened, closed, merged]
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  track-achievements:
+    name: Track GitHub Achievements
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for Pull Shark Achievement
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+        run: |
+          echo "🦈 Pull Shark Achievement Progress!"
+          echo "Merged PR #${{ github.event.pull_request.number }}"
+
+      - name: Check for Quickdraw Achievement
+        if: github.event_name == 'issues' && github.event.action == 'closed'
+        run: |
+          CREATED=$(date -d "${{ github.event.issue.created_at }}" +%s)
+          CLOSED=$(date -d "${{ github.event.issue.closed_at }}" +%s)
+          DIFF=$((CLOSED - CREATED))
+          HOURS=$((DIFF / 3600))
+          
+          if [ $HOURS -lt 1 ]; then
+            echo "⚡ Quickdraw Achievement! Issue closed in under 1 hour!"
+          fi
+
+      - name: Check for Code Review Achievement
+        if: github.event_name == 'pull_request_review'
+        run: |
+          echo "👀 Code Review Achievement Progress!"
+          echo "Reviewed PR #${{ github.event.pull_request.number }}"
+
+      - name: Create Achievement Comment
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const achievements = [
+              '🦈 **Pull Shark** - Keep merging those PRs!',
+              '🌟 **Contributor** - Thanks for your contribution!',
+              '🚀 **Momentum** - You\'re on a roll!'
+            ];
+            
+            const randomAchievement = achievements[Math.floor(Math.random() * achievements.length)];
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🎉 Achievement Unlocked!\n\n${randomAchievement}\n\n---\n*Keep up the great work!*`
+            })
+
+      - name: Update Contribution Stats
+        run: |
+          echo "📊 Updating contribution statistics..."
+          echo "Event: ${{ github.event_name }}"
+          echo "Action: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
