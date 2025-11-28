@@ -1,0 +1,64 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    "group:monorepos"
+  ],
+  "schedule": ["before 6am on monday"],
+  "timezone": "UTC",
+  "labels": ["dependencies", "renovate"],
+  "assignees": ["Mostafa-SAID7"],
+  "reviewers": ["Mostafa-SAID7"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "groupName": "Next.js packages",
+      "matchPackagePatterns": ["^next", "^@next/"],
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "groupName": "React packages",
+      "matchPackagePatterns": ["^react", "^react-dom"],
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "groupName": "Radix UI packages",
+      "matchPackagePatterns": ["^@radix-ui/"],
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "groupName": "ESLint packages",
+      "matchPackagePatterns": ["^eslint", "^@typescript-eslint/"],
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "assignees": ["Mostafa-SAID7"],
+    "schedule": ["at any time"]
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  }
+}
