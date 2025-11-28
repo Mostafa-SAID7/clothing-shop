@@ -1,7 +1,24 @@
 {
-  "name": "nextjs",
-  "version": "0.1.0",
+  "name": "style-haven-clothing-shop",
+  "version": "1.0.0",
+  "description": "Modern e-commerce clothing store built with Next.js, React, TypeScript, and Stripe",
+  "author": "Style Haven Team",
+  "license": "MIT",
   "private": true,
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "ecommerce",
+    "stripe",
+    "tailwindcss",
+    "clothing-store",
+    "shopping-cart"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/clothing-shop"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
