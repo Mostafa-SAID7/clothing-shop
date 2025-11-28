@@ -335,7 +335,7 @@ Built with amazing open-source technologies:
 
 <div align="center">
 
-**Made with ❤️ by the Style Haven Team**
+**Made with ❤️ by [Mostafa-SAID7](https://github.com/Mostafa-SAID7)**
 
 ⭐ **Star this repo if you find it helpful!**
 
