@@ -1,9 +1,9 @@
 ---
 name: Documentation Issue
 about: Report issues with documentation or suggest improvements
-title: '[DOCS] '
+title: "[DOCS] "
 labels: documentation
-assignees: ''
+assignees: ""
 ---
 
 ## 📚 Documentation Issue

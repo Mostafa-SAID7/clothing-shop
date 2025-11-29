@@ -13,11 +13,13 @@ Creates a Stripe Checkout session for processing payments.
 #### Request
 
 **Headers:**
+
 ```
 Content-Type: application/json
 ```
 
 **Body:**
+
 ```typescript
 {
   cart: CartItem[];
@@ -33,6 +35,7 @@ Content-Type: application/json
 ```
 
 **CartItem Interface:**
+
 ```typescript
 interface CartItem {
   id: number;
@@ -48,6 +51,7 @@ interface CartItem {
 #### Response
 
 **Success (200):**
+
 ```json
 {
   "sessionId": "cs_test_..."
@@ -55,6 +59,7 @@ interface CartItem {
 ```
 
 **Error (500):**
+
 ```json
 {
   "error": "Error creating checkout session"
@@ -78,8 +83,8 @@ const response = await fetch("/api/create-checkout-session", {
         image: "https://...",
         quantity: 2,
         selectedSize: "M",
-        selectedColor: "White"
-      }
+        selectedColor: "White",
+      },
     ],
     customerInfo: {
       email: "customer@example.com",
@@ -87,8 +92,8 @@ const response = await fetch("/api/create-checkout-session", {
       address: "123 Main St",
       city: "New York",
       country: "US",
-      postalCode: "10001"
-    }
+      postalCode: "10001",
+    },
   }),
 });
 
@@ -144,10 +149,7 @@ try {
   // API logic
 } catch (error) {
   console.error("Stripe error:", error);
-  return NextResponse.json(
-    { error: "Error creating checkout session" },
-    { status: 500 }
-  );
+  return NextResponse.json({ error: "Error creating checkout session" }, { status: 500 });
 }
 ```
 
@@ -164,20 +166,22 @@ try {
 ### Test Mode
 
 Use Stripe test keys for development:
+
 - `STRIPE_SECRET_KEY=sk_test_...`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...`
 
 ### Test Cards
 
-| Card Number | Scenario |
-|-------------|----------|
-| 4242 4242 4242 4242 | Successful payment |
-| 4000 0000 0000 9995 | Declined payment |
+| Card Number         | Scenario                |
+| ------------------- | ----------------------- |
+| 4242 4242 4242 4242 | Successful payment      |
+| 4000 0000 0000 9995 | Declined payment        |
 | 4000 0025 0000 3155 | Requires authentication |
 
 ### Testing Webhooks
 
 For production, set up Stripe webhooks to handle:
+
 - `checkout.session.completed` - Order confirmation
 - `payment_intent.succeeded` - Payment success
 - `payment_intent.payment_failed` - Payment failure

@@ -77,37 +77,40 @@ clothing-shop/
 ## 📊 Documentation Categories
 
 ### 🌟 Essential (Root Level)
+
 Files that users see first:
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `README.md` | Project overview & quick start | Everyone |
-| `DOCUMENTATION_MAP.md` | Navigation guide | Everyone |
-| `LICENSE` | Legal terms | Everyone |
-| `.env.example` | Configuration template | Developers |
+| File                   | Purpose                        | Audience   |
+| ---------------------- | ------------------------------ | ---------- |
+| `README.md`            | Project overview & quick start | Everyone   |
+| `DOCUMENTATION_MAP.md` | Navigation guide               | Everyone   |
+| `LICENSE`              | Legal terms                    | Everyone   |
+| `.env.example`         | Configuration template         | Developers |
 
 ### 📚 Technical (docs/)
+
 In-depth technical documentation:
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `docs/README.md` | Documentation index | Everyone |
-| `docs/GETTING_STARTED.md` | Setup & installation | Developers |
-| `docs/ARCHITECTURE.md` | System design | Developers |
-| `docs/API.md` | API reference | Developers |
-| `docs/DEPLOYMENT.md` | Production deployment | DevOps |
+| File                      | Purpose               | Audience   |
+| ------------------------- | --------------------- | ---------- |
+| `docs/README.md`          | Documentation index   | Everyone   |
+| `docs/GETTING_STARTED.md` | Setup & installation  | Developers |
+| `docs/ARCHITECTURE.md`    | System design         | Developers |
+| `docs/API.md`             | API reference         | Developers |
+| `docs/DEPLOYMENT.md`      | Production deployment | DevOps     |
 
 ### 🔧 GitHub (.github/)
+
 GitHub-specific files:
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `.github/README.md` | GitHub folder guide | Contributors |
-| `.github/CONTRIBUTING.md` | Contribution guide | Contributors |
-| `.github/SECURITY.md` | Security policy | Security researchers |
-| `.github/CHANGELOG.md` | Version history | Everyone |
-| `.github/PULL_REQUEST_TEMPLATE.md` | PR template | Contributors |
-| `.github/DOCUMENTATION_STRUCTURE.md` | This file | Maintainers |
+| File                                 | Purpose             | Audience             |
+| ------------------------------------ | ------------------- | -------------------- |
+| `.github/README.md`                  | GitHub folder guide | Contributors         |
+| `.github/CONTRIBUTING.md`            | Contribution guide  | Contributors         |
+| `.github/SECURITY.md`                | Security policy     | Security researchers |
+| `.github/CHANGELOG.md`               | Version history     | Everyone             |
+| `.github/PULL_REQUEST_TEMPLATE.md`   | PR template         | Contributors         |
+| `.github/DOCUMENTATION_STRUCTURE.md` | This file           | Maintainers          |
 
 ---
 
@@ -118,11 +121,13 @@ GitHub-specific files:
 Our main README uses:
 
 ✅ **Badges** - Technology stack visualization
+
 ```markdown
 [![Next.js](https://img.shields.io/badge/Next.js-15.4-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 ```
 
 ✅ **Centered Headers** - Professional appearance
+
 ```markdown
 <div align="center">
 # 👔 STYLE HAVEN
@@ -130,26 +135,33 @@ Our main README uses:
 ```
 
 ✅ **Tables** - Organized information
+
 ```markdown
-| Category | Technologies |
-|----------|-------------|
+| Category | Technologies                 |
+| -------- | ---------------------------- |
 | Frontend | Next.js • React • TypeScript |
 ```
 
 ✅ **Emojis** - Visual navigation
+
 ```markdown
 ## 🚀 Quick Start
+
 ## 📖 Documentation
+
 ## ✨ Features
 ```
 
 ✅ **Mermaid Diagrams** - Visual flows
-```markdown
+
+````markdown
 ```mermaid
 graph LR
     A[Browse] --> B[Cart]
 ```
-```
+````
+
+````
 
 ✅ **Icon Cards** - Feature highlights
 ```markdown
@@ -159,7 +171,7 @@ graph LR
 <td>Feature 2</td>
 </tr>
 </table>
-```
+````
 
 ---
 
@@ -168,16 +180,19 @@ graph LR
 ### Files Moved
 
 **To `.github/`:**
+
 - ✅ `CONTRIBUTING.md` → `.github/CONTRIBUTING.md`
 - ✅ `SECURITY.md` → `.github/SECURITY.md`
 - ✅ `CHANGELOG.md` → `.github/CHANGELOG.md`
 
 **Removed (Duplicates):**
+
 - ❌ `DEPLOYMENT.md` (exists in `docs/`)
 - ❌ `PROJECT_SUMMARY.md` (merged into README)
 - ❌ `QUICKSTART.md` (merged into README)
 
 **Created:**
+
 - ✨ `README.md` (modern styled version)
 - ✨ `DOCUMENTATION_MAP.md` (navigation guide)
 - ✨ `docs/README.md` (documentation index)
@@ -245,14 +260,14 @@ graph LR
 
 ## 📊 Documentation Metrics
 
-| Metric | Count |
-|--------|-------|
-| Total markdown files | 14 |
-| Root level docs | 3 |
-| Technical docs (docs/) | 5 |
-| GitHub docs (.github/) | 6 |
-| Average doc size | ~500 lines |
-| Total documentation | ~7,000 lines |
+| Metric                 | Count        |
+| ---------------------- | ------------ |
+| Total markdown files   | 14           |
+| Root level docs        | 3            |
+| Technical docs (docs/) | 5            |
+| GitHub docs (.github/) | 6            |
+| Average doc size       | ~500 lines   |
+| Total documentation    | ~7,000 lines |
 
 ---
 

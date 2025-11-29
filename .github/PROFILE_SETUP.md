@@ -55,17 +55,20 @@ Copy this content to your profile README:
 ## 💻 Tech Stack
 
 ### Frontend
+
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 ### Backend
+
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 
 ### DevOps & Cloud
+
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
@@ -73,6 +76,7 @@ Copy this content to your profile README:
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ### Databases
+
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
@@ -88,6 +92,7 @@ Copy this content to your profile README:
 ## 🎯 Featured Projects
 
 ### 🛍️ [Style Haven - E-Commerce Platform](https://github.com/Mostafa-SAID7/clothing-shop)
+
 Modern e-commerce clothing store with Stripe integration, feature flags, and complete DevOps setup.
 
 **Tech Stack:** Next.js 15, React 18, TypeScript, Stripe, Statsig, Docker, Kubernetes
@@ -178,6 +183,7 @@ Add workflow status badges:
 ### Option 3: Custom Metrics Dashboard
 
 Use GitHub's GraphQL API to track:
+
 - Total PRs reviewed
 - Issues closed
 - Code review comments
@@ -188,24 +194,28 @@ Use GitHub's GraphQL API to track:
 ## 🎯 Increase Your GitHub Activity
 
 ### 1. Code Reviews
+
 - Review PRs in your repos
 - Comment on code quality
 - Suggest improvements
 - Approve/Request changes
 
 ### 2. Issue Management
+
 - Create detailed issues
 - Label and organize
 - Close resolved issues
 - Link PRs to issues
 
 ### 3. Contributions
+
 - Commit regularly
 - Write meaningful commit messages
 - Use conventional commits
 - Co-author when collaborating
 
 ### 4. Community Engagement
+
 - Star interesting repos
 - Fork and contribute
 - Create discussions
@@ -216,26 +226,31 @@ Use GitHub's GraphQL API to track:
 ## 🔧 Tools to Enhance Profile
 
 ### 1. GitHub Readme Stats
+
 ```markdown
 ![Stats](https://github-readme-stats.vercel.app/api?username=Mostafa-SAID7&show_icons=true&theme=radical)
 ```
 
 ### 2. Streak Stats
+
 ```markdown
 ![Streak](https://github-readme-streak-stats.herokuapp.com/?user=Mostafa-SAID7&theme=radical)
 ```
 
 ### 3. Activity Graph
+
 ```markdown
 ![Activity](https://github-readme-activity-graph.vercel.app/graph?username=Mostafa-SAID7&theme=react-dark)
 ```
 
 ### 4. Profile Trophy
+
 ```markdown
 ![Trophy](https://github-profile-trophy.vercel.app/?username=Mostafa-SAID7&theme=radical)
 ```
 
 ### 5. WakaTime Stats (Coding Time)
+
 ```markdown
 ![WakaTime](https://github-readme-stats.vercel.app/api/wakatime?username=Mostafa-SAID7)
 ```
@@ -263,6 +278,7 @@ Choose from these themes for your stats:
 - `synthwave`, `highcontrast`, `dracula`
 
 Example:
+
 ```markdown
 ![Stats](https://github-readme-stats.vercel.app/api?username=Mostafa-SAID7&theme=tokyonight)
 ```
@@ -270,6 +286,7 @@ Example:
 ---
 
 **Need help?** Check out:
+
 - [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)
 - [Awesome GitHub Profile README](https://github.com/abhisheknaiidu/awesome-github-profile-readme)
 - [GitHub Readme Stats](https://github.com/anuraghazra/github-readme-stats)

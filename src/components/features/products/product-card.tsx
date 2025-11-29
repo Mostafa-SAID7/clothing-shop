@@ -5,12 +5,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Product, CartItem } from "@/lib/types";
@@ -52,9 +47,7 @@ export function ProductCard({
             alt={product.name}
             className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-200"
           />
-          {product.isNew && (
-            <Badge className="absolute top-2 left-2">New Arrival</Badge>
-          )}
+          {product.isNew && <Badge className="absolute top-2 left-2">New Arrival</Badge>}
           <Button
             variant="ghost"
             size="icon"
@@ -65,9 +58,7 @@ export function ProductCard({
             }}
           >
             <Heart
-              className={`h-5 w-5 ${
-                isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"
-              }`}
+              className={`h-5 w-5 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"}`}
             />
           </Button>
         </div>

@@ -41,6 +41,7 @@ src/components/
 ```
 
 **When to use:**
+
 - `ui/` - Reusable, generic UI components
 - `features/` - Components specific to a feature
 - `shared/` - Components used across multiple features
@@ -65,6 +66,7 @@ src/lib/
 ```
 
 **When to use:**
+
 - `api/` - External API integrations
 - `config/` - Environment and app configuration
 - `features/` - Feature flag logic
@@ -139,12 +141,12 @@ Infrastructure and deployment:
 Use these aliases in imports:
 
 ```typescript
-import { Button } from '@/components/ui/button';
-import { ProductCard } from '@/components/features/products';
-import { cn } from '@/lib/utils';
-import { useToast } from '@/lib/hooks';
-import type { Product } from '@/lib/types';
-import { products } from '@/data';
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/features/products";
+import { cn } from "@/lib/utils";
+import { useToast } from "@/lib/hooks";
+import type { Product } from "@/lib/types";
+import { products } from "@/data";
 ```
 
 ## Best Practices
@@ -158,6 +160,7 @@ import { products } from '@/data';
 ## Adding New Files
 
 ### New Component
+
 ```
 src/components/features/[feature-name]/
 ├── [component-name].tsx
@@ -166,6 +169,7 @@ src/components/features/[feature-name]/
 ```
 
 ### New Hook
+
 ```
 src/lib/hooks/
 ├── use-[hook-name].ts
@@ -174,6 +178,7 @@ src/lib/hooks/
 ```
 
 ### New Utility
+
 ```
 src/lib/utils/
 ├── [utility-name].ts

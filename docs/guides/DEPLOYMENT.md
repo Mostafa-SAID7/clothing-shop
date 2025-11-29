@@ -19,6 +19,7 @@ Complete guide for deploying Style Haven to various platforms.
 Vercel is the easiest and recommended platform for Next.js applications.
 
 ### Prerequisites
+
 - GitHub/GitLab/Bitbucket account
 - Vercel account (free tier available)
 - Stripe account with live API keys
@@ -26,6 +27,7 @@ Vercel is the easiest and recommended platform for Next.js applications.
 ### Steps
 
 1. **Push to Git Repository**
+
    ```bash
    git init
    git add .
@@ -41,8 +43,9 @@ Vercel is the easiest and recommended platform for Next.js applications.
    - Vercel will auto-detect Next.js
 
 3. **Configure Environment Variables**
-   
+
    In Vercel project settings, add:
+
    ```
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_key
    STRIPE_SECRET_KEY=sk_live_your_key
@@ -64,6 +67,7 @@ Vercel is the easiest and recommended platform for Next.js applications.
 ### Automatic Deployments
 
 Vercel automatically deploys:
+
 - **Production**: Pushes to `main` branch
 - **Preview**: Pull requests and other branches
 
@@ -74,13 +78,15 @@ Vercel automatically deploys:
 ### Steps
 
 1. **Build the Project**
+
    ```bash
    npm run build
    ```
 
 2. **Deploy to Netlify**
-   
+
    Option A - Netlify CLI:
+
    ```bash
    npm install -g netlify-cli
    netlify login
@@ -93,8 +99,9 @@ Vercel automatically deploys:
    - Or connect your Git repository
 
 3. **Configure Environment Variables**
-   
+
    In Netlify dashboard → Site settings → Environment variables:
+
    ```
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_key
    STRIPE_SECRET_KEY=sk_live_your_key
@@ -114,12 +121,14 @@ Vercel automatically deploys:
 ### Using AWS Amplify
 
 1. **Install Amplify CLI**
+
    ```bash
    npm install -g @aws-amplify/cli
    amplify configure
    ```
 
 2. **Initialize Amplify**
+
    ```bash
    amplify init
    amplify add hosting
@@ -138,17 +147,20 @@ Vercel automatically deploys:
    - Open ports 80, 443, 22
 
 2. **SSH into Instance**
+
    ```bash
    ssh -i your-key.pem ubuntu@your-instance-ip
    ```
 
 3. **Install Dependencies**
+
    ```bash
    sudo apt update
    sudo apt install nodejs npm nginx
    ```
 
 4. **Clone and Build**
+
    ```bash
    git clone <your-repo>
    cd clothing-shop
@@ -157,6 +169,7 @@ Vercel automatically deploys:
    ```
 
 5. **Configure Nginx**
+
    ```nginx
    server {
        listen 80;
@@ -174,6 +187,7 @@ Vercel automatically deploys:
    ```
 
 6. **Start Application**
+
    ```bash
    npm start
    ```
@@ -197,12 +211,14 @@ Vercel automatically deploys:
    - Connect your GitHub repository
 
 2. **Configure Build**
+
    ```
    Build Command: npm run build
    Run Command: npm start
    ```
 
 3. **Add Environment Variables**
+
    ```
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_key
    STRIPE_SECRET_KEY=sk_live_your_key
@@ -270,7 +286,7 @@ CMD ["node", "server.js"]
 Create `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   app:
@@ -303,11 +319,11 @@ docker-compose up -d
 
 ### Required Variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key | `pk_live_...` |
-| `STRIPE_SECRET_KEY` | Stripe secret key | `sk_live_...` |
-| `NEXT_PUBLIC_BASE_URL` | Your app's URL | `https://yourdomain.com` |
+| Variable                             | Description            | Example                  |
+| ------------------------------------ | ---------------------- | ------------------------ |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key | `pk_live_...`            |
+| `STRIPE_SECRET_KEY`                  | Stripe secret key      | `sk_live_...`            |
+| `NEXT_PUBLIC_BASE_URL`               | Your app's URL         | `https://yourdomain.com` |
 
 ### Security Notes
 
@@ -405,6 +421,7 @@ npm run build
 ## Support
 
 For deployment issues:
+
 - Check [Next.js Deployment Docs](https://nextjs.org/docs/deployment)
 - Review platform-specific documentation
 - Open an issue on GitHub

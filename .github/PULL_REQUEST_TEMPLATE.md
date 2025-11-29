@@ -17,24 +17,27 @@
 ## Related Issue
 
 <!-- Link to the issue this PR addresses -->
+
 Fixes #(issue number)
 
 ## Changes Made
 
 <!-- List the specific changes made in this PR -->
 
-- 
-- 
-- 
+-
+-
+-
 
 ## Screenshots
 
 <!-- If applicable, add screenshots to help explain your changes -->
 
 ### Before
+
 <!-- Screenshot of the UI before changes -->
 
 ### After
+
 <!-- Screenshot of the UI after changes -->
 
 ## Testing

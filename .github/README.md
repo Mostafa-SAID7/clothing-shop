@@ -50,6 +50,7 @@ This directory contains GitHub-specific configuration files and templates.
 ## 🎯 Purpose
 
 These files help maintain:
+
 - **Consistency** in contributions
 - **Security** through proper reporting
 - **Quality** via automated checks

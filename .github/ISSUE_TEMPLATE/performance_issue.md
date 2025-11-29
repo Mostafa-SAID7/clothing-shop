@@ -1,9 +1,9 @@
 ---
 name: Performance Issue
 about: Report performance problems or slow loading times
-title: '[PERFORMANCE] '
+title: "[PERFORMANCE] "
 labels: performance
-assignees: ''
+assignees: ""
 ---
 
 ## ⚡ Performance Issue Description
@@ -26,7 +26,7 @@ assignees: ''
 - [ ] Home page
 - [ ] Product listing
 - [ ] Checkout page
-- [ ] Other: 
+- [ ] Other:
 
 ## 🔍 Steps to Reproduce
 

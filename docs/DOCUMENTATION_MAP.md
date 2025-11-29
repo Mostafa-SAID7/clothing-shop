@@ -35,61 +35,70 @@ clothing-shop/
 ## 🎯 Quick Navigation
 
 ### 🚀 Getting Started
-| What you need | Where to find it |
-|---------------|------------------|
-| Project overview | [README.md](README.md) |
+
+| What you need      | Where to find it                                   |
+| ------------------ | -------------------------------------------------- |
+| Project overview   | [README.md](README.md)                             |
 | Setup instructions | [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
-| Environment setup | [.env.example](.env.example) |
+| Environment setup  | [.env.example](.env.example)                       |
 
 ### 👨‍💻 Development
-| What you need | Where to find it |
-|---------------|------------------|
-| Architecture guide | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
-| API documentation | [docs/API.md](docs/API.md) |
-| Code style guide | [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) |
+
+| What you need      | Where to find it                                   |
+| ------------------ | -------------------------------------------------- |
+| Architecture guide | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)       |
+| API documentation  | [docs/API.md](docs/API.md)                         |
+| Code style guide   | [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) |
 
 ### 🚀 Deployment
-| What you need | Where to find it |
-|---------------|------------------|
-| Deployment guide | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
+
+| What you need         | Where to find it                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------ |
+| Deployment guide      | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)                                             |
 | Environment variables | [docs/DEPLOYMENT.md#environment-variables](docs/DEPLOYMENT.md#environment-variables) |
-| Production checklist | [docs/DEPLOYMENT.md#post-deployment](docs/DEPLOYMENT.md#post-deployment) |
+| Production checklist  | [docs/DEPLOYMENT.md#post-deployment](docs/DEPLOYMENT.md#post-deployment)             |
 
 ### 🤝 Contributing
-| What you need | Where to find it |
-|---------------|------------------|
-| How to contribute | [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) |
+
+| What you need         | Where to find it                                                     |
+| --------------------- | -------------------------------------------------------------------- |
+| How to contribute     | [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)                   |
 | Pull request template | [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) |
-| Issue templates | [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/) |
+| Issue templates       | [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)                   |
 
 ### 🔒 Security & Legal
-| What you need | Where to find it |
-|---------------|------------------|
-| Security policy | [.github/SECURITY.md](.github/SECURITY.md) |
-| License | [LICENSE](LICENSE) |
-| Changelog | [.github/CHANGELOG.md](.github/CHANGELOG.md) |
+
+| What you need   | Where to find it                             |
+| --------------- | -------------------------------------------- |
+| Security policy | [.github/SECURITY.md](.github/SECURITY.md)   |
+| License         | [LICENSE](LICENSE)                           |
+| Changelog       | [.github/CHANGELOG.md](.github/CHANGELOG.md) |
 
 ---
 
 ## 📊 Documentation by Role
 
 ### 👨‍💻 For Developers
+
 1. Start: [README.md](README.md)
 2. Setup: [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
 3. Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 4. API: [docs/API.md](docs/API.md)
 
 ### 🚀 For DevOps Engineers
+
 1. Deployment: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 2. Environment: [.env.example](.env.example)
 3. CI/CD: [.github/workflows/](.github/workflows/)
 
 ### 🤝 For Contributors
+
 1. Guidelines: [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
 2. PR Template: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md)
 3. Issues: [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)
 
 ### 🔒 For Security Researchers
+
 1. Policy: [.github/SECURITY.md](.github/SECURITY.md)
 2. Reporting: [.github/SECURITY.md#reporting-a-vulnerability](.github/SECURITY.md#reporting-a-vulnerability)
 
@@ -98,28 +107,33 @@ clothing-shop/
 ## 🔍 Search by Topic
 
 ### Setup & Installation
+
 - [Getting Started Guide](docs/GETTING_STARTED.md)
 - [Environment Variables](.env.example)
 - [Prerequisites](docs/GETTING_STARTED.md#prerequisites)
 
 ### Development
+
 - [Project Structure](docs/GETTING_STARTED.md#project-structure)
 - [Architecture](docs/ARCHITECTURE.md)
 - [API Reference](docs/API.md)
 - [Code Style](.github/CONTRIBUTING.md#code-style)
 
 ### Deployment
+
 - [Vercel Deployment](docs/DEPLOYMENT.md#vercel-recommended)
 - [Netlify Deployment](docs/DEPLOYMENT.md#netlify)
 - [Docker Setup](docs/DEPLOYMENT.md#docker)
 - [Environment Config](docs/DEPLOYMENT.md#environment-variables)
 
 ### Contributing
+
 - [How to Contribute](.github/CONTRIBUTING.md)
 - [Commit Guidelines](.github/CONTRIBUTING.md#commit-message-guidelines)
 - [PR Process](.github/CONTRIBUTING.md#pull-request-process)
 
 ### Maintenance
+
 - [Changelog](.github/CHANGELOG.md)
 - [Security Policy](.github/SECURITY.md)
 - [License](LICENSE)
@@ -134,7 +148,7 @@ All documentation in this project follows these standards:
 ✅ **Code Examples** - Practical examples included  
 ✅ **Up-to-date** - Regularly maintained and updated  
 ✅ **Accessible** - Easy to understand for all skill levels  
-✅ **Searchable** - Well-indexed and cross-referenced  
+✅ **Searchable** - Well-indexed and cross-referenced
 
 ---
 

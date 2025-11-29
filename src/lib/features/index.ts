@@ -1,3 +1,3 @@
 // Feature Flags
-export * from './flags';
-export * from './statsig-client';
+export * from "./flags";
+export * from "./statsig-client";

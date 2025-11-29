@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🎉 Initial Release
 
 #### ✨ Features
+
 - **Product Catalog**: Browse clothing items with category filtering
 - **Search Functionality**: Real-time product search
 - **Shopping Cart**: Add items with size and color selection
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Order Confirmation**: Success page with order details
 
 #### 🛠️ Technical
+
 - Built with Next.js 15.4.2 (App Router)
 - TypeScript 5.8.2 for type safety
 - Tailwind CSS 3.3.3 for styling
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - localStorage for cart persistence
 
 #### 📦 Components
+
 - Product card with image, details, and actions
 - Shopping cart drawer with quantity management
 - Checkout form with validation
@@ -34,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 40+ reusable UI components from shadcn/ui
 
 #### 🎨 UI/UX
+
 - Clean, modern interface
 - Smooth animations and transitions
 - Intuitive navigation
@@ -45,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### 🚧 Planned Features
+
 - User authentication and accounts
 - Order history and tracking
 - Product reviews and ratings
@@ -57,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Discount codes and promotions
 
 ### 🐛 Known Issues
+
 - None reported yet
 
 ---
@@ -73,12 +79,15 @@ When making changes, add them under the `[Unreleased]` section using these categ
 - `Security` for vulnerability fixes
 
 Example:
+
 ```markdown
 ## [Unreleased]
 
 ### Added
+
 - New feature description
 
 ### Fixed
+
 - Bug fix description
 ```

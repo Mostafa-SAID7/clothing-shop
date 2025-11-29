@@ -7,6 +7,7 @@ Welcome to the Style Haven documentation! This directory contains comprehensive 
 ## 📖 Table of Contents
 
 ### 🚀 Getting Started
+
 - **[Getting Started Guide](GETTING_STARTED.md)** - Complete setup and installation instructions
   - Prerequisites and system requirements
   - Step-by-step installation
@@ -15,6 +16,7 @@ Welcome to the Style Haven documentation! This directory contains comprehensive 
   - Making your first changes
 
 ### 🏗️ Architecture & Design
+
 - **[Architecture Overview](ARCHITECTURE.md)** - System design and technical architecture
   - Application structure
   - Component hierarchy
@@ -23,6 +25,7 @@ Welcome to the Style Haven documentation! This directory contains comprehensive 
   - Technology decisions
 
 ### 🔌 API Documentation
+
 - **[API Reference](API.md)** - Complete API documentation
   - Stripe checkout endpoints
   - Request/response formats
@@ -31,6 +34,7 @@ Welcome to the Style Haven documentation! This directory contains comprehensive 
   - Rate limiting
 
 ### 🚀 Deployment
+
 - **[Deployment Guide](DEPLOYMENT.md)** - Deploy to production
   - Vercel deployment (recommended)
   - Netlify deployment
@@ -44,18 +48,21 @@ Welcome to the Style Haven documentation! This directory contains comprehensive 
 ## 🎯 Quick Links
 
 ### For Developers
+
 - [Project Structure](GETTING_STARTED.md#project-structure)
 - [Adding New Products](GETTING_STARTED.md#making-your-first-changes)
 - [Customizing Styles](GETTING_STARTED.md#3-customize-colors)
 - [Testing Checkout](GETTING_STARTED.md#testing-the-checkout-flow)
 
 ### For DevOps
+
 - [Environment Variables](DEPLOYMENT.md#environment-variables)
 - [Docker Setup](DEPLOYMENT.md#docker)
 - [CI/CD Configuration](DEPLOYMENT.md#automatic-deployments)
 - [Monitoring Setup](DEPLOYMENT.md#3-set-up-monitoring)
 
 ### For Contributors
+
 - [Contributing Guidelines](../.github/CONTRIBUTING.md)
 - [Code Style Guide](../.github/CONTRIBUTING.md#code-style)
 - [Pull Request Process](../.github/CONTRIBUTING.md#pull-request-process)
@@ -103,6 +110,7 @@ docs/
 ## 📝 Additional Resources
 
 ### External Documentation
+
 - [Next.js Documentation](https://nextjs.org/docs) - Framework documentation
 - [React Documentation](https://react.dev) - React library docs
 - [Stripe Documentation](https://stripe.com/docs) - Payment integration
@@ -110,6 +118,7 @@ docs/
 - [shadcn/ui Documentation](https://ui.shadcn.com) - UI components
 
 ### Video Tutorials
+
 - [Next.js 15 Tutorial](https://www.youtube.com/results?search_query=nextjs+15+tutorial)
 - [Stripe Integration Guide](https://www.youtube.com/results?search_query=stripe+nextjs)
 - [Tailwind CSS Crash Course](https://www.youtube.com/results?search_query=tailwind+css+tutorial)
@@ -119,12 +128,15 @@ docs/
 ## 🆘 Getting Help
 
 ### Documentation Issues
+
 If you find any issues with the documentation:
+
 1. Check if it's already reported in [Issues](../../issues)
 2. Open a new issue with the `documentation` label
 3. Suggest improvements via Pull Request
 
 ### Technical Support
+
 - **Bug Reports**: [Open an issue](../../issues/new?template=bug_report.md)
 - **Feature Requests**: [Open an issue](../../issues/new?template=feature_request.md)
 - **Questions**: [Start a discussion](../../discussions)
@@ -137,13 +149,16 @@ If you find any issues with the documentation:
 This documentation is continuously updated. Last major update: **November 2025**
 
 ### Recent Changes
+
 - ✅ Added modern styled README
 - ✅ Reorganized documentation structure
 - ✅ Updated deployment guides
 - ✅ Enhanced getting started guide
 
 ### Contributing to Docs
+
 We welcome documentation improvements! To contribute:
+
 1. Fork the repository
 2. Make your changes in the `docs/` folder
 3. Submit a Pull Request
@@ -153,12 +168,12 @@ We welcome documentation improvements! To contribute:
 
 ## 📊 Documentation Status
 
-| Document | Status | Last Updated |
-|----------|--------|--------------|
-| Getting Started | ✅ Complete | Nov 2025 |
-| Architecture | ✅ Complete | Nov 2025 |
-| API Reference | ✅ Complete | Nov 2025 |
-| Deployment | ✅ Complete | Nov 2025 |
+| Document        | Status      | Last Updated |
+| --------------- | ----------- | ------------ |
+| Getting Started | ✅ Complete | Nov 2025     |
+| Architecture    | ✅ Complete | Nov 2025     |
+| API Reference   | ✅ Complete | Nov 2025     |
+| Deployment      | ✅ Complete | Nov 2025     |
 
 ---
 

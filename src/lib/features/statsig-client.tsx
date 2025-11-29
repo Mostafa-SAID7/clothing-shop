@@ -13,11 +13,11 @@ interface StatsigClientProviderProps {
 /**
  * Client-side Statsig provider for React components
  * Wrap your client components with this provider to use Statsig hooks
- * 
+ *
  * @example
  * ```tsx
  * import { StatsigClientProvider } from "@/lib/statsig-client";
- * 
+ *
  * export default function RootLayout({ children }) {
  *   const sdkKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY!;
  *   return (

@@ -59,7 +59,7 @@ export default function CheckoutPage() {
 
       const { sessionId } = await response.json();
       const stripe = await stripePromise;
-      
+
       if (stripe) {
         const { error } = await stripe.redirectToCheckout({ sessionId });
         if (error) {
@@ -166,7 +166,10 @@ export default function CheckoutPage() {
             <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
             <div className="space-y-4">
               {cart.map((item) => (
-                <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4">
+                <div
+                  key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
+                  className="flex gap-4"
+                >
                   <img
                     src={item.image}
                     alt={item.name}

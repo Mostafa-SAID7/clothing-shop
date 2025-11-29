@@ -18,7 +18,6 @@ Before asking for help, please check our documentation:
 
 - **GitHub Discussions** - Ask questions and share ideas
   - [Start a discussion](https://github.com/Mostafa-SAID7/clothing-shop/discussions)
-  
 - **GitHub Issues** - Report bugs or request features
   - [Bug Report](https://github.com/Mostafa-SAID7/clothing-shop/issues/new?template=bug_report.md)
   - [Feature Request](https://github.com/Mostafa-SAID7/clothing-shop/issues/new?template=feature_request.md)
@@ -52,12 +51,14 @@ Have an idea for a new feature?
 **DO NOT** create public issues for security vulnerabilities.
 
 Instead, please report them privately:
+
 - See our [Security Policy](SECURITY.md)
 - Email: [security@example.com](mailto:security@example.com)
 
 ### 📧 Direct Contact
 
 For other inquiries:
+
 - Email: [mostafa.said@example.com](mailto:mostafa.said@example.com)
 - Twitter: [@MostafaSaid](https://twitter.com/MostafaSaid)
 

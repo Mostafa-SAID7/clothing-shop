@@ -30,9 +30,7 @@ export default async function FeatureFlagsExample() {
           New Feature is: <strong>{showNewFeature ? "ON" : "OFF"}</strong>
         </p>
         {showNewFeature && (
-          <div className="mt-2 p-2 bg-green-100 rounded">
-            🎉 New feature is enabled!
-          </div>
+          <div className="mt-2 p-2 bg-green-100 rounded">🎉 New feature is enabled!</div>
         )}
       </div>
 
@@ -40,10 +38,7 @@ export default async function FeatureFlagsExample() {
       <div className="p-4 border rounded">
         <h2 className="font-semibold">Dynamic Config</h2>
         {bannerConfig?.enabled && (
-          <div
-            className="mt-2 p-4 rounded"
-            style={{ backgroundColor: bannerConfig.color }}
-          >
+          <div className="mt-2 p-4 rounded" style={{ backgroundColor: bannerConfig.color }}>
             {bannerConfig.message}
           </div>
         )}

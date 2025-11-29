@@ -15,12 +15,11 @@ export default function Home() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<number[]>([]);
 
-  const filteredProducts = products
-    .filter(
-      (product) =>
-        (selectedCategory === "All" || product.category === selectedCategory) &&
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredProducts = products.filter(
+    (product) =>
+      (selectedCategory === "All" || product.category === selectedCategory) &&
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const toggleWishlist = (productId: number) => {
     setWishlist((current) =>
@@ -41,9 +40,7 @@ export default function Home() {
 
       if (existingItem) {
         return current.map((i) =>
-          i === existingItem
-            ? { ...i, quantity: i.quantity + item.quantity }
-            : i
+          i === existingItem ? { ...i, quantity: i.quantity + item.quantity } : i
         );
       }
 

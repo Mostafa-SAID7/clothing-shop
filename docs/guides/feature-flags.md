@@ -5,6 +5,7 @@ This project uses Statsig for feature flags, A/B testing, and dynamic configurat
 ## Setup
 
 1. **Environment Variables**
+
    ```bash
    NEXT_PUBLIC_STATSIG_CLIENT_KEY=client-your_key_here
    STATSIG_SERVER_API_KEY=secret-your_key_here
@@ -23,7 +24,7 @@ import { createFeatureFlag } from "@/lib/flags";
 
 export default async function MyPage() {
   const isEnabled = await createFeatureFlag("my_feature")();
-  
+
   return (
     <div>
       {isEnabled && <NewFeature />}
@@ -40,7 +41,7 @@ import { useGate } from "@statsig/react-bindings";
 
 export default function MyClientComponent() {
   const { value: isEnabled } = useGate("my_feature");
-  
+
   return (
     <div>
       {isEnabled && <NewFeature />}
@@ -61,7 +62,7 @@ interface MyConfig {
 
 export default async function MyPage() {
   const config = await createDynamicConfig<MyConfig>("my_config")();
-  
+
   return (
     <div style={{ color: config.color }}>
       {config.title}
@@ -79,7 +80,7 @@ export default async function MyPage() {
   const variant = await createExperiment<"control" | "variant_a" | "variant_b">(
     "button_test"
   )();
-  
+
   return (
     <button className={variant === "variant_a" ? "blue" : "green"}>
       Click Me
@@ -109,6 +110,7 @@ The following feature flags are already set up in `lib/flags.ts`:
 ## Examples
 
 See the example components:
+
 - `app/examples/feature-flags-example.tsx` - Server-side usage
 - `app/examples/client-feature-flags-example.tsx` - Client-side usage
 

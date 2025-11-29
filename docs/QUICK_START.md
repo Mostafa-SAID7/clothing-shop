@@ -45,27 +45,31 @@ The application will start at: **http://localhost:3000**
 ## 🎯 What to Do Next
 
 ### 1. Browse Products
+
 - Open http://localhost:3000
 - Explore the product catalog
 - Try filtering by category (T-Shirts, Hoodies, Jeans, etc.)
 
 ### 2. Test Shopping Cart
+
 - Click "Add to Cart" on any product
 - Select size and color
 - Click the cart icon to view your items
 - Adjust quantities or remove items
 
 ### 3. Try Checkout
+
 - Click "Checkout" in the cart
 - Fill in the shipping form
 - Click "Proceed to Payment"
 
 ### 4. Test Stripe Payment
+
 Use these test card numbers:
 
-| Card Number | Result |
-|-------------|--------|
-| `4242 4242 4242 4242` | ✅ Success |
+| Card Number           | Result      |
+| --------------------- | ----------- |
+| `4242 4242 4242 4242` | ✅ Success  |
 | `4000 0000 0000 9995` | ❌ Declined |
 
 - **Expiry:** Any future date (e.g., 12/25)
@@ -73,6 +77,7 @@ Use these test card numbers:
 - **ZIP:** Any 5 digits (e.g., 12345)
 
 ### 5. View Success Page
+
 After successful payment, you'll be redirected to the success page with order details.
 
 ---
@@ -82,6 +87,7 @@ After successful payment, you'll be redirected to the success page with order de
 Screenshots should be saved in the `screenshots/` folder. See [screenshots/README.md](screenshots/README.md) for detailed instructions.
 
 ### Recommended Screenshots:
+
 1. Homepage with product grid
 2. Category filter in action
 3. Shopping cart with items
@@ -106,6 +112,7 @@ npm run lint     # Run ESLint
 ## 🐛 Troubleshooting
 
 ### Port 3000 Already in Use
+
 ```bash
 # Windows
 netstat -ano | findstr :3000
@@ -116,6 +123,7 @@ npm run dev -- -p 3001
 ```
 
 ### Dependencies Not Installing
+
 ```bash
 # Clear cache and reinstall
 npm cache clean --force
@@ -124,6 +132,7 @@ npm install
 ```
 
 ### Stripe Keys Not Working
+
 - Verify `.env` file exists in the root directory
 - Check that keys start with `pk_test_` and `sk_test_`
 - Restart the dev server after changing `.env`

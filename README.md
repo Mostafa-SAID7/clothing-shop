@@ -25,6 +25,7 @@
 <td width="50%">
 
 ### 🛍️ Shopping Experience
+
 - **Smart Product Catalog** with category filtering
 - **Real-time Search** for instant results
 - **Wishlist System** to save favorites
@@ -35,6 +36,7 @@
 <td width="50%">
 
 ### 💳 Checkout & Payments
+
 - **Stripe Integration** for secure payments
 - **Shopping Cart** with quantity management
 - **Persistent Cart** using localStorage
@@ -115,14 +117,14 @@ npm run dev
 
 <div align="center">
 
-| Category | Technologies |
-|----------|-------------|
+| Category     | Technologies                           |
+| ------------ | -------------------------------------- |
 | **Frontend** | Next.js 15 • React 18 • TypeScript 5.8 |
-| **Styling** | Tailwind CSS • shadcn/ui • Radix UI |
-| **Payments** | Stripe Checkout • Stripe API |
-| **State** | React Hooks • localStorage |
-| **Icons** | Lucide React |
-| **Forms** | React Hook Form • Zod |
+| **Styling**  | Tailwind CSS • shadcn/ui • Radix UI    |
+| **Payments** | Stripe Checkout • Stripe API           |
+| **State**    | React Hooks • localStorage             |
+| **Icons**    | Lucide React                           |
+| **Forms**    | React Hook Form • Zod                  |
 
 </div>
 
@@ -200,7 +202,7 @@ clothing-shop/
 
 ## 🎯 Key Features Explained
 
-### �  Shopping Cart System
+### � Shopping Cart System
 
 ```typescript
 // Smart cart management with size & color variants
@@ -210,8 +212,8 @@ const cartItem = {
   price: 29.99,
   selectedSize: "M",
   selectedColor: "White",
-  quantity: 2
-}
+  quantity: 2,
+};
 ```
 
 - **Unique Identification**: Items tracked by `id + size + color`
@@ -241,10 +243,10 @@ graph LR
 
 ### Stripe Test Cards
 
-| Card Number | Result |
-|-------------|--------|
-| `4242 4242 4242 4242` | ✅ Success |
-| `4000 0000 0000 9995` | ❌ Declined |
+| Card Number           | Result           |
+| --------------------- | ---------------- |
+| `4242 4242 4242 4242` | ✅ Success       |
+| `4000 0000 0000 9995` | ❌ Declined      |
 | `4000 0025 0000 3155` | 🔐 Requires Auth |
 
 **Expiry:** Any future date • **CVC:** Any 3 digits • **ZIP:** Any 5 digits
@@ -311,7 +313,7 @@ Edit `tailwind.config.ts`:
 theme: {
   extend: {
     colors: {
-      primary: '#your-brand-color'
+      primary: "#your-brand-color";
     }
   }
 }

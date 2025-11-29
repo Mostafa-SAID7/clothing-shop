@@ -59,25 +59,30 @@ clothing-shop/
 ## 🏗️ Architecture Principles
 
 ### 1. **Feature-Based Organization**
+
 - Group related files by feature, not by type
 - Each feature is self-contained and reusable
 
 ### 2. **Clear Separation of Concerns**
+
 - UI components in `src/components`
 - Business logic in `src/lib`
 - API routes in `app/api`
 - DevOps in `.devops`
 
 ### 3. **Type Safety**
+
 - All types centralized in `src/lib/types`
 - Shared types exported from index files
 
 ### 4. **Configuration Management**
+
 - Environment-specific configs
 - Feature flags for gradual rollouts
 - Centralized configuration files
 
 ### 5. **Documentation**
+
 - Code documentation inline
 - Architecture docs in `/docs`
 - API docs auto-generated
@@ -85,6 +90,7 @@ clothing-shop/
 ## 📦 Module Organization
 
 ### Components
+
 ```
 src/components/
 ├── ui/              # Base UI components (shadcn/ui)
@@ -99,6 +105,7 @@ src/components/
 ```
 
 ### Library
+
 ```
 src/lib/
 ├── api/             # API clients & services

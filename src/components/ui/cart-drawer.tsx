@@ -46,12 +46,11 @@ export function CartDrawer({ cart, updateQuantity, removeFromCart }: CartDrawerP
         </SheetHeader>
         <div className="mt-8 space-y-4 h-[calc(100vh-200px)] overflow-y-auto">
           {cart.map((item) => (
-            <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="h-24 w-24 object-cover rounded"
-              />
+            <div
+              key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
+              className="flex gap-4"
+            >
+              <img src={item.image} alt={item.name} className="h-24 w-24 object-cover rounded" />
               <div className="flex-1">
                 <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-sm text-muted-foreground">

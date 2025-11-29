@@ -3,6 +3,7 @@
 ## Files to Move/Reorganize
 
 ### 1. Create src/ directory structure
+
 ```bash
 mkdir -p src/{components/{ui,features,shared},lib/{api,config,features,hooks,types,utils},styles,data}
 ```
@@ -10,6 +11,7 @@ mkdir -p src/{components/{ui,features,shared},lib/{api,config,features,hooks,typ
 ### 2. Move existing files
 
 #### Components
+
 ```bash
 # Move UI components
 mv components/ui src/components/ui
@@ -20,6 +22,7 @@ mkdir -p src/components/features/{cart,checkout,products}
 ```
 
 #### Library Files
+
 ```bash
 # Move lib files to organized structure
 mv lib/utils.ts src/lib/utils/
@@ -31,25 +34,30 @@ mv lib/flags.md docs/guides/feature-flags.md
 ```
 
 #### Hooks
+
 ```bash
 mv hooks/use-toast.ts src/lib/hooks/
 ```
 
 #### Styles
+
 ```bash
 mv app/globals.css src/styles/
 ```
 
 ### 3. Update imports in all files
+
 - Update all import paths to reflect new structure
 - Use path aliases (@/src/...) for cleaner imports
 
 ### 4. Clean up root directory
+
 - Move documentation files to docs/
 - Consolidate config files
 - Remove duplicate files
 
 ### 5. Update configuration files
+
 - tsconfig.json - Update paths
 - next.config.js - Update aliases
 - package.json - Update scripts

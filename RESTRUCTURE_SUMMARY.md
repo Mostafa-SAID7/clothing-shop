@@ -7,6 +7,7 @@ The project has been restructured with a clean, scalable architecture following 
 ## 📁 New Structure
 
 ### Source Code (`src/`)
+
 All source code is now organized under `src/` directory:
 
 ```
@@ -33,6 +34,7 @@ src/
 ```
 
 ### Documentation (`docs/`)
+
 Organized by category:
 
 ```
@@ -49,6 +51,7 @@ docs/
 ```
 
 ### DevOps (`.devops/`)
+
 Complete infrastructure setup:
 
 ```
@@ -63,6 +66,7 @@ Complete infrastructure setup:
 ## 🔄 What Changed
 
 ### Files Moved
+
 - ✅ `components/ui/*` → `src/components/ui/`
 - ✅ `components/product-card.tsx` → `src/components/features/products/`
 - ✅ `lib/utils.ts` → `src/lib/utils/`
@@ -74,6 +78,7 @@ Complete infrastructure setup:
 - ✅ `app/globals.css` → `src/styles/`
 
 ### Documentation Reorganized
+
 - ✅ `docs/ARCHITECTURE.md` → `docs/architecture/overview.md`
 - ✅ `docs/API.md` → `docs/api/`
 - ✅ `docs/GETTING_STARTED.md` → `docs/guides/`
@@ -81,6 +86,7 @@ Complete infrastructure setup:
 - ✅ `lib/flags.md` → `docs/guides/feature-flags.md`
 
 ### New Files Created
+
 - ✅ `docs/architecture/ARCHITECTURE.md` - Complete architecture guide
 - ✅ `docs/architecture/folder-structure.md` - Folder structure documentation
 - ✅ `scripts/reorganize-structure.md` - Reorganization plan
@@ -104,33 +110,36 @@ Updated `tsconfig.json` with new path aliases:
 ## 📝 Usage Examples
 
 ### Importing Components
+
 ```typescript
 // Old
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 // New (both work)
-import { Button } from '@/components/ui/button';
-import { Button } from '@/src/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
 ```
 
 ### Importing Utilities
+
 ```typescript
 // Old
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 // New
-import { cn } from '@/lib/utils';
-import { cn } from '@/src/lib/utils';
+import { cn } from "@/lib/utils";
+import { cn } from "@/src/lib/utils";
 ```
 
 ### Importing Feature Flags
+
 ```typescript
 // Old
-import { createFeatureFlag } from '@/lib/flags';
+import { createFeatureFlag } from "@/lib/flags";
 
 // New
-import { createFeatureFlag } from '@/lib/features';
-import { createFeatureFlag } from '@/src/lib/features';
+import { createFeatureFlag } from "@/lib/features";
+import { createFeatureFlag } from "@/src/lib/features";
 ```
 
 ## ✨ Benefits
@@ -146,6 +155,7 @@ import { createFeatureFlag } from '@/src/lib/features';
 ## 🔄 Migration Status
 
 ### ✅ Completed
+
 - Source code reorganization
 - Documentation restructuring
 - Path aliases configuration
@@ -153,6 +163,7 @@ import { createFeatureFlag } from '@/src/lib/features';
 - Architecture documentation
 
 ### 📋 Original Files
+
 - Original files in `lib/`, `components/`, `hooks/` are kept for backward compatibility
 - Can be removed after verifying all imports are updated
 

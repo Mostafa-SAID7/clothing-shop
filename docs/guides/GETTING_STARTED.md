@@ -22,11 +22,11 @@ Before you begin, ensure you have the following installed on your system:
 
 ### Required Software
 
-| Software | Minimum Version | Download Link |
-|----------|----------------|---------------|
-| **Node.js** | 18.0.0 | [nodejs.org](https://nodejs.org/) |
-| **npm** | 9.0.0 | Comes with Node.js |
-| **Git** | 2.0.0 | [git-scm.com](https://git-scm.com/) |
+| Software    | Minimum Version | Download Link                       |
+| ----------- | --------------- | ----------------------------------- |
+| **Node.js** | 18.0.0          | [nodejs.org](https://nodejs.org/)   |
+| **npm**     | 9.0.0           | Comes with Node.js                  |
+| **Git**     | 2.0.0           | [git-scm.com](https://git-scm.com/) |
 
 ### Verify Installation
 
@@ -41,6 +41,7 @@ git --version   # Should show 2.0.0 or higher
 ### Stripe Account
 
 You'll need a Stripe account for payment processing:
+
 1. Sign up at [stripe.com](https://stripe.com)
 2. No credit card required for test mode
 3. Free tier is sufficient for development
@@ -143,6 +144,7 @@ npm run dev
 ```
 
 You should see:
+
 ```
 ▲ Next.js 15.4.2
 - Local:        http://localhost:3000
@@ -211,11 +213,9 @@ export const products: Product[] = [
     isNew: true,
     description: "Your product description",
     sizes: ["S", "M", "L", "XL"],
-    colors: [
-      { name: "Blue", hex: "#0000FF" }
-    ],
-    stock: 20
-  }
+    colors: [{ name: "Blue", hex: "#0000FF" }],
+    stock: 20,
+  },
 ];
 ```
 
@@ -316,6 +316,7 @@ taskkill /PID <PID> /F
 ```
 
 Or use a different port:
+
 ```bash
 PORT=3001 npm run dev
 ```
@@ -325,6 +326,7 @@ PORT=3001 npm run dev
 **Problem**: Clicking "Proceed to Payment" does nothing
 
 **Solutions**:
+
 1. Check browser console for errors (F12)
 2. Verify Stripe keys in `.env` file
 3. Ensure keys start with `pk_test_` and `sk_test_`
@@ -335,6 +337,7 @@ PORT=3001 npm run dev
 **Problem**: Product images show broken image icon
 
 **Solutions**:
+
 1. Check internet connection
 2. Verify image URLs in `lib/data.ts`
 3. Check `next.config.js` has correct image configuration
@@ -364,17 +367,20 @@ npx tsc --noEmit
 Now that you have the app running, here's what to explore next:
 
 ### 1. Learn the Codebase
+
 - [ ] Read [ARCHITECTURE.md](ARCHITECTURE.md) for system design
 - [ ] Review [API.md](API.md) for API documentation
 - [ ] Check [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines
 
 ### 2. Customize the Store
+
 - [ ] Add your own products
 - [ ] Change colors and styling
 - [ ] Update store name and branding
 - [ ] Add your own product images
 
 ### 3. Add Features
+
 - [ ] Product reviews
 - [ ] User accounts
 - [ ] Order history
@@ -382,12 +388,14 @@ Now that you have the app running, here's what to explore next:
 - [ ] Advanced filtering
 
 ### 4. Deploy to Production
+
 - [ ] Read [DEPLOYMENT.md](DEPLOYMENT.md)
 - [ ] Get Stripe live API keys
 - [ ] Deploy to Vercel or your preferred platform
 - [ ] Set up custom domain
 
 ### 5. Learn More
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [React Documentation](https://react.dev)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
@@ -423,6 +431,7 @@ If you run into issues:
 You've successfully set up Style Haven on your local machine. Happy coding!
 
 For more detailed information, check out the other documentation files:
+
 - [README.md](../README.md) - Project overview
 - [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture
 - [API.md](API.md) - API documentation
