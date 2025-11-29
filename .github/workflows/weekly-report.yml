@@ -1,0 +1,89 @@
+name: Weekly Repository Report
+
+on:
+  schedule:
+    # Run every Monday at 8 AM UTC
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  report:
+    name: Generate Weekly Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate report
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+            // Get PRs merged this week
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 50
+            });
+
+            const mergedPRs = prs.data.filter(pr => 
+              pr.merged_at && new Date(pr.merged_at) > oneWeekAgo
+            );
+
+            // Get issues closed this week
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              since: oneWeekAgo.toISOString(),
+              per_page: 50
+            });
+
+            const closedIssues = issues.data.filter(i => !i.pull_request);
+
+            // Get open issues
+            const openIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            const report = `## 📊 Weekly Repository Report
+
+            **Period:** ${oneWeekAgo.toDateString()} - ${new Date().toDateString()}
+
+            ### Summary
+            - 🔀 PRs Merged: ${mergedPRs.length}
+            - ✅ Issues Closed: ${closedIssues.length}
+            - 📋 Open Issues: ${openIssues.data.filter(i => !i.pull_request).length}
+
+            ### Merged PRs
+            ${mergedPRs.slice(0, 10).map(pr => `- [#${pr.number}](${pr.html_url}) ${pr.title}`).join('\n') || 'None'}
+
+            ### Closed Issues
+            ${closedIssues.slice(0, 10).map(i => `- [#${i.number}](${i.html_url}) ${i.title}`).join('\n') || 'None'}
+
+            ---
+            *Generated automatically by GitHub Actions*`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📊 Weekly Report - ${new Date().toDateString()}`,
+              body: report,
+              labels: ['report', 'automated']
+            });

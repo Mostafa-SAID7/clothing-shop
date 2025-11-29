@@ -1,0 +1,75 @@
+name: Auto Label Issues
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  label-issues:
+    name: Auto Label Based on Content
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Label issue by keywords
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const body = (issue.body || '').toLowerCase();
+            const content = title + ' ' + body;
+
+            const labels = [];
+
+            // Bug detection
+            if (content.includes('bug') || content.includes('error') || content.includes('broken') || content.includes('not working') || content.includes('crash')) {
+              labels.push('bug');
+            }
+
+            // Feature request
+            if (content.includes('feature') || content.includes('enhancement') || content.includes('request') || content.includes('add support')) {
+              labels.push('enhancement');
+            }
+
+            // Documentation
+            if (content.includes('documentation') || content.includes('docs') || content.includes('readme') || content.includes('typo')) {
+              labels.push('documentation');
+            }
+
+            // Question
+            if (content.includes('question') || content.includes('how to') || content.includes('help') || content.includes('?')) {
+              labels.push('question');
+            }
+
+            // UI/UX
+            if (content.includes('ui') || content.includes('ux') || content.includes('design') || content.includes('style') || content.includes('css')) {
+              labels.push('ui/ux');
+            }
+
+            // Performance
+            if (content.includes('performance') || content.includes('slow') || content.includes('optimize') || content.includes('speed')) {
+              labels.push('performance');
+            }
+
+            // Security
+            if (content.includes('security') || content.includes('vulnerability') || content.includes('cve') || content.includes('xss') || content.includes('injection')) {
+              labels.push('security');
+            }
+
+            // Dependencies
+            if (content.includes('dependency') || content.includes('package') || content.includes('npm') || content.includes('upgrade') || content.includes('update')) {
+              labels.push('dependencies');
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+            }

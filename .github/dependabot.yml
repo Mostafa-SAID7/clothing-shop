@@ -4,11 +4,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "09:00"
       timezone: "UTC"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 15
     reviewers:
       - "Mostafa-SAID7"
     assignees:
@@ -28,6 +27,20 @@ updates:
           - "react*"
           - "stripe*"
           - "@radix-ui/*"
+          - "lucide-react"
+          - "recharts"
+        update-types:
+          - "minor"
+          - "patch"
+      ui-components:
+        patterns:
+          - "@radix-ui/*"
+          - "class-variance-authority"
+          - "clsx"
+          - "tailwind-merge"
+          - "cmdk"
+          - "vaul"
+          - "sonner"
         update-types:
           - "minor"
           - "patch"
@@ -37,15 +50,17 @@ updates:
           - "typescript"
           - "tailwindcss*"
           - "@types/*"
+          - "postcss*"
+          - "autoprefixer"
         update-types:
           - "minor"
           - "patch"
+      security-patches:
+        applies-to: security-updates
     # Ignore specific packages if needed
     ignore:
       - dependency-name: "@next/swc-wasm-nodejs"
         # Keep specific version for compatibility
-      - dependency-name: "autoprefixer"
-        versions: ["11.x"]
     # Allow both direct and indirect updates
     versioning-strategy: increase
     # Rebase strategy for PRs
@@ -59,7 +74,7 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "UTC"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 10
     reviewers:
       - "Mostafa-SAID7"
     labels:
@@ -69,3 +84,23 @@ updates:
     commit-message:
       prefix: "chore(ci)"
       include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Docker updates
+  - package-ecosystem: "docker"
+    directory: "/.devops/docker"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+      - "automated"
+    commit-message:
+      prefix: "chore(docker)"

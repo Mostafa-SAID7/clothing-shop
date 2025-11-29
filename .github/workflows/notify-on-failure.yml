@@ -1,0 +1,69 @@
+name: Notify on Workflow Failure
+
+on:
+  workflow_run:
+    workflows:
+      - "CI Pipeline"
+      - "Automated Deployment Pipeline"
+      - "Security Scan"
+    types: [completed]
+
+permissions:
+  issues: write
+
+jobs:
+  notify:
+    name: Create Issue on Failure
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'failure'
+
+    steps:
+      - name: Create failure issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const workflow = context.payload.workflow_run;
+
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-failure'
+            });
+
+            const existingIssue = issues.data.find(i => 
+              i.title.includes(workflow.name)
+            );
+
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `🔴 Workflow failed again at ${new Date().toISOString()}
+                
+            **Run:** [${workflow.id}](${workflow.html_url})
+            **Branch:** ${workflow.head_branch}
+            **Commit:** ${workflow.head_sha.substring(0, 7)}`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🔴 CI Failure: ${workflow.name}`,
+                body: `## Workflow Failure Alert
+                
+            **Workflow:** ${workflow.name}
+            **Branch:** ${workflow.head_branch}
+            **Commit:** ${workflow.head_sha}
+            **Run:** [View Details](${workflow.html_url})
+            **Time:** ${new Date().toISOString()}
+
+            Please investigate and fix the failing workflow.`,
+                labels: ['ci-failure', 'bug', 'automated']
+              });
+            }

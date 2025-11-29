@@ -1,0 +1,112 @@
+name: Auto Merge Dependency PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge-dependabot:
+    name: Auto Merge Dependabot/Renovate
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.actor == 'renovate[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Add labels
+        run: |
+          gh pr edit "$PR_URL" --add-label "dependencies,automated"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-approve patch updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: |
+          gh pr review --approve "$PR_URL" -b "Auto-approved: patch update"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-approve minor updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: |
+          gh pr review --approve "$PR_URL" -b "Auto-approved: minor update"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on major updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        run: |
+          gh pr comment "$PR_URL" --body "⚠️ **Major version update detected!**
+
+          This PR contains a major version bump which may include breaking changes.
+          Please review the changelog before merging.
+
+          **Package:** ${{ steps.metadata.outputs.dependency-names }}
+          **Update type:** ${{ steps.metadata.outputs.update-type }}"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-merge-snyk:
+    name: Auto Merge Snyk Security PRs
+    runs-on: ubuntu-latest
+    if: github.actor == 'snyk-bot' || contains(github.event.pull_request.title, '[Snyk]')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Add labels
+        run: |
+          gh pr edit "$PR_URL" --add-label "dependencies,security,automated,snyk"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check PR title for upgrade type
+        id: check-type
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          if [[ "$TITLE" == *"Upgrade"* ]] || [[ "$TITLE" == *"upgrade"* ]]; then
+            echo "is_upgrade=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_upgrade=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Auto-approve Snyk security upgrades
+        if: steps.check-type.outputs.is_upgrade == 'true'
+        run: |
+          gh pr review --approve "$PR_URL" -b "Auto-approved: Snyk security upgrade"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on Snyk PR
+        run: |
+          gh pr comment "$PR_URL" --body "🔒 **Snyk Security Update**
+
+          This PR was created by Snyk to fix a security vulnerability.
+
+          ✅ Auto-approved and queued for merge.
+
+          Please ensure CI checks pass before final merge."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

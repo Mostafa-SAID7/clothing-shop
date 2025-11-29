@@ -2,165 +2,229 @@
 # This file defines all labels used in the repository
 
 # Priority Labels
-- name: 'priority: critical'
-  color: 'b60205'
-  description: 'Critical priority - needs immediate attention'
+- name: "priority: critical"
+  color: "b60205"
+  description: "Critical priority - needs immediate attention"
 
-- name: 'priority: high'
-  color: 'd93f0b'
-  description: 'High priority'
+- name: "priority: high"
+  color: "d93f0b"
+  description: "High priority"
 
-- name: 'priority: medium'
-  color: 'fbca04'
-  description: 'Medium priority'
+- name: "priority: medium"
+  color: "fbca04"
+  description: "Medium priority"
 
-- name: 'priority: low'
-  color: '0e8a16'
-  description: 'Low priority'
+- name: "priority: low"
+  color: "0e8a16"
+  description: "Low priority"
 
 # Type Labels
-- name: 'type: bug'
-  color: 'd73a4a'
-  description: 'Something is not working'
+- name: "type: bug"
+  color: "d73a4a"
+  description: "Something is not working"
 
-- name: 'type: feature'
-  color: 'a2eeef'
-  description: 'New feature or request'
+- name: "type: feature"
+  color: "a2eeef"
+  description: "New feature or request"
 
-- name: 'type: enhancement'
-  color: '84b6eb'
-  description: 'Improvement to existing feature'
+- name: "type: enhancement"
+  color: "84b6eb"
+  description: "Improvement to existing feature"
 
-- name: 'type: documentation'
-  color: '0075ca'
-  description: 'Documentation improvements'
+- name: "type: documentation"
+  color: "0075ca"
+  description: "Documentation improvements"
 
-- name: 'type: refactor'
-  color: 'fbca04'
-  description: 'Code refactoring'
+- name: "type: refactor"
+  color: "fbca04"
+  description: "Code refactoring"
 
-- name: 'type: performance'
-  color: 'ff6b6b'
-  description: 'Performance improvements'
+- name: "type: performance"
+  color: "ff6b6b"
+  description: "Performance improvements"
 
-- name: 'type: security'
-  color: 'ee0701'
-  description: 'Security related'
+- name: "type: security"
+  color: "ee0701"
+  description: "Security related"
 
 # Status Labels
-- name: 'status: needs-triage'
-  color: 'ededed'
-  description: 'Needs initial review and categorization'
+- name: "status: needs-triage"
+  color: "ededed"
+  description: "Needs initial review and categorization"
 
-- name: 'status: in-progress'
-  color: 'fbca04'
-  description: 'Currently being worked on'
+- name: "status: in-progress"
+  color: "fbca04"
+  description: "Currently being worked on"
 
-- name: 'status: blocked'
-  color: 'd93f0b'
-  description: 'Blocked by another issue or external factor'
+- name: "status: blocked"
+  color: "d93f0b"
+  description: "Blocked by another issue or external factor"
 
-- name: 'status: ready-for-review'
-  color: '0e8a16'
-  description: 'Ready for code review'
+- name: "status: ready-for-review"
+  color: "0e8a16"
+  description: "Ready for code review"
 
-- name: 'status: needs-feedback'
-  color: 'cc317c'
-  description: 'Needs feedback from maintainers or community'
+- name: "status: needs-feedback"
+  color: "cc317c"
+  description: "Needs feedback from maintainers or community"
 
 # Component Labels
-- name: 'component: frontend'
-  color: '1d76db'
-  description: 'Frontend related'
+- name: "component: frontend"
+  color: "1d76db"
+  description: "Frontend related"
 
-- name: 'component: backend'
-  color: '5319e7'
-  description: 'Backend related'
+- name: "component: backend"
+  color: "5319e7"
+  description: "Backend related"
 
-- name: 'component: api'
-  color: 'c5def5'
-  description: 'API related'
+- name: "component: api"
+  color: "c5def5"
+  description: "API related"
 
-- name: 'component: ui'
-  color: 'bfdadc'
-  description: 'UI/UX related'
+- name: "component: ui"
+  color: "bfdadc"
+  description: "UI/UX related"
 
-- name: 'component: database'
-  color: '006b75'
-  description: 'Database related'
+- name: "component: database"
+  color: "006b75"
+  description: "Database related"
 
-- name: 'component: devops'
-  color: '0052cc'
-  description: 'DevOps/Infrastructure related'
+- name: "component: devops"
+  color: "0052cc"
+  description: "DevOps/Infrastructure related"
 
 # Size Labels (for PRs)
-- name: 'size: xs'
-  color: '00ff00'
-  description: 'Extra small PR (< 10 lines)'
+- name: "size: xs"
+  color: "00ff00"
+  description: "Extra small PR (< 10 lines)"
 
-- name: 'size: s'
-  color: '77ff00'
-  description: 'Small PR (10-100 lines)'
+- name: "size: s"
+  color: "77ff00"
+  description: "Small PR (10-100 lines)"
 
-- name: 'size: m'
-  color: 'ffff00'
-  description: 'Medium PR (100-500 lines)'
+- name: "size: m"
+  color: "ffff00"
+  description: "Medium PR (100-500 lines)"
 
-- name: 'size: l'
-  color: 'ff7700'
-  description: 'Large PR (500-1000 lines)'
+- name: "size: l"
+  color: "ff7700"
+  description: "Large PR (500-1000 lines)"
 
-- name: 'size: xl'
-  color: 'ff0000'
-  description: 'Extra large PR (> 1000 lines)'
+- name: "size: xl"
+  color: "ff0000"
+  description: "Extra large PR (> 1000 lines)"
 
 # Special Labels
-- name: 'good first issue'
-  color: '7057ff'
-  description: 'Good for newcomers'
+- name: "good first issue"
+  color: "7057ff"
+  description: "Good for newcomers"
 
-- name: 'help wanted'
-  color: '008672'
-  description: 'Extra attention is needed'
+- name: "help wanted"
+  color: "008672"
+  description: "Extra attention is needed"
 
-- name: 'duplicate'
-  color: 'cfd3d7'
-  description: 'This issue or PR already exists'
+- name: "duplicate"
+  color: "cfd3d7"
+  description: "This issue or PR already exists"
 
-- name: 'wontfix'
-  color: 'ffffff'
-  description: 'This will not be worked on'
+- name: "wontfix"
+  color: "ffffff"
+  description: "This will not be worked on"
 
-- name: 'invalid'
-  color: 'e4e669'
-  description: 'This does not seem right'
+- name: "invalid"
+  color: "e4e669"
+  description: "This does not seem right"
 
-- name: 'question'
-  color: 'd876e3'
-  description: 'Further information is requested'
+- name: "question"
+  color: "d876e3"
+  description: "Further information is requested"
 
-- name: 'stale'
-  color: 'eeeeee'
-  description: 'No recent activity'
+- name: "stale"
+  color: "eeeeee"
+  description: "No recent activity"
 
 # Dependency Labels
-- name: 'dependencies'
-  color: '0366d6'
-  description: 'Dependency updates'
+- name: "dependencies"
+  color: "0366d6"
+  description: "Dependency updates"
 
-- name: 'npm'
-  color: 'cb3837'
-  description: 'NPM package updates'
+- name: "npm"
+  color: "cb3837"
+  description: "NPM package updates"
 
-- name: 'github-actions'
-  color: '2088ff'
-  description: 'GitHub Actions updates'
+- name: "github-actions"
+  color: "2088ff"
+  description: "GitHub Actions updates"
 
 # Automation Labels
-- name: 'automated'
-  color: 'ededed'
-  description: 'Created by automation'
+- name: "automated"
+  color: "ededed"
+  description: "Created by automation"
 
-- name: 'breaking-change'
-  color: 'd73a4a'
-  description: 'Breaking change'
+- name: "breaking-change"
+  color: "d73a4a"
+  description: "Breaking change"
+
+- name: "ci-failure"
+  color: "b60205"
+  description: "CI/CD workflow failure"
+
+- name: "report"
+  color: "5319e7"
+  description: "Automated report"
+
+- name: "docker"
+  color: "2496ed"
+  description: "Docker related"
+
+- name: "ui/ux"
+  color: "bfdadc"
+  description: "UI/UX improvements"
+
+- name: "performance"
+  color: "ff6b6b"
+  description: "Performance related"
+
+- name: "bug"
+  color: "d73a4a"
+  description: "Something is not working"
+
+- name: "enhancement"
+  color: "a2eeef"
+  description: "New feature or enhancement"
+
+- name: "documentation"
+  color: "0075ca"
+  description: "Documentation updates"
+
+- name: "security"
+  color: "ee0701"
+  description: "Security vulnerability"
+
+- name: "pinned"
+  color: "006b75"
+  description: "Pinned - will not go stale"
+
+- name: "critical"
+  color: "b60205"
+  description: "Critical issue"
+
+- name: "in-progress"
+  color: "fbca04"
+  description: "Work in progress"
+
+- name: "work-in-progress"
+  color: "fbca04"
+  description: "Work in progress PR"
+
+- name: "snyk"
+  color: "4c4a73"
+  description: "Snyk security update"
+
+- name: "renovate"
+  color: "1a7f37"
+  description: "Renovate bot update"
+
+- name: "dependabot"
+  color: "0366d6"
+  description: "Dependabot update"

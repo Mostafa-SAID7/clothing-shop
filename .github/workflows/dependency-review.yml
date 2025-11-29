@@ -1,0 +1,45 @@
+name: Dependency Review
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    name: Review Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          deny-licenses: GPL-3.0, AGPL-3.0
+          comment-summary-in-pr: always
+
+      - name: Check for outdated packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install and check outdated
+        run: |
+          npm ci
+          echo "## Outdated Packages" >> $GITHUB_STEP_SUMMARY
+          npm outdated --json > outdated.json || true
+          cat outdated.json >> $GITHUB_STEP_SUMMARY
+
+      - name: License check
+        run: |
+          npx license-checker --summary --production || true
