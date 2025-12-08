@@ -91,6 +91,6 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.9.2",
     "vaul": "^0.9.9",
-    "zod": "^3.25.76"
+    "zod": "^4.1.13"
   }
 }
