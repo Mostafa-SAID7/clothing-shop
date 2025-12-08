@@ -50,7 +50,7 @@ jobs:
 
       - name: Create Achievement Comment
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
