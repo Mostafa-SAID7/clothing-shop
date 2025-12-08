@@ -58,7 +58,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@statsig/js-client": "^3.30.0",
     "@statsig/react-bindings": "^3.30.0",
-    "@stripe/stripe-js": "^2.3.0",
+    "@stripe/stripe-js": "^8.5.3",
     "@types/node": "20.17.23",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.2.7",
