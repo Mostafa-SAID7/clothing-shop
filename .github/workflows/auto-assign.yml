@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Auto assign issue to author
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Auto assign PR to author
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -49,7 +49,7 @@ jobs:
 
       - name: Request review from maintainers
         if: github.event.pull_request.user.login != 'Mostafa-SAID7'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
