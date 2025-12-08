@@ -22,7 +22,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Check for Pull Shark Achievement
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
