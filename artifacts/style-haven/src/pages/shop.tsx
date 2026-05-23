@@ -1,11 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearch } from "wouter";
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Layout } from "@/components/layout";
 import { ProductCard, ProductCardSkeleton } from "@/components/product-card";
+import { PageHero } from "@/components/page-hero";
+import { LottiePlayer, LOTTIE } from "@/components/lottie-player";
 import { products, categories } from "@/lib/data";
 import { useLang } from "@/contexts/LangContext";
 
@@ -15,17 +17,17 @@ export default function ShopPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
   const initialCat = params.get("cat") || "All";
-  const initialQ = params.get("q") || "";
+  const initialQ   = params.get("q")   || "";
 
   const [selectedCategory, setSelectedCategory] = useState(initialCat);
-  const [searchQuery, setSearchQuery] = useState(initialQ);
-  const [wishlist, setWishlist] = useState<number[]>([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery]           = useState(initialQ);
+  const [wishlist, setWishlist]                 = useState<number[]>([]);
+  const [page, setPage]                         = useState(1);
+  const [loading, setLoading]                   = useState(true);
   const { t } = useLang();
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 450);
+    const timer = setTimeout(() => setLoading(false), 420);
     return () => clearTimeout(timer);
   }, []);
 
@@ -44,38 +46,41 @@ export default function ShopPage() {
     [selectedCategory, searchQuery]
   );
 
-  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
-  const safePage = Math.min(page, totalPages);
+  const totalPages       = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
+  const safePage         = Math.min(page, totalPages);
   const paginatedProducts = filteredProducts.slice(
     (safePage - 1) * ITEMS_PER_PAGE,
     safePage * ITEMS_PER_PAGE
   );
 
-  const clearFilters = () => {
-    setSelectedCategory("All");
-    setSearchQuery("");
-    setPage(1);
-  };
+  useEffect(() => { setPage(1); }, [selectedCategory, searchQuery]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [selectedCategory, searchQuery]);
+  const clearFilters = () => { setSelectedCategory("All"); setSearchQuery(""); setPage(1); };
+  const hasFilters   = selectedCategory !== "All" || searchQuery;
 
-  const hasFilters = selectedCategory !== "All" || searchQuery;
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <Layout>
-      {/* Page header */}
-      <div className="border-b border-border bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-2xl sm:text-3xl font-bold">{t.nav.shop}</h1>
-          <p className="text-muted-foreground text-sm mt-1">{t.tagline}</p>
-        </div>
-      </div>
+      {/* ── HERO ─── */}
+      <PageHero
+        badge={t.brand}
+        title={t.nav.shop}
+        subtitle={t.tagline}
+        bgImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400&q=80"
+        overlayOpacity={0.68}
+        light
+        className="min-h-[220px] sm:min-h-[260px]"
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters bar */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        {/* ── FILTERS BAR ─── */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.1 }}
+        >
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
@@ -93,6 +98,7 @@ export default function ShopPage() {
               </button>
             )}
           </div>
+
           <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
             <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
             {categories.map((cat) => (
@@ -107,13 +113,13 @@ export default function ShopPage() {
               </Button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Results meta */}
-        <div className="flex items-center justify-between mb-5">
+        {/* ── RESULTS META ─── */}
+        <div className="flex items-center justify-between mb-6">
           <p className="text-sm text-muted-foreground">
             {loading ? (
-              <span className="inline-block w-32 h-4 bg-muted rounded animate-pulse" />
+              <span className="inline-block w-40 h-4 bg-muted rounded animate-pulse" />
             ) : (
               <>
                 {filteredProducts.length > 0
@@ -132,7 +138,7 @@ export default function ShopPage() {
           )}
         </div>
 
-        {/* Grid */}
+        {/* ── GRID ─── */}
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
             {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
@@ -142,25 +148,30 @@ export default function ShopPage() {
         ) : paginatedProducts.length > 0 ? (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-              {paginatedProducts.map((product) => (
-                <ProductCard
+              {paginatedProducts.map((product, i) => (
+                <motion.div
                   key={product.id}
-                  product={product}
-                  isWishlisted={wishlist.includes(product.id)}
-                  onToggleWishlist={toggleWishlist}
-                />
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                >
+                  <ProductCard
+                    product={product}
+                    isWishlisted={wishlist.includes(product.id)}
+                    onToggleWishlist={toggleWishlist}
+                  />
+                </motion.div>
               ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-10">
+              <div className="flex items-center justify-center gap-2 mt-12">
                 <Button
                   variant="outline"
                   size="sm"
                   className="gap-1"
                   disabled={safePage === 1}
-                  onClick={() => { setPage((p) => p - 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onClick={() => { setPage((p) => p - 1); scrollTop(); }}
                 >
                   <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
                   <span className="hidden sm:inline">Previous</span>
@@ -168,21 +179,17 @@ export default function ShopPage() {
 
                 <div className="flex items-center gap-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => {
-                    const isActive = pg === safePage;
-                    const isNearby = Math.abs(pg - safePage) <= 1 || pg === 1 || pg === totalPages;
-                    if (!isNearby && pg !== safePage - 2 && pg !== safePage + 2) {
-                      if (pg === safePage - 2 || pg === safePage + 2) {
-                        return <span key={pg} className="text-muted-foreground text-sm px-1">…</span>;
-                      }
-                      return null;
-                    }
+                    const near = Math.abs(pg - safePage) <= 1 || pg === 1 || pg === totalPages;
+                    const isDot = !near && (pg === safePage - 2 || pg === safePage + 2);
+                    if (!near && !isDot) return null;
+                    if (isDot) return <span key={pg} className="text-muted-foreground text-sm w-8 text-center">…</span>;
                     return (
                       <Button
                         key={pg}
-                        variant={isActive ? "default" : "outline"}
+                        variant={pg === safePage ? "default" : "outline"}
                         size="sm"
                         className="h-9 w-9 p-0"
-                        onClick={() => { setPage(pg); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                        onClick={() => { setPage(pg); scrollTop(); }}
                       >
                         {pg}
                       </Button>
@@ -195,7 +202,7 @@ export default function ShopPage() {
                   size="sm"
                   className="gap-1"
                   disabled={safePage === totalPages}
-                  onClick={() => { setPage((p) => p + 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onClick={() => { setPage((p) => p + 1); scrollTop(); }}
                 >
                   <span className="hidden sm:inline">Next</span>
                   <ChevronRight className="h-4 w-4 rtl:rotate-180" />
@@ -204,14 +211,19 @@ export default function ShopPage() {
             )}
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
-            <Search className="h-12 w-12 text-muted-foreground/30" />
+          /* ── EMPTY STATE ─── */
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-16 text-center gap-3"
+          >
+            <LottiePlayer src={LOTTIE.noResults} width={200} height={200} />
             <div>
-              <p className="font-medium">No products found</p>
+              <p className="font-semibold text-lg">No products found</p>
               <p className="text-muted-foreground text-sm mt-1">Try a different search or category</p>
             </div>
-            <Button variant="outline" onClick={clearFilters}>Clear filters</Button>
-          </div>
+            <Button variant="outline" onClick={clearFilters} className="mt-2">Clear filters</Button>
+          </motion.div>
         )}
       </div>
     </Layout>

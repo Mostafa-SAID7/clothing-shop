@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,17 +43,18 @@ export function Navbar() {
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-14 flex items-center justify-between gap-4">
+
           {/* Logo */}
           <button
             onClick={() => navigate("/")}
-            className="font-black text-xl tracking-widest uppercase select-none hover:opacity-80 transition-opacity shrink-0"
+            className="font-black text-xl tracking-widest uppercase select-none hover:opacity-75 transition-opacity shrink-0"
             aria-label={t.brand}
           >
             {t.brand}
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <button
                 key={link.href}
@@ -69,9 +70,9 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Actions */}
+          {/* Right-side actions */}
           <div className="flex items-center gap-1">
-            {/* Lang toggle — animated text flip */}
+            {/* Lang toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -93,7 +94,7 @@ export function Navbar() {
               </AnimatePresence>
             </Button>
 
-            {/* Theme toggle — animated sun/moon swap */}
+            {/* Theme toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -117,17 +118,23 @@ export function Navbar() {
 
             <CartDrawer />
 
+            {/* Auth — avatar icon (logged in) or user icon (logged out) */}
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full hidden sm:flex">
-                    <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
-                      {user.name?.[0]?.toUpperCase() ?? "U"}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 rounded-full hidden sm:flex p-0"
+                    aria-label="Account menu"
+                  >
+                    <div className="h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold select-none">
+                      {(user.name?.[0] ?? user.email?.[0] ?? "U").toUpperCase()}
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align={isRTL ? "start" : "end"} className="w-44">
-                  <div className="px-2 py-1.5">
+                <DropdownMenuContent align={isRTL ? "start" : "end"} className="w-48">
+                  <div className="px-2 py-2">
                     <p className="text-xs font-semibold truncate">{user.name}</p>
                     <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                   </div>
@@ -135,27 +142,31 @@ export function Navbar() {
                   <DropdownMenuItem>{t.auth.profile}</DropdownMenuItem>
                   <DropdownMenuItem>{t.auth.orders}</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive" onClick={handleLogout}>
+                  <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={handleLogout}>
                     {t.auth.logout}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
+              /* Logged-out: user icon opens auth modal */
               <Button
                 variant="ghost"
-                size="sm"
-                className="hidden sm:flex h-9 rounded-full text-sm"
+                size="icon"
+                className="h-9 w-9 rounded-full hidden sm:flex"
                 onClick={() => openModal("login")}
+                aria-label={t.auth.login}
               >
-                {t.auth.login}
+                <User className="h-4 w-4" />
               </Button>
             )}
 
+            {/* Mobile hamburger */}
             <Button
               variant="ghost"
               size="icon"
               className="h-9 w-9 rounded-full md:hidden"
               onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Menu"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -202,17 +213,17 @@ export function Navbar() {
                 <Button variant="ghost" size="sm" className="gap-1.5 text-xs" onClick={toggleLang}>
                   {lang === "en" ? "العربية" : "English"}
                 </Button>
-                {!user && (
+                {!user ? (
                   <Button
                     variant="outline"
                     size="sm"
-                    className="ms-auto text-xs"
+                    className="ms-auto text-xs gap-1.5"
                     onClick={() => { openModal("login"); setMenuOpen(false); }}
                   >
+                    <User className="h-3.5 w-3.5" />
                     {t.auth.login}
                   </Button>
-                )}
-                {user && (
+                ) : (
                   <Button
                     variant="ghost"
                     size="sm"
