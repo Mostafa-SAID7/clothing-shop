@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Style Haven"
+version = "1.0.0"
+id = "artifacts/style-haven"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21993
+
+[services.development]
+run = "pnpm --filter @workspace/style-haven run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/style-haven", "run", "build" ]
+publicDir = "artifacts/style-haven/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21993"
+BASE_PATH = "/"
