@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { loadStripe } from "@stripe/stripe-js";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +10,6 @@ import { Layout } from "@/components/layout";
 import { useCart } from "@/contexts/CartContext";
 import { useLang } from "@/contexts/LangContext";
 import { formatPrice } from "@/lib/utils";
-
-const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 export default function CheckoutPage() {
   const [, navigate] = useLocation();
@@ -50,15 +46,15 @@ export default function CheckoutPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cart, customerInfo: formData }),
       });
-      const { sessionId } = await response.json();
-      const stripe = await stripePromise;
-      if (stripe) {
-        const { error } = await stripe.redirectToCheckout({ sessionId });
-        if (error) console.error("Stripe error:", error);
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Stripe checkout error:", data.error);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Checkout error:", error);
-    } finally {
       setLoading(false);
     }
   };
