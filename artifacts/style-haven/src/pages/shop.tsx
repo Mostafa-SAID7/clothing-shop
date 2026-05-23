@@ -30,6 +30,16 @@ export default function ShopPage() {
   const [loading, setLoading]                   = useState(true);
   const { t } = useLang();
 
+  /* Sync filters when URL search params change (e.g. footer/nav links) */
+  useEffect(() => {
+    const p = new URLSearchParams(search);
+    setSelectedCategory(p.get("cat") || "All");
+    setSearchQuery(p.get("q") || "");
+    setOnlyNew(p.get("new") === "true");
+    setPage(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [search]);
+
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 420);
     return () => clearTimeout(timer);

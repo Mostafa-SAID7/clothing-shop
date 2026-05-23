@@ -18,7 +18,7 @@ const PROMO_ICONS: Record<string, LucideIcon> = {
 
 export default function Home() {
   const [, navigate] = useLocation();
-  const { t } = useLang();
+  const { t, isRTL } = useLang();
   useSEO();
   const h = t.home;
 
@@ -113,12 +113,15 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 <div className="absolute bottom-0 start-0 end-0 p-4 text-start">
-                  <p className="text-white/70 text-xs mb-0.5">
+                  <p className="text-white font-bold text-xl leading-tight mb-0.5">
                     {t.categories[cat as keyof typeof t.categories]}
                   </p>
-                  <p className="text-white font-bold text-lg leading-tight">
-                    {t.shopNow} <ArrowRight className="inline h-4 w-4" />
+                  <p className="text-white/65 text-xs mb-2.5">
+                    {isRTL ? meta.descAr : meta.desc}
                   </p>
+                  <span className="inline-flex items-center gap-1 text-white/90 text-xs font-semibold tracking-wide uppercase border border-white/30 rounded-full px-3 py-1 bg-white/10 backdrop-blur group-hover:bg-white/20 transition-colors">
+                    {t.shopNow} <ArrowRight className="h-3 w-3" />
+                  </span>
                 </div>
               </button>
             );

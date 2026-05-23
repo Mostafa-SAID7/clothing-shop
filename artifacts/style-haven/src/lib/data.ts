@@ -418,7 +418,7 @@ export const categoryMeta: Record<string, { image: string; desc: string; descAr:
     desc: "Comfort elevated", descAr: "راحة بمستوى أعلى",
   },
   "Jackets": {
-    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=600&q=80",
     desc: "Make a statement", descAr: "اصنع حضوراً",
   },
 };
