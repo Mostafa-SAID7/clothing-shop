@@ -47,8 +47,9 @@ export class DrizzleUserRepository implements UserRepository {
     return (result.rowCount ?? 0) > 0;
   }
 
-  async findAll(limit = 50, offset = 0): Promise<User[]> {
-    const result = await this.db.select().from(users).limit(limit).offset(offset);
+  async findAll(limit = DEFAULT_LIMIT, offset = 0): Promise<User[]> {
+    const safeLimit = Math.min(limit, MAX_LIMIT);
+    const result = await this.db.select().from(users).limit(safeLimit).offset(offset);
     return result.map(user => this.mapToUser(user));
   }
 

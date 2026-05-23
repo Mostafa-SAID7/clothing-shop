@@ -5,6 +5,8 @@ import { logger } from "../infrastructure/logging/logger";
 import { Container } from "../infrastructure/container/container";
 import { createAuthRoutes } from "./routes/auth.routes";
 import { createProductsRoutes } from "./routes/products.routes";
+import { createCartRoutes } from "./routes/cart.routes";
+import { createOrdersRoutes } from "./routes/orders.routes";
 import { errorHandler } from "./middleware/error-handler.middleware";
 
 const app: Express = express();
@@ -33,6 +35,13 @@ app.use(
   }),
 );
 app.use(cors());
+
+// Mount orders routes BEFORE express.json() to preserve raw body for Stripe Webhooks
+if (container.ordersController) {
+  app.use("/api/v1/orders", createOrdersRoutes(container.ordersController));
+  app.use("/api/orders", createOrdersRoutes(container.ordersController));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,6 +53,10 @@ app.get("/api/healthz", (req, res) => {
 // API Routes
 app.use("/api/v1/auth", createAuthRoutes(container.authController));
 app.use("/api/v1/products", createProductsRoutes(container.productsController));
+if (container.cartController) {
+  app.use("/api/v1/cart", createCartRoutes(container.cartController));
+  app.use("/api/cart", createCartRoutes(container.cartController));
+}
 
 // Legacy routes (for backward compatibility)
 app.use("/api/auth", createAuthRoutes(container.authController));

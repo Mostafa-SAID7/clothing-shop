@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { GetProductsUseCase, GetProductByIdUseCase } from '../../application/use-cases';
 import { ResponseFormatter } from '../utils/response-formatter';
-import { QueryParser } from '../utils/query-parser';
+import { paginationSchema } from '../../shared/dto/pagination.dto';
 import { AppError } from '../../domain/errors';
 import { ValidationError } from '../../domain/errors';
 
@@ -13,7 +13,7 @@ export class ProductsController {
 
   getProducts = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { page, limit, offset } = QueryParser.parsePagination(req.query);
+      const { limit, offset, page } = paginationSchema.parse(req.query);
       const { category, brand, minPrice, maxPrice, search } = req.query;
 
       const result = await this.getProductsUseCase.execute({

@@ -10,10 +10,14 @@ import { ConsoleEmailService } from '../services/console-email.service';
 
 // Use Cases
 import { RegisterUserUseCase, LoginUserUseCase, GetProductsUseCase, GetProductByIdUseCase } from '../../application/use-cases';
+import { AddToCartUseCase } from '../../application/use-cases/cart/add-to-cart.use-case';
+import { CreateOrderUseCase } from '../../application/use-cases/orders/create-order.use-case';
 
 // Controllers
 import { AuthController } from '../../presentation/controllers/auth.controller';
 import { ProductsController } from '../../presentation/controllers/products.controller';
+import { CartController } from '../../presentation/controllers/cart.controller';
+import { OrdersController } from '../../presentation/controllers/orders.controller';
 
 export class Container {
   private static instance: Container;
@@ -34,10 +38,14 @@ export class Container {
   public readonly loginUserUseCase: LoginUserUseCase;
   public readonly getProductsUseCase: GetProductsUseCase;
   public readonly getProductByIdUseCase: GetProductByIdUseCase;
+  public readonly addToCartUseCase?: AddToCartUseCase;
+  public readonly createOrderUseCase?: CreateOrderUseCase;
   
   // Controllers
   public readonly authController: AuthController;
   public readonly productsController: ProductsController;
+  public readonly cartController?: CartController;
+  public readonly ordersController?: OrdersController;
 
   private constructor() {
     // Use shared database connection from connection module
@@ -67,6 +75,10 @@ export class Container {
     this.getProductsUseCase = {} as any;
     this.getProductByIdUseCase = {} as any;
 
+    // TODO: Add cart and order repositories and initialize these use cases
+    // this.addToCartUseCase = new AddToCartUseCase(...);
+    // this.createOrderUseCase = new CreateOrderUseCase(...);
+
     // Initialize controllers
     this.authController = new AuthController(
       this.registerUserUseCase,
@@ -77,6 +89,13 @@ export class Container {
       this.getProductsUseCase,
       this.getProductByIdUseCase
     );
+
+    if (this.addToCartUseCase) {
+      this.cartController = new CartController(this.addToCartUseCase);
+    }
+    if (this.createOrderUseCase) {
+      this.ordersController = new OrdersController(this.createOrderUseCase, this.paymentService);
+    }
   }
 
   public static getInstance(): Container {

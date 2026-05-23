@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { PgTable } from 'drizzle-orm/pg-core';
 import { NotFoundError } from '../../domain/errors';
+import { DEFAULT_LIMIT, MAX_LIMIT } from '../../shared/config';
 
 export abstract class BaseRepository<T extends Record<string, any>> {
   constructor(
@@ -27,8 +28,9 @@ export abstract class BaseRepository<T extends Record<string, any>> {
     return (result.rowCount ?? 0) > 0;
   }
 
-  async findAll(limit = 50, offset = 0): Promise<T[]> {
-    const result = await this.db.select().from(this.table).limit(limit).offset(offset);
+  async findAll(limit = DEFAULT_LIMIT, offset = 0): Promise<T[]> {
+    const safeLimit = Math.min(limit, MAX_LIMIT);
+    const result = await this.db.select().from(this.table).limit(safeLimit).offset(offset);
     return result.map(item => this.mapFromDb(item));
   }
 

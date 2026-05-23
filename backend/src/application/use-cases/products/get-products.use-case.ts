@@ -19,24 +19,35 @@ export class GetProductsUseCase {
   constructor(private productRepository: ProductRepository) {}
 
   async execute(request: GetProductsRequest): Promise<GetProductsResponse> {
-    const page = request.page || 1;
-    const limit = request.limit || 20;
-    const offset = (page - 1) * limit;
+    // Parse pagination parameters (limit and offset) with defaults from schema
+    const limit = request.limit ?? 20;
+    const offset = request.page ? (request.page - 1) * limit : 0;
 
-    // Get products with filter
-    const products = await this.productRepository.findAll(request.filter, limit, offset);
-    
-    // For simplicity, we'll return the count of fetched products as total
-    // In a real implementation, you'd want a separate count query
-    const total = products.length;
+    const filter = request.filter ?? {};
+    const cacheKey = `products:${limit}:${offset}:${JSON.stringify(filter)}`;
+
+    // Try cache first
+    const cached = this.cacheService.get<GetProductsResponse>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Fetch products from repository with pagination
+    const products = await this.productRepository.findAll(filter, limit, offset);
+    const total = await this.productRepository.count();
     const totalPages = Math.ceil(total / limit);
+    const page = Math.floor(offset / limit) + 1;
 
-    return {
+    const result: GetProductsResponse = {
       products,
       total,
       page,
       limit,
-      totalPages
+      totalPages,
     };
+
+    // Cache the result for subsequent requests
+    this.cacheService.set(cacheKey, result);
+    return result;
   }
 }
