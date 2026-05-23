@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { AuthModal } from "@/components/auth-modal";
+import { CookieBanner } from "@/components/cookie-banner";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,6 +30,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
       </AnimatePresence>
       {!hideFooter && <Footer />}
       <AuthModal />
+      <CookieBanner />
     </div>
   );
 }

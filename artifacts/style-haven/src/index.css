@@ -4,39 +4,28 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── SCROLLBAR COLOR TOKENS (mode-aware) ───────────────────── */
-:root {
-  --scrollbar-thumb: hsl(0 0% 78%);
-  --scrollbar-thumb-hover: hsl(0 0% 60%);
-}
-.dark {
-  --scrollbar-thumb: hsl(0 0% 40%);
-  --scrollbar-thumb-hover: hsl(0 0% 58%);
-}
-
 /* ── CUSTOM SCROLLBAR ──────────────────────────────────────── */
+/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-color: hsl(0 0% 76%) hsl(0 0% 96%);
 }
-*::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+html.dark * {
+  scrollbar-color: hsl(0 0% 40%) hsl(0 0% 7%);
 }
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-*::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb);
-  border-radius: 10px;
-  transition: background-color 0.2s ease;
-}
-*::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover);
-}
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
+
+/* WebKit (Chrome, Safari, Edge) — explicit overrides avoid CSS-var
+   inheritance issues on scrollbar pseudo-elements */
+*::-webkit-scrollbar            { width: 5px; height: 5px; }
+*::-webkit-scrollbar-track      { background: hsl(0 0% 96%); }
+*::-webkit-scrollbar-thumb      { background-color: hsl(0 0% 76%); border-radius: 10px; }
+*::-webkit-scrollbar-thumb:hover{ background-color: hsl(0 0% 58%); }
+*::-webkit-scrollbar-corner     { background: hsl(0 0% 96%); }
+
+html.dark *::-webkit-scrollbar-track      { background: hsl(0 0% 7%); }
+html.dark *::-webkit-scrollbar-thumb      { background-color: hsl(0 0% 40%); }
+html.dark *::-webkit-scrollbar-thumb:hover{ background-color: hsl(0 0% 56%); }
+html.dark *::-webkit-scrollbar-corner     { background: hsl(0 0% 7%); }
 
 /* ── LANGUAGE TRANSITION ───────────────────────────────────── */
 body {

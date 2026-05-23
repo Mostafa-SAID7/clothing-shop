@@ -6,6 +6,7 @@ import { PageHero } from "@/components/page-hero";
 import { LottiePlayer, LOTTIE } from "@/components/lottie-player";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LangContext";
+import { useSEO } from "@/lib/useSEO";
 
 const VALUE_ICONS: Record<string, LucideIcon> = {
   "leaf":     Leaf,
@@ -28,6 +29,7 @@ export default function AboutPage() {
   const { t } = useLang();
   const a = t.about;
   const [, navigate] = useLocation();
+  useSEO({ title: "About", description: "Learn the story behind HAVEN — a brand built on timeless style, quality materials, and sustainable fashion values." });
 
   return (
     <Layout>

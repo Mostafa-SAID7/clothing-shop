@@ -10,10 +10,12 @@ import { PageHero } from "@/components/page-hero";
 import { LottiePlayer, LOTTIE } from "@/components/lottie-player";
 import { products, categories } from "@/lib/data";
 import { useLang } from "@/contexts/LangContext";
+import { useSEO } from "@/lib/useSEO";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function ShopPage() {
+  useSEO({ title: "Shop", description: "Browse HAVEN's full collection of premium T-Shirts, Jeans, Hoodies, and Jackets. Free shipping on orders over $50." });
   const search = useSearch();
   const params = new URLSearchParams(search);
   const initialCat  = params.get("cat") || "All";

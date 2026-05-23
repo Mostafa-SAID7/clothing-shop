@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout";
 import { PageHero } from "@/components/page-hero";
 import { useLang } from "@/contexts/LangContext";
+import { useSEO } from "@/lib/useSEO";
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -49,6 +50,7 @@ const sections = [
 
 export default function PrivacyPage() {
   const { t } = useLang();
+  useSEO({ title: "Privacy Policy", description: "Read HAVEN's Privacy Policy to understand how we collect, use, and protect your personal information." });
 
   return (
     <Layout>

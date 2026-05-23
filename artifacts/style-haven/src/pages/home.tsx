@@ -7,6 +7,7 @@ import { Layout } from "@/components/layout";
 import { ProductCard } from "@/components/product-card";
 import { products, categories, categoryMeta, newArrivals } from "@/lib/data";
 import { useLang } from "@/contexts/LangContext";
+import { useSEO } from "@/lib/useSEO";
 
 const PROMO_ICONS: Record<string, LucideIcon> = {
   "truck": Truck,
@@ -18,6 +19,7 @@ const PROMO_ICONS: Record<string, LucideIcon> = {
 export default function Home() {
   const [, navigate] = useLocation();
   const { t } = useLang();
+  useSEO();
   const h = t.home;
 
   const [wishlist, setWishlist] = useState<number[]>([]);

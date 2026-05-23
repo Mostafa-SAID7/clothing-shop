@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout";
 import { PageHero } from "@/components/page-hero";
 import { useLang } from "@/contexts/LangContext";
+import { useSEO } from "@/lib/useSEO";
 
 const fadeUp = (delay = 0) => ({
   hidden: { opacity: 0, y: 18 },
@@ -61,6 +62,7 @@ const sections = [
 
 export default function TermsPage() {
   const { t } = useLang();
+  useSEO({ title: "Terms of Service", description: "Read HAVEN's Terms of Service governing the use of our website, products, and services." });
 
   return (
     <Layout>
