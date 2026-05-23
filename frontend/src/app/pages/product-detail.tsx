@@ -90,7 +90,7 @@ export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, navigate] = useLocation();
   const { addToCart, cart } = useCart();
-  const { t, isRTL } = useLang();
+  const { t } = useLang();
   const { toast } = useToast();
   const p = t.product;
 

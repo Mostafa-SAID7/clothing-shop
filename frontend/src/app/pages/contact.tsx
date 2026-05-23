@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Loader2, MapPin, Phone, Mail, Clock, Send, type LucideIcon } from "lucide-react";
+import { Loader2, MapPin, Phone, Mail, Clock, Send, type LucideIcon } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { PageHero } from "@/components/page-hero";
 import { LottiePlayer, LOTTIE } from "@/components/lottie-player";

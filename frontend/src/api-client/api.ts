@@ -15,8 +15,8 @@ import type {
 
 import type { HealthStatus } from "./api.schemas";
 
-import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import { customFetch } from "./custom-fetch";
+import type { ErrorType } from "./custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
