@@ -1,113 +1,210 @@
-import { useState, useMemo } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Layout } from "@/components/layout";
 import { ProductCard } from "@/components/product-card";
-import { products, categories } from "@/lib/data";
+import { products, categories, categoryMeta, newArrivals } from "@/lib/data";
 import { useLang } from "@/contexts/LangContext";
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [wishlist, setWishlist] = useState<number[]>([]);
+  const [, navigate] = useLocation();
   const { t } = useLang();
+  const h = t.home;
 
-  const filteredProducts = useMemo(
-    () =>
-      products.filter(
-        (p) =>
-          (selectedCategory === "All" || p.category === selectedCategory) &&
-          p.name.toLowerCase().includes(searchQuery.toLowerCase())
-      ),
-    [selectedCategory, searchQuery]
-  );
-
+  const [wishlist, setWishlist] = useState<number[]>([]);
   const toggleWishlist = (id: number) =>
-    setWishlist((curr) =>
-      curr.includes(id) ? curr.filter((x) => x !== id) : [...curr, id]
-    );
+    setWishlist((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
+
+  const trending = products.filter((p) => !p.isNew).slice(0, 4);
 
   return (
     <Layout>
-      {/* Hero banner */}
-      <section className="bg-gradient-to-br from-primary/5 via-background to-accent/20 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <div className="max-w-xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-              {t.brand}
-            </h1>
-            <p className="mt-3 text-muted-foreground text-lg">{t.tagline}</p>
-            <div className="mt-6 flex gap-3">
-              <Button size="lg" className="h-11 px-6">
-                {t.nav.shop}
-              </Button>
-              <Button variant="outline" size="lg" className="h-11 px-6">
-                {t.about.heroTitle}
-              </Button>
-            </div>
+      {/* ── HERO ─────────────────────────────────────────────── */}
+      <section className="relative h-[75vh] min-h-[520px] overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85"
+          alt="Haven collection"
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-e from-black/70 via-black/40 to-transparent" />
+        <div className="relative z-10 h-full flex flex-col justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
+          <Badge
+            variant="outline"
+            className="w-fit mb-5 text-white/80 border-white/30 bg-white/10 backdrop-blur text-xs tracking-widest uppercase"
+          >
+            {h.heroBadge}
+          </Badge>
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black text-white leading-none tracking-tight">
+            {h.heroTitle}
+          </h1>
+          <p className="mt-4 text-white/70 text-lg max-w-md leading-relaxed">{h.heroSubtitle}</p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Button
+              size="lg"
+              className="h-12 px-8 text-base"
+              onClick={() => navigate("/shop")}
+            >
+              {t.shopNow}
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-12 px-8 text-base text-white border-white/40 bg-white/10 backdrop-blur hover:bg-white/20 hover:text-white"
+              onClick={() => navigate("/about")}
+            >
+              {t.explore}
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Shop section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        {/* Filters row */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          {/* Search */}
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-            <Input
-              placeholder={t.search}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="ps-9 h-10"
-            />
-          </div>
-
-          {/* Category pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-            <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
-            {categories.map((cat) => (
-              <Button
-                key={cat}
-                variant={selectedCategory === cat ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(cat)}
-                className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
-              >
-                {t.categories[cat as keyof typeof t.categories] ?? cat}
-              </Button>
+      {/* ── PROMO STRIP ──────────────────────────────────────── */}
+      <section className="bg-primary text-primary-foreground">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-1 text-xs sm:text-sm font-medium">
+            {h.promos.map((p) => (
+              <span key={p.text} className="flex items-center gap-1.5 opacity-90">
+                <span>{p.icon}</span>
+                {p.text}
+              </span>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Results count */}
-        <p className="text-sm text-muted-foreground mb-5">
-          {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"}
-        </p>
+      {/* ── SHOP BY CATEGORY ─────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold">{h.shopByCategory}</h2>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1 text-muted-foreground hover:text-foreground"
+            onClick={() => navigate("/shop")}
+          >
+            {t.viewAll} <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          {categories.filter((c) => c !== "All").map((cat) => {
+            const meta = categoryMeta[cat];
+            return (
+              <button
+                key={cat}
+                onClick={() => navigate(`/shop?cat=${cat}`)}
+                className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <img
+                  src={meta.image}
+                  alt={cat}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 start-0 end-0 p-4 text-start">
+                  <p className="text-white/70 text-xs mb-0.5">
+                    {t.categories[cat as keyof typeof t.categories]}
+                  </p>
+                  <p className="text-white font-bold text-lg leading-tight">
+                    {t.shopNow} <ArrowRight className="inline h-4 w-4" />
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
-        {/* Grid */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-            {filteredProducts.map((product) => (
+      {/* ── NEW ARRIVALS ─────────────────────────────────────── */}
+      <section className="bg-muted/30 border-y border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold">{h.newArrivals}</h2>
+              <p className="text-muted-foreground text-sm mt-1">{h.newArrivalsSubtitle}</p>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1 text-muted-foreground hover:text-foreground"
+              onClick={() => navigate("/shop")}
+            >
+              {t.viewAll} <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+            {newArrivals.map((p) => (
               <ProductCard
-                key={product.id}
-                product={product}
-                isWishlisted={wishlist.includes(product.id)}
+                key={p.id}
+                product={p}
+                isWishlisted={wishlist.includes(p.id)}
                 onToggleWishlist={toggleWishlist}
               />
             ))}
           </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
-            <Search className="h-12 w-12 text-muted-foreground/30" />
-            <p className="text-muted-foreground">No products found for "{searchQuery}"</p>
-            <Button variant="outline" onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }}>
-              Clear filters
-            </Button>
+        </div>
+      </section>
+
+      {/* ── FEATURED BANNER ──────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-gray-950">
+        <img
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80"
+          alt="Featured collection"
+          className="absolute inset-0 w-full h-full object-cover opacity-40 object-center"
+          loading="lazy"
+        />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-start">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-white/60 mb-4 border border-white/20 rounded-full px-3 py-1">
+            {h.featured}
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight max-w-xl">
+            {h.featuredBannerTitle}
+          </h2>
+          <p className="text-white/60 mt-4 max-w-md text-base leading-relaxed">
+            {h.featuredBannerSubtitle}
+          </p>
+          <Button
+            size="lg"
+            variant="secondary"
+            className="mt-8 h-12 px-8"
+            onClick={() => navigate("/shop")}
+          >
+            {t.shopNow} <ArrowRight className="ms-2 h-4 w-4" />
+          </Button>
+        </div>
+      </section>
+
+      {/* ── TRENDING NOW ─────────────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold">{h.trending}</h2>
+            <p className="text-muted-foreground text-sm mt-1">{h.trendingSubtitle}</p>
           </div>
-        )}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1 text-muted-foreground hover:text-foreground"
+            onClick={() => navigate("/shop")}
+          >
+            {t.viewAll} <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+          {trending.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              isWishlisted={wishlist.includes(p.id)}
+              onToggleWishlist={toggleWishlist}
+            />
+          ))}
+        </div>
       </section>
     </Layout>
   );

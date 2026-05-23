@@ -14,9 +14,9 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground text-xs font-bold">SH</span>
+                <span className="text-primary-foreground text-xs font-bold">H</span>
               </div>
-              <span className="font-bold text-base">{t.brand}</span>
+              <span className="font-bold text-base tracking-widest uppercase">{t.brand}</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">{f.tagline}</p>
           </div>
@@ -60,18 +60,18 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter placeholder */}
+          {/* Newsletter */}
           <div>
-            <h4 className="font-semibold text-sm mb-4">Newsletter</h4>
+            <h4 className="font-semibold text-sm mb-4">{f.newsletterTitle}</h4>
             <p className="text-sm text-muted-foreground mb-3">Stay updated on new arrivals and special offers.</p>
             <div className="flex gap-2">
               <input
                 type="email"
-                placeholder="your@email.com"
+                placeholder={f.newsletterPlaceholder}
                 className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               />
-              <button className="h-9 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shrink-0">
-                →
+              <button className="h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shrink-0 whitespace-nowrap">
+                {f.newsletterBtn}
               </button>
             </div>
           </div>

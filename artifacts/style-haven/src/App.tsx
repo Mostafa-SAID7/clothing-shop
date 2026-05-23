@@ -13,6 +13,7 @@ import CheckoutPage from "@/pages/checkout";
 import SuccessPage from "@/pages/success";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
+import ProductDetail from "@/pages/product-detail";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/shop" component={ShopPage} />
+      <Route path="/product/:slug" component={ProductDetail} />
       <Route path="/checkout" component={CheckoutPage} />
       <Route path="/success" component={SuccessPage} />
       <Route path="/about" component={AboutPage} />
