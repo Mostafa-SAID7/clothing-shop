@@ -1,0 +1,12 @@
+{
+  "name": "clothing-shop-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend workspace for Clothing Shop",
+  "workspaces": [
+    "api-server",
+    "api-spec",
+    "api-zod",
+    "db"
+  ]
+}
