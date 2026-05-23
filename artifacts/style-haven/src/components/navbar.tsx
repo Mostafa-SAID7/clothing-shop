@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Sun, Moon, Menu, X, ShoppingBag, User, LogOut, ChevronDown } from "lucide-react";
+import { Sun, Moon, Menu, X, User, LogOut, ChevronDown, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -10,17 +10,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
+import { CartDrawer } from "@/components/cart-drawer";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useLang } from "@/contexts/LangContext";
-import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLang, t, isRTL } = useLang();
-  const { totalItems } = useCart();
   const { user, openModal, logout } = useAuth();
   const [location] = useLocation();
 
@@ -92,17 +90,8 @@ export function Navbar() {
               )}
             </Button>
 
-            {/* Cart */}
-            <Link href="/checkout">
-              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full relative" aria-label="Cart">
-                <ShoppingBag className="h-4 w-4" />
-                {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px] rounded-full">
-                    {totalItems}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
+            {/* Cart drawer */}
+            <CartDrawer />
 
             {/* Account */}
             {user ? (
