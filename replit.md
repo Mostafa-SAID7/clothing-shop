@@ -1,36 +1,40 @@
-# [Project name]
+# Style Haven
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A modern e-commerce clothing store where users can browse products, filter by category, manage a shopping cart, and checkout via Stripe.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
+- `pnpm --filter @workspace/style-haven run dev` — run the frontend (port varies)
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `STRIPE_SECRET_KEY` — Stripe secret key for checkout
+- Optional env: `VITE_STRIPE_PUBLISHABLE_KEY` — Stripe publishable key (frontend)
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
+- Frontend: React + Vite, Tailwind CSS v4, wouter (routing), shadcn/ui
+- API: Express 5 + Stripe
 - Build: esbuild (CJS bundle)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/style-haven/src/pages/` — Home, Checkout, Success pages
+- `artifacts/style-haven/src/components/` — ProductCard, CartDrawer
+- `artifacts/style-haven/src/lib/` — types, utils, data (products)
+- `artifacts/api-server/src/routes/checkout.ts` — Stripe checkout session API
+- `artifacts/style-haven/src/index.css` — Tailwind v4 theme (HSL CSS vars)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Next.js → Vite + React migration: replaced `next/navigation` with wouter, `next/image` with `<img>`, API routes moved to Express
+- Stripe key initialized lazily per-request to avoid server crash when key is not set
+- Cart state is persisted to localStorage and passed between pages via localStorage
+- Products are stored as static data (no DB needed for this catalog)
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Users can browse 4 clothing categories (T-Shirts, Jeans, Hoodies, Jackets), search by name, add items to cart with size/color selection, and checkout via Stripe.
 
 ## User preferences
 
@@ -38,7 +42,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Stripe checkout requires `STRIPE_SECRET_KEY` set as a secret. Without it, the /api/create-checkout-session route returns a 500 error but the rest of the app works fine.
+- Cart is persisted in localStorage — shared between Home and Checkout pages.
 
 ## Pointers
 
