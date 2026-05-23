@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "../src/api-server",
+    "types": ["node"]
+  },
+  "include": ["../src/api-server"],
+  "references": []
+}
