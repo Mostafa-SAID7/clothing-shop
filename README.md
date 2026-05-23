@@ -10,39 +10,38 @@ A modern, full-stack e-commerce platform built with **React**, **Express**, **Ty
 - **PostgreSQL** 14+ (database)
 - **Stripe Account** (for payment processing)
 
-### Installation & Setup
+### Backend Setup
 
 ```bash
-# 1. Clone and navigate to project
-cd clothing-shop
+# 1. Navigate to backend
+cd backend/api-server
 
 # 2. Install dependencies
 pnpm install
 
 # 3. Set up environment variables
-cp .env.example .env.local
+cp ../../.env.example .env.local
 
-# 4. Initialize database
-cd lib/db
-pnpm run push
-cd ../..
-
-# 5. Generate API client code
-cd lib/api-spec
-pnpm run codegen
-cd ../..
-
-# 6. Start backend (Terminal 1)
-cd api-server
-pnpm run dev
-
-# 7. Start frontend (Terminal 2)
-cd style-haven
+# 4. Start backend
 pnpm run dev
 ```
 
-**Frontend**: http://localhost:5173  
-**Backend**: http://localhost:3000
+**Backend runs on**: http://localhost:3000
+
+### Frontend Setup
+
+```bash
+# 1. Navigate to frontend
+cd frontend/style-haven
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Start frontend
+pnpm run dev
+```
+
+**Frontend runs on**: http://localhost:5173
 
 ---
 
@@ -197,40 +196,55 @@ See `.env.example` for all available options.
 
 ## 🛠️ Common Commands
 
-### Development
-```bash
-# Start backend
-cd backend/api-server && pnpm run dev
+### Backend
 
-# Start frontend
-cd frontend/style-haven && pnpm run dev
+```bash
+cd backend/api-server
+
+# Development
+pnpm run dev
+
+# Build
+pnpm run build
 
 # Type checking
-pnpm run typecheck:all
+pnpm run typecheck
+```
 
-# Generate API client code
-cd backend/api-spec && pnpm run codegen
+### Frontend
+
+```bash
+cd frontend/style-haven
+
+# Development
+pnpm run dev
+
+# Build
+pnpm run build
+
+# Type checking
+pnpm run typecheck
 ```
 
 ### Database
+
 ```bash
+cd backend/db
+
 # Apply migrations
-cd backend/db && pnpm run push
+pnpm run push
 
 # Force apply migrations
-cd backend/db && pnpm run push-force
+pnpm run push-force
 ```
 
-### Production
+### API Code Generation
+
 ```bash
-# Build backend
-cd backend/api-server && pnpm run build
+cd backend/api-spec
 
-# Build frontend
-cd frontend/style-haven && pnpm run build
-
-# Start production backend
-cd backend/api-server && pnpm run start
+# Generate API client code
+pnpm run codegen
 ```
 
 ---

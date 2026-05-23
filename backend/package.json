@@ -2,11 +2,14 @@
   "name": "clothing-shop-backend",
   "version": "1.0.0",
   "private": true,
-  "description": "Backend workspace for Clothing Shop",
-  "workspaces": [
-    "api-server",
-    "api-spec",
-    "api-zod",
-    "db"
-  ]
+  "description": "Backend API server for Clothing Shop",
+  "scripts": {
+    "dev": "cd api-server && pnpm run dev",
+    "build": "cd api-server && pnpm run build",
+    "start": "cd api-server && pnpm run start",
+    "typecheck": "cd api-server && pnpm run typecheck",
+    "codegen": "cd api-spec && pnpm run codegen",
+    "db:push": "cd db && pnpm run push",
+    "db:push-force": "cd db && pnpm run push-force"
+  }
 }

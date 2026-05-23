@@ -1,6 +1,6 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["../src/app/**/*"],
+  "extends": "../tsconfig.base.json",
+  "include": ["src/app/**/*"],
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
   "compilerOptions": {
     "noEmit": true,
@@ -11,10 +11,7 @@
     "moduleResolution": "bundler",
     "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["../src/app/*"]
+      "@/*": ["src/app/*"]
     }
-  },
-  "references": [
-    { "path": "../api-client-react" }
-  ]
+  }
 }
