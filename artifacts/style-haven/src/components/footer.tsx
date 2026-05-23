@@ -26,7 +26,7 @@ export function Footer() {
             <h4 className="font-semibold text-sm mb-4">{f.shop}</h4>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
               {[
-                { href: "/shop", label: f.links.newArrivals },
+                { href: "/shop?new=true", label: f.links.newArrivals },
                 { href: "/shop?cat=T-Shirts", label: f.links.tshirts },
                 { href: "/shop?cat=Jeans", label: f.links.jeans },
                 { href: "/shop?cat=Hoodies", label: f.links.hoodies },

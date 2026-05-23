@@ -14,6 +14,8 @@ import SuccessPage from "@/pages/success";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
 import ProductDetail from "@/pages/product-detail";
+import PrivacyPage from "@/pages/privacy";
+import TermsPage from "@/pages/terms";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ function Router() {
       <Route path="/success" component={SuccessPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/terms" component={TermsPage} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,7 +1,9 @@
 import { useLocation } from "wouter";
-import { ShoppingBag, Plus, Minus, Trash2, Package } from "lucide-react";
+import { ShoppingBag, Plus, Minus, Trash2, Package, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -16,20 +18,15 @@ export function CartDrawer() {
   const { t } = useLang();
   const c = t.cart;
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal   = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shippingFree = subtotal >= 50;
-  const shipping = shippingFree ? 0 : 5.99;
-  const total = subtotal + shipping;
+  const shipping   = shippingFree ? 0 : 5.99;
+  const total      = subtotal + shipping;
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-9 w-9 rounded-full relative"
-          aria-label={c.title}
-        >
+        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full relative" aria-label={c.title}>
           <ShoppingBag className="h-4 w-4" />
           <AnimatePresence>
             {totalItems > 0 && (
@@ -51,34 +48,36 @@ export function CartDrawer() {
       </SheetTrigger>
 
       <SheetContent className="w-full sm:max-w-[420px] flex flex-col p-0" side="right">
-        <SheetHeader className="px-5 py-4 border-b border-border shrink-0">
-          <SheetTitle className="flex items-center justify-between">
-            <span className="flex items-center gap-2 text-base font-bold">
-              <ShoppingBag className="h-4 w-4" /> {c.title}
-            </span>
+        {/* ── Header (manually includes close button to avoid position clash) ── */}
+        <SheetHeader className="flex flex-row items-center justify-between px-5 py-4 border-b border-border shrink-0 space-y-0">
+          <SheetTitle className="flex items-center gap-2 text-base font-bold m-0">
+            <ShoppingBag className="h-4 w-4 shrink-0" />
+            {c.title}
             {totalItems > 0 && (
-              <Badge variant="secondary" className="font-normal">
+              <Badge variant="secondary" className="font-normal ms-1">
                 {totalItems} {c.items}
               </Badge>
             )}
           </SheetTitle>
+          <SheetClose asChild>
+            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full shrink-0">
+              <X className="h-4 w-4" />
+            </Button>
+          </SheetClose>
         </SheetHeader>
 
-        {/* Items */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+        {/* ── Items scroll area ── */}
+        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 min-h-0">
           {cart.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[320px] text-center gap-2">
-              {/* Lottie empty-bag animation */}
-              <LottiePlayer src={LOTTIE.emptyCart} width={180} height={180} />
-              <div>
-                <p className="font-semibold text-base">{c.empty}</p>
-                <p className="text-sm text-muted-foreground mt-0.5">{c.emptySubtitle}</p>
-              </div>
-              <SheetTrigger asChild>
+            <div className="flex flex-col items-center justify-center h-full min-h-[300px] text-center gap-2">
+              <LottiePlayer src={LOTTIE.emptyCart} width={170} height={170} />
+              <p className="font-semibold text-base">{c.empty}</p>
+              <p className="text-sm text-muted-foreground">{c.emptySubtitle}</p>
+              <SheetClose asChild>
                 <Button variant="outline" size="sm" className="mt-2" onClick={() => navigate("/shop")}>
                   {c.continueShopping}
                 </Button>
-              </SheetTrigger>
+              </SheetClose>
             </div>
           ) : (
             <AnimatePresence mode="popLayout" initial={false}>
@@ -86,52 +85,59 @@ export function CartDrawer() {
                 <motion.div
                   key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
                   layout
-                  initial={{ opacity: 0, x: 40 }}
+                  initial={{ opacity: 0, x: 32 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30, height: 0, marginBottom: 0 }}
+                  exit={{ opacity: 0, x: -24, height: 0, marginBottom: 0, paddingBottom: 0 }}
                   transition={{ duration: 0.22, ease: "easeInOut" }}
-                  className="flex gap-3"
+                  className="flex gap-3 pb-4 border-b border-border/50 last:border-0 last:pb-0"
                 >
-                  <div
-                    className="h-20 w-20 rounded-xl overflow-hidden bg-muted shrink-0 cursor-pointer"
+                  {/* Product image */}
+                  <button
+                    className="h-20 w-20 rounded-xl overflow-hidden bg-muted shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => navigate(`/product/${item.slug}`)}
                   >
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                  </div>
+                  </button>
+
+                  {/* Details + controls */}
                   <div className="flex-1 min-w-0">
-                    <p
-                      className="font-semibold text-sm leading-snug line-clamp-1 cursor-pointer hover:underline"
-                      onClick={() => navigate(`/product/${item.slug}`)}
-                    >
-                      {item.name}
-                    </p>
+                    <div className="flex items-start justify-between gap-2">
+                      <button
+                        className="font-semibold text-sm leading-snug text-start hover:underline line-clamp-2"
+                        onClick={() => navigate(`/product/${item.slug}`)}
+                      >
+                        {item.name}
+                      </button>
+                      {/* Remove button */}
+                      <button
+                        onClick={() => removeFromCart(item)}
+                        className="text-muted-foreground hover:text-destructive transition-colors p-0.5 rounded shrink-0 mt-0.5"
+                        aria-label="Remove item"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {item.selectedSize} · {item.selectedColor}
                     </p>
-                    <div className="flex items-center gap-1.5 mt-2">
-                      <button
-                        className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                        onClick={() => updateQuantity(item, item.quantity - 1)}
-                      >
-                        <Minus className="h-3 w-3" />
-                      </button>
-                      <span className="w-6 text-center text-sm tabular-nums font-medium">{item.quantity}</span>
-                      <button
-                        className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                        onClick={() => updateQuantity(item, item.quantity + 1)}
-                      >
-                        <Plus className="h-3 w-3" />
-                      </button>
+                    <div className="flex items-center justify-between mt-2.5">
+                      <div className="flex items-center gap-1">
+                        <button
+                          className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                          onClick={() => updateQuantity(item, item.quantity - 1)}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </button>
+                        <span className="w-6 text-center text-sm tabular-nums font-medium">{item.quantity}</span>
+                        <button
+                          className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                          onClick={() => updateQuantity(item, item.quantity + 1)}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </button>
+                      </div>
+                      <span className="font-bold text-sm">{formatPrice(item.price * item.quantity)}</span>
                     </div>
-                  </div>
-                  <div className="flex flex-col items-end justify-between shrink-0">
-                    <button
-                      onClick={() => removeFromCart(item)}
-                      className="text-muted-foreground hover:text-destructive transition-colors p-1 rounded"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                    <span className="font-bold text-sm">{formatPrice(item.price * item.quantity)}</span>
                   </div>
                 </motion.div>
               ))}
@@ -139,17 +145,21 @@ export function CartDrawer() {
           )}
         </div>
 
-        {/* Footer totals */}
+        {/* ── Footer totals ── */}
         {cart.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="px-5 py-4 border-t border-border bg-muted/20 space-y-3 shrink-0"
           >
+            {/* Shipping progress */}
             {!shippingFree ? (
               <div className="text-xs text-muted-foreground bg-muted rounded-lg px-3 py-2 flex items-center gap-2">
                 <Package className="h-3.5 w-3.5 shrink-0 text-primary" />
-                Add <span className="font-semibold text-foreground mx-1">{formatPrice(50 - subtotal)}</span> more for {c.free} shipping
+                Add{" "}
+                <span className="font-semibold text-foreground mx-0.5">{formatPrice(50 - subtotal)}</span>
+                {" "}more for{" "}
+                <span className="font-semibold text-foreground">{c.free}</span> shipping
               </div>
             ) : (
               <div className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/40 rounded-lg px-3 py-2 flex items-center gap-2">
@@ -158,6 +168,7 @@ export function CartDrawer() {
               </div>
             )}
 
+            {/* Price breakdown */}
             <div className="space-y-1.5 text-sm">
               <div className="flex justify-between text-muted-foreground">
                 <span>{c.subtotal}</span>
@@ -176,11 +187,11 @@ export function CartDrawer() {
               </div>
             </div>
 
-            <SheetTrigger asChild>
+            <SheetClose asChild>
               <Button className="w-full h-11 text-base font-semibold" onClick={() => navigate("/checkout")}>
                 {c.checkout} · {formatPrice(total)}
               </Button>
-            </SheetTrigger>
+            </SheetClose>
           </motion.div>
         )}
       </SheetContent>

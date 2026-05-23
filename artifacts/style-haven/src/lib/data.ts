@@ -306,11 +306,11 @@ export const products: Product[] = [
     slug: "classic-denim-jacket",
     name: "Classic Denim Jacket",
     price: 89.99,
-    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
       "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&q=80",
       "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=800&q=80",
+      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
     ],
     category: "Jackets",
     tags: ["denim", "casual", "timeless", "layering"],

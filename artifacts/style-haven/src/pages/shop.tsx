@@ -16,11 +16,13 @@ const ITEMS_PER_PAGE = 8;
 export default function ShopPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const initialCat = params.get("cat") || "All";
-  const initialQ   = params.get("q")   || "";
+  const initialCat  = params.get("cat") || "All";
+  const initialQ    = params.get("q")   || "";
+  const initialNew  = params.get("new") === "true";
 
   const [selectedCategory, setSelectedCategory] = useState(initialCat);
   const [searchQuery, setSearchQuery]           = useState(initialQ);
+  const [onlyNew, setOnlyNew]                   = useState(initialNew);
   const [wishlist, setWishlist]                 = useState<number[]>([]);
   const [page, setPage]                         = useState(1);
   const [loading, setLoading]                   = useState(true);
@@ -36,27 +38,26 @@ export default function ShopPage() {
 
   const filteredProducts = useMemo(
     () =>
-      products.filter(
-        (p) =>
-          (selectedCategory === "All" || p.category === selectedCategory) &&
-          (searchQuery === "" ||
-            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())))
-      ),
-    [selectedCategory, searchQuery]
+      products.filter((p) => {
+        const catMatch = selectedCategory === "All" || p.category === selectedCategory;
+        const searchMatch =
+          searchQuery === "" ||
+          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        const newMatch = !onlyNew || p.isNew;
+        return catMatch && searchMatch && newMatch;
+      }),
+    [selectedCategory, searchQuery, onlyNew]
   );
 
-  const totalPages       = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
-  const safePage         = Math.min(page, totalPages);
-  const paginatedProducts = filteredProducts.slice(
-    (safePage - 1) * ITEMS_PER_PAGE,
-    safePage * ITEMS_PER_PAGE
-  );
+  const totalPages        = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
+  const safePage          = Math.min(page, totalPages);
+  const paginatedProducts = filteredProducts.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
 
-  useEffect(() => { setPage(1); }, [selectedCategory, searchQuery]);
+  useEffect(() => { setPage(1); }, [selectedCategory, searchQuery, onlyNew]);
 
-  const clearFilters = () => { setSelectedCategory("All"); setSearchQuery(""); setPage(1); };
-  const hasFilters   = selectedCategory !== "All" || searchQuery;
+  const clearFilters = () => { setSelectedCategory("All"); setSearchQuery(""); setOnlyNew(false); setPage(1); };
+  const hasFilters   = selectedCategory !== "All" || searchQuery || onlyNew;
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -65,8 +66,8 @@ export default function ShopPage() {
       {/* ── HERO ─── */}
       <PageHero
         badge={t.brand}
-        title={t.nav.shop}
-        subtitle={t.tagline}
+        title={onlyNew ? t.home.newArrivals : t.nav.shop}
+        subtitle={onlyNew ? t.home.newArrivalsSubtitle : t.tagline}
         bgImage="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400&q=80"
         overlayOpacity={0.68}
         light
@@ -79,7 +80,7 @@ export default function ShopPage() {
           className="flex flex-col sm:flex-row gap-4 mb-8"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.1 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
         >
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -99,19 +100,33 @@ export default function ShopPage() {
             )}
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none flex-wrap">
             <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
-            {categories.map((cat) => (
+            {/* New Arrivals pill */}
+            <Button
+              variant={onlyNew ? "default" : "outline"}
+              size="sm"
+              onClick={() => setOnlyNew((v) => !v)}
+              className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
+            >
+              {t.home.newArrivals}
+            </Button>
+            {categories.filter((c) => c !== "All").map((cat) => (
               <Button
                 key={cat}
                 variant={selectedCategory === cat ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => setSelectedCategory((prev) => (prev === cat ? "All" : cat))}
                 className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
               >
                 {t.categories[cat as keyof typeof t.categories] ?? cat}
               </Button>
             ))}
+            {hasFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1 text-xs h-9 shrink-0">
+                <X className="h-3 w-3" /> Clear
+              </Button>
+            )}
           </div>
         </motion.div>
 
@@ -119,31 +134,26 @@ export default function ShopPage() {
         <div className="flex items-center justify-between mb-6">
           <p className="text-sm text-muted-foreground">
             {loading ? (
-              <span className="inline-block w-40 h-4 bg-muted rounded animate-pulse" />
-            ) : (
+              <span className="inline-block w-44 h-4 bg-muted rounded animate-pulse" />
+            ) : filteredProducts.length > 0 ? (
               <>
-                {filteredProducts.length > 0
-                  ? `Showing ${(safePage - 1) * ITEMS_PER_PAGE + 1}–${Math.min(safePage * ITEMS_PER_PAGE, filteredProducts.length)} of ${filteredProducts.length} products`
-                  : "No products found"}
+                Showing {(safePage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(safePage * ITEMS_PER_PAGE, filteredProducts.length)}{" "}
+                of {filteredProducts.length} products
                 {selectedCategory !== "All" && (
                   <> in <span className="font-medium text-foreground">{t.categories[selectedCategory as keyof typeof t.categories]}</span></>
                 )}
+                {onlyNew && <> · <span className="font-medium text-foreground">New Arrivals</span></>}
               </>
+            ) : (
+              "No products found"
             )}
           </p>
-          {hasFilters && !loading && (
-            <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1 text-xs h-7">
-              <X className="h-3 w-3" /> Clear
-            </Button>
-          )}
         </div>
 
         {/* ── GRID ─── */}
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
-            {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-              <ProductCardSkeleton key={i} />
-            ))}
+            {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => <ProductCardSkeleton key={i} />)}
           </div>
         ) : paginatedProducts.length > 0 ? (
           <>
@@ -167,9 +177,7 @@ export default function ShopPage() {
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 mt-12">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-1"
+                  variant="outline" size="sm" className="gap-1"
                   disabled={safePage === 1}
                   onClick={() => { setPage((p) => p - 1); scrollTop(); }}
                 >
@@ -187,8 +195,7 @@ export default function ShopPage() {
                       <Button
                         key={pg}
                         variant={pg === safePage ? "default" : "outline"}
-                        size="sm"
-                        className="h-9 w-9 p-0"
+                        size="sm" className="h-9 w-9 p-0"
                         onClick={() => { setPage(pg); scrollTop(); }}
                       >
                         {pg}
@@ -198,9 +205,7 @@ export default function ShopPage() {
                 </div>
 
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-1"
+                  variant="outline" size="sm" className="gap-1"
                   disabled={safePage === totalPages}
                   onClick={() => { setPage((p) => p + 1); scrollTop(); }}
                 >
@@ -211,7 +216,6 @@ export default function ShopPage() {
             )}
           </>
         ) : (
-          /* ── EMPTY STATE ─── */
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

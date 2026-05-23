@@ -396,7 +396,13 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("sh-lang", lang);
   }, [lang, isRTL]);
 
-  const toggleLang = () => setLang((l) => (l === "en" ? "ar" : "en"));
+  const toggleLang = () => {
+    document.body.classList.add("lang-switching");
+    setTimeout(() => {
+      setLang((l) => (l === "en" ? "ar" : "en"));
+      setTimeout(() => document.body.classList.remove("lang-switching"), 30);
+    }, 160);
+  };
 
   return (
     <LangContext.Provider value={{ lang, toggleLang, t, isRTL }}>
