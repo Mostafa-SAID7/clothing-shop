@@ -2,6 +2,14 @@ import { Layout } from "@/components/layout";
 import { useLang } from "@/contexts/LangContext";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
+import { Leaf, Sparkles, Users, Zap, type LucideIcon } from "lucide-react";
+
+const VALUE_ICONS: Record<string, LucideIcon> = {
+  "leaf": Leaf,
+  "sparkles": Sparkles,
+  "users": Users,
+  "zap": Zap,
+};
 
 export default function AboutPage() {
   const { t } = useLang();
@@ -57,16 +65,21 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10">{a.valuesTitle}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {a.values.map((val) => (
-              <div
-                key={val.title}
-                className="bg-background rounded-2xl p-6 border border-border hover:shadow-md transition-shadow"
-              >
-                <span className="text-3xl mb-4 block">{val.icon}</span>
-                <h3 className="font-bold text-base mb-2">{val.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{val.desc}</p>
-              </div>
-            ))}
+            {a.values.map((val) => {
+              const Icon = VALUE_ICONS[val.iconId] ?? Sparkles;
+              return (
+                <div
+                  key={val.title}
+                  className="bg-background rounded-2xl p-6 border border-border hover:shadow-md transition-shadow"
+                >
+                  <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-base mb-2">{val.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{val.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

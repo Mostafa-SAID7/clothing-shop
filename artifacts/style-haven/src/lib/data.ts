@@ -10,8 +10,8 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80&sat=-100",
       "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&q=80",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80",
     ],
     category: "T-Shirts",
     tags: ["casual", "cotton", "basics", "essentials"],
@@ -33,10 +33,10 @@ export const products: Product[] = [
     slug: "oversized-black-tee",
     name: "Oversized Black Tee",
     price: 34.99,
-    image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=800&q=80",
-      "https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&q=80",
+      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&q=80",
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
     ],
     category: "T-Shirts",
     tags: ["streetwear", "oversized", "urban", "bold"],
@@ -56,9 +56,9 @@ export const products: Product[] = [
     slug: "graphic-art-tee",
     name: "Graphic Art Tee",
     price: 39.99,
-    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+      "https://images.unsplash.com/photo-1527719327859-c6ce80353573?w=800&q=80",
       "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&q=80",
     ],
     category: "T-Shirts",
@@ -111,7 +111,7 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
-      "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80",
+      "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=800&q=80",
     ],
     category: "Jeans",
     tags: ["slim", "denim", "versatile", "classics"],
@@ -136,7 +136,7 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
-      "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=800&q=80",
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
     ],
     category: "Jeans",
     tags: ["skinny", "black", "sleek", "night-out"],
@@ -159,7 +159,7 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80",
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80",
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
     ],
     category: "Jeans",
     tags: ["relaxed", "straight", "comfort", "weekend"],
@@ -183,7 +183,7 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=800&q=80",
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80",
+      "https://images.unsplash.com/photo-1475178626620-a4d074967452?w=800&q=80",
     ],
     category: "Jeans",
     tags: ["ripped", "vintage", "distressed", "edgy"],
@@ -306,10 +306,11 @@ export const products: Product[] = [
     slug: "classic-denim-jacket",
     name: "Classic Denim Jacket",
     price: 89.99,
-    image: "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
     images: [
-      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=800&q=80",
+      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
       "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&q=80",
+      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=800&q=80",
     ],
     category: "Jackets",
     tags: ["denim", "casual", "timeless", "layering"],
@@ -357,7 +358,7 @@ export const products: Product[] = [
     image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
     images: [
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
-      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=800&q=80",
+      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800&q=80",
     ],
     category: "Jackets",
     tags: ["bomber", "satin", "night-out", "luxury"],
@@ -400,29 +401,24 @@ export const products: Product[] = [
 ];
 
 export const categories = ["All", "T-Shirts", "Jeans", "Hoodies", "Jackets"];
-
 export const featuredProducts = products.filter((p) => p.isFeatured);
 export const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
 
 export const categoryMeta: Record<string, { image: string; desc: string; descAr: string }> = {
   "T-Shirts": {
     image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80",
-    desc: "Basics redefined",
-    descAr: "الأساسيات بتعريف جديد",
+    desc: "Basics redefined", descAr: "الأساسيات بتعريف جديد",
   },
   "Jeans": {
     image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80",
-    desc: "The perfect fit",
-    descAr: "المقاس المثالي",
+    desc: "The perfect fit", descAr: "المقاس المثالي",
   },
   "Hoodies": {
     image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80",
-    desc: "Comfort elevated",
-    descAr: "راحة بمستوى أعلى",
+    desc: "Comfort elevated", descAr: "راحة بمستوى أعلى",
   },
   "Jackets": {
-    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80",
-    desc: "Make a statement",
-    descAr: "اصنع حضوراً",
+    image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600&q=80",
+    desc: "Make a statement", descAr: "اصنع حضوراً",
   },
 };

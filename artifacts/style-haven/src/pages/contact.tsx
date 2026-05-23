@@ -6,10 +6,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2, MapPin, Phone, Mail, Clock, type LucideIcon } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+const INFO_ICONS: Record<string, LucideIcon> = {
+  "map-pin": MapPin,
+  "phone": Phone,
+  "mail": Mail,
+  "clock": Clock,
+};
 
 export default function ContactPage() {
   const { t } = useLang();
+  const { toast } = useToast();
   const c = t.contact;
 
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -26,6 +35,7 @@ export default function ContactPage() {
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
     setSent(true);
+    toast({ title: "Message sent!", description: "We'll be in touch soon." });
   };
 
   return (
@@ -97,15 +107,20 @@ export default function ContactPage() {
           <div className="lg:col-span-2 space-y-4">
             <h2 className="text-xl font-bold">{c.infoTitle}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              {c.info.map((item) => (
-                <div key={item.label} className="flex gap-4 p-4 rounded-xl border border-border bg-muted/20">
-                  <span className="text-2xl shrink-0">{item.icon}</span>
-                  <div>
-                    <p className="font-semibold text-sm">{item.label}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{item.value}</p>
+              {c.info.map((item) => {
+                const Icon = INFO_ICONS[item.iconId] ?? Mail;
+                return (
+                  <div key={item.label} className="flex gap-4 p-4 rounded-xl border border-border bg-muted/20">
+                    <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <Icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">{item.label}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5">{item.value}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

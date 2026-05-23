@@ -4,6 +4,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── SMOOTH THEME TRANSITION ──────────────────────────────── */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.25s ease,
+    fill 0.25s ease !important;
+  transition-delay: 0s !important;
+}
+
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));

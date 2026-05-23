@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useParams, useLocation } from "wouter";
 import { Heart, ShoppingBag, ChevronRight, Star, Info, Ruler, ChevronLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -13,6 +15,7 @@ import { products } from "@/lib/data";
 import { useCart } from "@/contexts/CartContext";
 import { useLang } from "@/contexts/LangContext";
 import { formatPrice } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 function StarRating({ rating, count }: { rating: number; count: number }) {
   const { t } = useLang();
@@ -35,8 +38,9 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, navigate] = useLocation();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const { t, isRTL } = useLang();
+  const { toast } = useToast();
   const p = t.product;
 
   const product = products.find((pr) => pr.slug === slug);
@@ -47,7 +51,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [wishlisted, setWishlisted] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [addedFlash, setAddedFlash] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([]);
 
   const toggleWishlistRelated = (id: number) =>
@@ -71,9 +75,29 @@ export default function ProductDetail() {
     .slice(0, 4);
 
   const handleAddToCart = () => {
+    const existingItem = cart.find(
+      (i) => i.id === product.id && i.selectedSize === selectedSize && i.selectedColor === selectedColor
+    );
     addToCart({ ...product, quantity, selectedSize, selectedColor });
-    setAddedFlash(true);
-    setTimeout(() => setAddedFlash(false), 2000);
+    if (existingItem) {
+      toast({
+        title: "Quantity updated",
+        description: `${product.name} — ${selectedSize}, ${selectedColor} (×${existingItem.quantity + quantity})`,
+      });
+    } else {
+      toast({
+        title: "Added to bag!",
+        description: `${product.name} — ${selectedSize}, ${selectedColor}`,
+      });
+    }
+  };
+
+  const handleWishlist = () => {
+    setWishlisted((w) => !w);
+    toast({
+      title: wishlisted ? "Removed from wishlist" : "Saved to wishlist",
+      description: product.name,
+    });
   };
 
   const sizeRows = ["XS", "S", "M", "L", "XL", "XXL"].filter((s) =>
@@ -107,12 +131,23 @@ export default function ProductDetail() {
           {/* ── IMAGE GALLERY ── */}
           <div className="flex flex-col gap-3">
             <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
-              <img
-                src={product.images[activeImg] ?? product.image}
-                alt={product.name}
-                className="w-full h-full object-cover transition-opacity duration-300"
-                key={activeImg}
-              />
+              {/* Skeleton while loading */}
+              {!imgLoaded && (
+                <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
+              )}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.img
+                  key={activeImg}
+                  src={product.images[activeImg] ?? product.image}
+                  alt={product.name}
+                  onLoad={() => setImgLoaded(true)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: imgLoaded ? 1 : 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
               {product.isNew && (
                 <Badge className="absolute top-3 start-3">{t.newArrival}</Badge>
               )}
@@ -123,13 +158,13 @@ export default function ProductDetail() {
               {product.images.length > 1 && (
                 <>
                   <button
-                    onClick={() => setActiveImg((i) => (i - 1 + product.images.length) % product.images.length)}
+                    onClick={() => { setImgLoaded(false); setActiveImg((i) => (i - 1 + product.images.length) % product.images.length); }}
                     className="absolute start-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors"
                   >
                     <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
                   </button>
                   <button
-                    onClick={() => setActiveImg((i) => (i + 1) % product.images.length)}
+                    onClick={() => { setImgLoaded(false); setActiveImg((i) => (i + 1) % product.images.length); }}
                     className="absolute end-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors"
                   >
                     <ChevronRight className="h-4 w-4 rtl:rotate-180" />
@@ -143,7 +178,7 @@ export default function ProductDetail() {
                 {product.images.map((img, i) => (
                   <button
                     key={i}
-                    onClick={() => setActiveImg(i)}
+                    onClick={() => { setImgLoaded(false); setActiveImg(i); }}
                     className={`shrink-0 h-20 w-20 rounded-xl overflow-hidden border-2 transition-all ${
                       i === activeImg ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"
                     }`}
@@ -290,16 +325,15 @@ export default function ProductDetail() {
               <Button
                 className="flex-1 h-12 text-base font-semibold gap-2"
                 onClick={handleAddToCart}
-                disabled={addedFlash}
               >
                 <ShoppingBag className="h-5 w-5" />
-                {addedFlash ? p.addedToCart : t.addToCart}
+                {t.addToCart}
               </Button>
               <Button
                 variant="outline"
                 size="icon"
                 className="h-12 w-12 shrink-0"
-                onClick={() => setWishlisted((w) => !w)}
+                onClick={handleWishlist}
                 aria-label={t.wishlist}
               >
                 <Heart className={`h-5 w-5 transition-colors ${wishlisted ? "fill-red-500 text-red-500" : ""}`} />

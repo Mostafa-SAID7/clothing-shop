@@ -3,26 +3,28 @@ import { CartItem } from "@/lib/types";
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: CartItem) => "added" | "merged";
   removeFromCart: (item: CartItem) => void;
   updateQuantity: (item: CartItem, newQuantity: number) => void;
   clearCart: () => void;
   totalItems: number;
+  isInCart: (id: number, size: string, color: string) => boolean;
 }
 
 const CartContext = createContext<CartContextType>({
   cart: [],
-  addToCart: () => {},
+  addToCart: () => "added",
   removeFromCart: () => {},
   updateQuantity: () => {},
   clearCart: () => {},
   totalItems: 0,
+  isInCart: () => false,
 });
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem("cart");
+      const saved = localStorage.getItem("haven-cart");
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -30,10 +32,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("haven-cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CartItem): "added" | "merged" => {
+    let result: "added" | "merged" = "added";
     setCart((current) => {
       const existing = current.find(
         (i) =>
@@ -42,12 +45,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           i.selectedColor === item.selectedColor
       );
       if (existing) {
+        result = "merged";
         return current.map((i) =>
           i === existing ? { ...i, quantity: i.quantity + item.quantity } : i
         );
       }
       return [...current, item];
     });
+    return result;
   };
 
   const removeFromCart = (item: CartItem) => {
@@ -81,13 +86,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem("cart");
+    localStorage.removeItem("haven-cart");
   };
+
+  const isInCart = (id: number, size: string, color: string) =>
+    cart.some(
+      (i) => i.id === id && i.selectedSize === size && i.selectedColor === color
+    );
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, totalItems }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, isInCart }}>
       {children}
     </CartContext.Provider>
   );

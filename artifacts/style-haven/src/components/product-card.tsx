@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Heart, Star } from "lucide-react";
 import { useLocation } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/lib/types";
 import { useCart } from "@/contexts/CartContext";
 import { useLang } from "@/contexts/LangContext";
 import { formatPrice } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -16,16 +19,32 @@ interface ProductCardProps {
 
 export function ProductCard({ product, isWishlisted, onToggleWishlist }: ProductCardProps) {
   const [, navigate] = useLocation();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const { t } = useLang();
+  const { toast } = useToast();
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart({
-      ...product,
-      quantity: 1,
-      selectedSize: product.sizes[0],
-      selectedColor: product.colors[0].name,
+    const size = product.sizes[0];
+    const color = product.colors[0].name;
+    const existingItem = cart.find(
+      (i) => i.id === product.id && i.selectedSize === size && i.selectedColor === color
+    );
+    addToCart({ ...product, quantity: 1, selectedSize: size, selectedColor: color });
+    if (existingItem) {
+      toast({ title: "Quantity updated", description: `${product.name} — ${size}, ${color}` });
+    } else {
+      toast({ title: "Added to bag!", description: `${product.name} — ${size}, ${color}` });
+    }
+  };
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggleWishlist(product.id);
+    toast({
+      title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+      description: product.name,
     });
   };
 
@@ -35,10 +54,16 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
     <Card className="overflow-hidden group border border-border/60 hover:shadow-md transition-shadow duration-200 cursor-pointer">
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden bg-muted" onClick={goToProduct}>
+        {!imgLoaded && (
+          <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
+        )}
         <img
           src={product.image}
           alt={product.name}
-          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+          onLoad={() => setImgLoaded(true)}
+          className={`object-cover w-full h-full group-hover:scale-105 transition-all duration-500 ${
+            imgLoaded ? "opacity-100" : "opacity-0"
+          }`}
           loading="lazy"
         />
         {/* Badges */}
@@ -53,7 +78,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
         {/* Wishlist */}
         <button
           className="absolute top-2 end-2 h-8 w-8 rounded-full bg-background/80 backdrop-blur flex items-center justify-center hover:bg-background transition-colors"
-          onClick={(e) => { e.stopPropagation(); onToggleWishlist(product.id); }}
+          onClick={handleWishlist}
           aria-label={t.wishlist}
         >
           <Heart
@@ -62,10 +87,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
         </button>
         {/* Quick add on hover */}
         <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-200 p-2">
-          <Button
-            className="w-full h-9 text-xs font-semibold"
-            onClick={handleQuickAdd}
-          >
+          <Button className="w-full h-9 text-xs font-semibold" onClick={handleQuickAdd}>
             {t.addToCart}
           </Button>
         </div>
@@ -100,10 +122,29 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
             />
           ))}
           {product.colors.length > 4 && (
-            <span className="text-[10px] text-muted-foreground">+{product.colors.length - 4}</span>
+            <span className="text-[10px] text-muted-foreground self-center">+{product.colors.length - 4}</span>
           )}
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+export function ProductCardSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
+      <Skeleton className="aspect-[3/4] w-full rounded-none" />
+      <div className="p-3 sm:p-4 space-y-2.5">
+        <Skeleton className="h-2.5 w-16" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-3 w-24" />
+        <Skeleton className="h-4 w-20" />
+        <div className="flex gap-1.5 pt-1">
+          <Skeleton className="h-3 w-3 rounded-full" />
+          <Skeleton className="h-3 w-3 rounded-full" />
+          <Skeleton className="h-3 w-3 rounded-full" />
+        </div>
+      </div>
+    </div>
   );
 }

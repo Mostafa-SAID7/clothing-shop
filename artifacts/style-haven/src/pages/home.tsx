@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, Truck, RotateCcw, Sparkles, ShieldCheck, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Layout } from "@/components/layout";
 import { ProductCard } from "@/components/product-card";
 import { products, categories, categoryMeta, newArrivals } from "@/lib/data";
 import { useLang } from "@/contexts/LangContext";
+
+const PROMO_ICONS: Record<string, LucideIcon> = {
+  "truck": Truck,
+  "rotate-ccw": RotateCcw,
+  "sparkles": Sparkles,
+  "shield-check": ShieldCheck,
+};
 
 export default function Home() {
   const [, navigate] = useLocation();
@@ -42,11 +49,7 @@ export default function Home() {
           </h1>
           <p className="mt-4 text-white/70 text-lg max-w-md leading-relaxed">{h.heroSubtitle}</p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <Button
-              size="lg"
-              className="h-12 px-8 text-base"
-              onClick={() => navigate("/shop")}
-            >
+            <Button size="lg" className="h-12 px-8 text-base" onClick={() => navigate("/shop")}>
               {t.shopNow}
             </Button>
             <Button
@@ -65,12 +68,15 @@ export default function Home() {
       <section className="bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-1 text-xs sm:text-sm font-medium">
-            {h.promos.map((p) => (
-              <span key={p.text} className="flex items-center gap-1.5 opacity-90">
-                <span>{p.icon}</span>
-                {p.text}
-              </span>
-            ))}
+            {h.promos.map((p) => {
+              const Icon = PROMO_ICONS[p.iconId] ?? ShieldCheck;
+              return (
+                <span key={p.text} className="flex items-center gap-1.5 opacity-90">
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  {p.text}
+                </span>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -78,9 +84,7 @@ export default function Home() {
       {/* ── SHOP BY CATEGORY ─────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
         <div className="flex items-end justify-between mb-8">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">{h.shopByCategory}</h2>
-          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold">{h.shopByCategory}</h2>
           <Button
             variant="ghost"
             size="sm"
