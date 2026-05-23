@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { loadStripe } from "@stripe/stripe-js";
+import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CartItem } from "@/lib/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Layout } from "@/components/layout";
+import { useCart } from "@/contexts/CartContext";
+import { useLang } from "@/contexts/LangContext";
 import { formatPrice } from "@/lib/utils";
 
 const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -12,7 +17,10 @@ const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : 
 
 export default function CheckoutPage() {
   const [, navigate] = useLocation();
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const { cart, clearCart } = useCart();
+  const { t } = useLang();
+  const c = t.checkout;
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -22,13 +30,6 @@ export default function CheckoutPage() {
     country: "",
     postalCode: "",
   });
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shipping = 5.99;
@@ -43,27 +44,17 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cart,
-          customerInfo: formData,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart, customerInfo: formData }),
       });
-
       const { sessionId } = await response.json();
       const stripe = await stripePromise;
-
       if (stripe) {
         const { error } = await stripe.redirectToCheckout({ sessionId });
-        if (error) {
-          console.error("Stripe error:", error);
-        }
+        if (error) console.error("Stripe error:", error);
       }
     } catch (error) {
       console.error("Checkout error:", error);
@@ -74,140 +65,117 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
-          <Button onClick={() => navigate("/")}>Continue Shopping</Button>
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <ShoppingBag className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+            <h2 className="text-2xl font-bold">{c.emptyCart}</h2>
+            <Button onClick={() => navigate("/")}>{t.cart.continueShopping}</Button>
+          </div>
         </div>
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Checkout</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="address">Address</Label>
-                  <Input
-                    id="address"
-                    name="address"
-                    required
-                    value={formData.address}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="city">City</Label>
-                    <Input
-                      id="city"
-                      name="city"
-                      required
-                      value={formData.city}
-                      onChange={handleInputChange}
-                    />
+    <Layout>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-8">{c.title}</h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Form — wider column */}
+          <div className="lg:col-span-3">
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="text-base font-semibold">Shipping Information</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email">{c.email}</Label>
+                      <Input id="email" name="email" type="email" required value={formData.email} onChange={handleInputChange} placeholder="you@example.com" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="name">{c.fullName}</Label>
+                      <Input id="name" name="name" required value={formData.name} onChange={handleInputChange} placeholder="John Doe" />
+                    </div>
                   </div>
-                  <div>
-                    <Label htmlFor="postalCode">Postal Code</Label>
-                    <Input
-                      id="postalCode"
-                      name="postalCode"
-                      required
-                      value={formData.postalCode}
-                      onChange={handleInputChange}
-                    />
+                  <div className="space-y-1.5">
+                    <Label htmlFor="address">{c.address}</Label>
+                    <Input id="address" name="address" required value={formData.address} onChange={handleInputChange} placeholder="123 Main St" />
                   </div>
-                </div>
-                <div>
-                  <Label htmlFor="country">Country</Label>
-                  <Input
-                    id="country"
-                    name="country"
-                    required
-                    value={formData.country}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Processing..." : "Proceed to Payment"}
-              </Button>
-            </form>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="city">{c.city}</Label>
+                      <Input id="city" name="city" required value={formData.city} onChange={handleInputChange} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="postalCode">{c.postalCode}</Label>
+                      <Input id="postalCode" name="postalCode" required value={formData.postalCode} onChange={handleInputChange} />
+                    </div>
+                    <div className="space-y-1.5 col-span-2 sm:col-span-1">
+                      <Label htmlFor="country">{c.country}</Label>
+                      <Input id="country" name="country" required value={formData.country} onChange={handleInputChange} />
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-full h-11 mt-2" disabled={loading}>
+                    {loading ? c.processing : c.proceedPayment}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
-            <div className="space-y-4">
-              {cart.map((item) => (
-                <div
-                  key={`${item.id}-${item.selectedSize}-${item.selectedColor}`}
-                  className="flex gap-4"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-20 w-20 object-cover rounded"
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-medium">{item.name}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Size: {item.selectedSize} | Color: {item.selectedColor}
-                    </p>
-                    <p className="text-sm">Quantity: {item.quantity}</p>
+          {/* Order summary */}
+          <div className="lg:col-span-2">
+            <Card className="sticky top-24">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-base font-semibold">{c.orderSummary}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {cart.map((item) => (
+                    <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-3">
+                      <img src={item.image} alt={item.name} className="h-16 w-16 object-cover rounded-lg shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm line-clamp-1">{item.name}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          {item.selectedSize} · {item.selectedColor}
+                        </p>
+                        <p className="text-xs text-muted-foreground">{c.quantity}: {item.quantity}</p>
+                      </div>
+                      <p className="font-semibold text-sm shrink-0">{formatPrice(item.price * item.quantity)}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Separator className="my-4" />
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>{c.subtotal}</span>
+                    <span>{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="text-right">
-                    <p className="font-medium">{formatPrice(item.price * item.quantity)}</p>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>{c.shipping}</span>
+                    <span>{formatPrice(shipping)}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>{c.tax}</span>
+                    <span>{formatPrice(tax)}</span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between font-bold text-base pt-1">
+                    <span>{c.total}</span>
+                    <span>{formatPrice(total)}</span>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="mt-6 space-y-2 border-t pt-4">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>{formatPrice(subtotal)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span>{formatPrice(shipping)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Tax</span>
-                <span>{formatPrice(tax)}</span>
-              </div>
-              <div className="flex justify-between font-bold border-t pt-2">
-                <span>Total</span>
-                <span>{formatPrice(total)}</span>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }

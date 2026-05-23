@@ -1,137 +1,114 @@
-import { useState } from "react";
-import { Search } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { CartDrawer } from "@/components/cart-drawer";
-import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
+import { Layout } from "@/components/layout";
+import { ProductCard } from "@/components/product-card";
 import { products, categories } from "@/lib/data";
-import { CartItem } from "@/lib/types";
+import { useLang } from "@/contexts/LangContext";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<number[]>([]);
+  const { t } = useLang();
 
-  const filteredProducts = products.filter(
-    (product) =>
-      (selectedCategory === "All" || product.category === selectedCategory) &&
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProducts = useMemo(
+    () =>
+      products.filter(
+        (p) =>
+          (selectedCategory === "All" || p.category === selectedCategory) &&
+          p.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [selectedCategory, searchQuery]
   );
 
-  const toggleWishlist = (productId: number) => {
-    setWishlist((current) =>
-      current.includes(productId)
-        ? current.filter((id) => id !== productId)
-        : [...current, productId]
+  const toggleWishlist = (id: number) =>
+    setWishlist((curr) =>
+      curr.includes(id) ? curr.filter((x) => x !== id) : [...curr, id]
     );
-  };
-
-  const addToCart = (item: CartItem) => {
-    setCart((current) => {
-      const existingItem = current.find(
-        (i) =>
-          i.id === item.id &&
-          i.selectedSize === item.selectedSize &&
-          i.selectedColor === item.selectedColor
-      );
-
-      if (existingItem) {
-        return current.map((i) =>
-          i === existingItem ? { ...i, quantity: i.quantity + item.quantity } : i
-        );
-      }
-
-      return [...current, item];
-    });
-  };
-
-  const updateCartItemQuantity = (item: CartItem, newQuantity: number) => {
-    setCart((current) =>
-      newQuantity === 0
-        ? current.filter(
-            (i) =>
-              !(
-                i.id === item.id &&
-                i.selectedSize === item.selectedSize &&
-                i.selectedColor === item.selectedColor
-              )
-          )
-        : current.map((i) =>
-            i.id === item.id &&
-            i.selectedSize === item.selectedSize &&
-            i.selectedColor === item.selectedColor
-              ? { ...i, quantity: newQuantity }
-              : i
-          )
-    );
-  };
-
-  const removeFromCart = (item: CartItem) => {
-    setCart((current) =>
-      current.filter(
-        (i) =>
-          !(
-            i.id === item.id &&
-            i.selectedSize === item.selectedSize &&
-            i.selectedColor === item.selectedColor
-          )
-      )
-    );
-  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">STYLE HAVEN</h1>
-            <div className="flex items-center space-x-4">
-              <div className="relative w-64">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-8"
-                />
-              </div>
-              <CartDrawer
-                cart={cart}
-                updateQuantity={updateCartItemQuantity}
-                removeFromCart={removeFromCart}
-              />
+    <Layout>
+      {/* Hero banner */}
+      <section className="bg-gradient-to-br from-primary/5 via-background to-accent/20 border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="max-w-xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+              {t.brand}
+            </h1>
+            <p className="mt-3 text-muted-foreground text-lg">{t.tagline}</p>
+            <div className="mt-6 flex gap-3">
+              <Button size="lg" className="h-11 px-6">
+                {t.nav.shop}
+              </Button>
+              <Button variant="outline" size="lg" className="h-11 px-6">
+                {t.about.heroTitle}
+              </Button>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex space-x-4 overflow-x-auto pb-4">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className="whitespace-nowrap"
-            >
-              {category}
-            </Button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isWishlisted={wishlist.includes(product.id)}
-              onToggleWishlist={toggleWishlist}
-              onAddToCart={addToCart}
+      {/* Shop section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        {/* Filters row */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          {/* Search */}
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Input
+              placeholder={t.search}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="ps-9 h-10"
             />
-          ))}
+          </div>
+
+          {/* Category pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0" />
+            {categories.map((cat) => (
+              <Button
+                key={cat}
+                variant={selectedCategory === cat ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(cat)}
+                className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
+              >
+                {t.categories[cat as keyof typeof t.categories] ?? cat}
+              </Button>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+
+        {/* Results count */}
+        <p className="text-sm text-muted-foreground mb-5">
+          {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"}
+        </p>
+
+        {/* Grid */}
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                isWishlisted={wishlist.includes(product.id)}
+                onToggleWishlist={toggleWishlist}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
+            <Search className="h-12 w-12 text-muted-foreground/30" />
+            <p className="text-muted-foreground">No products found for "{searchQuery}"</p>
+            <Button variant="outline" onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }}>
+              Clear filters
+            </Button>
+          </div>
+        )}
+      </section>
+    </Layout>
   );
 }
