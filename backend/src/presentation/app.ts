@@ -45,6 +45,22 @@ if (container.ordersController) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root route
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "Clothing Shop API",
+    version: "1.0.0",
+    status: "running",
+    endpoints: {
+      health: "/api/healthz",
+      products: "/api/v1/products",
+      auth: "/api/v1/auth",
+      cart: "/api/v1/cart",
+      orders: "/api/v1/orders"
+    }
+  });
+});
+
 // Health check route
 app.get("/api/healthz", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
