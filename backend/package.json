@@ -44,5 +44,8 @@
     "drizzle-kit": "^0.28.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "pnpm": {
+    "neverBuiltDependencies": ["bcrypt"]
   }
 }
