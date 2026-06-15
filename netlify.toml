@@ -1,9 +1,9 @@
 [build]
 command = "cd frontend && pnpm install && pnpm build"
 publish = "frontend/dist"
-environment = { NODE_VERSION = "20" }
 
 [build.environment]
+NODE_VERSION = "20"
 # Frontend environment variables
 VITE_API_URL = "https://clothing-shop-api.vercel.app/api"
 VITE_STRIPE_PUBLIC_KEY = "pk_live_your_public_key_here"
