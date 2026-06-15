@@ -3,13 +3,7 @@ import app from "./presentation/app";
 import { logger } from "./infrastructure/logging/logger";
 import { closeDatabase } from "./infrastructure/database/connection";
 
-const rawPort = process.env["PORT"];
-
-if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided.",
-  );
-}
+const rawPort = process.env["PORT"] || "3001";
 
 const port = Number(rawPort);
 
@@ -17,7 +11,7 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-const server = app.listen(port, (err) => {
+const server = app.listen(port, "0.0.0.0", (err?: Error) => {
   if (err) {
     logger.error({ err }, "Error listening on port");
     process.exit(1);
