@@ -1,21 +1,3 @@
 {
-  "version": 2,
-  "buildCommand": "cd backend && pnpm install && pnpm build",
-  "installCommand": "cd backend && pnpm install",
-  "outputDirectory": "backend/dist",
-  "env": {
-    "NODE_ENV": "production",
-    "LOG_LEVEL": "info"
-  },
-  "functions": {
-    "backend/src/main.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "backend/src/main.ts"
-    }
-  ]
+  "version": 2
 }
