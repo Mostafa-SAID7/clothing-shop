@@ -3,17 +3,24 @@ import { PaymentService } from '../../domain/services/payment.service';
 import { Order } from '../../domain/entities/order.entity';
 
 export class StripePaymentService implements PaymentService {
-  private stripe: Stripe;
+  private _stripe: Stripe | null = null;
+
+  private get stripe(): Stripe {
+    if (!this._stripe) {
+      const stripeKey = process.env.STRIPE_SECRET_KEY;
+      if (!stripeKey || stripeKey.startsWith('sk_test_your')) {
+        throw new Error('STRIPE_SECRET_KEY environment variable is required and must be a real key');
+      }
+      this._stripe = new Stripe(stripeKey, {
+        apiVersion: '2025-02-24.acacia',
+      });
+    }
+    return this._stripe;
+  }
 
   constructor() {
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (!stripeKey) {
-      throw new Error('STRIPE_SECRET_KEY environment variable is required');
-    }
-    
-    this.stripe = new Stripe(stripeKey, {
-      apiVersion: '2025-02-24.acacia',
-    });
+    // Lazy initialization — Stripe client is created on first use,
+    // so the app doesn't crash at startup if the key is missing.
   }
 
   async createCheckoutSession(

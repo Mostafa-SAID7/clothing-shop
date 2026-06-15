@@ -5,11 +5,16 @@ import { logger } from "../logging/logger";
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  console.error(
+    '[FATAL] DATABASE_URL environment variable is not set. ' +
+    'Go to Vercel Dashboard → Settings → Environment Variables and add DATABASE_URL. ' +
+    'The server will start but all database operations will fail.'
   );
 }
+
 
 // Configure connection pool for production scalability
 export const pool = new Pool({
