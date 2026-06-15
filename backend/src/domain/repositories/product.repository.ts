@@ -6,6 +6,7 @@ export interface ProductRepository {
   create(productData: CreateProductData): Promise<Product>;
   update(id: string, productData: UpdateProductData): Promise<Product | null>;
   delete(id: string): Promise<boolean>;
+  count(filter?: ProductFilter): Promise<number>;
   findByCategory(category: string, limit?: number, offset?: number): Promise<Product[]>;
   findByBrand(brand: string, limit?: number, offset?: number): Promise<Product[]>;
   search(query: string, limit?: number, offset?: number): Promise<Product[]>;

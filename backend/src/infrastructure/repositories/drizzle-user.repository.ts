@@ -4,6 +4,7 @@ import { UserRepository } from '../../domain/repositories/user.repository';
 import { User, CreateUserData, UpdateUserData, UserRole } from '../../domain/entities/user.entity';
 import { users } from '../database/schema';
 import * as schema from '../database/schema';
+import { DEFAULT_LIMIT, MAX_LIMIT } from '../../shared/config';
 
 export class DrizzleUserRepository implements UserRepository {
   constructor(private db: NodePgDatabase<typeof schema>) {}

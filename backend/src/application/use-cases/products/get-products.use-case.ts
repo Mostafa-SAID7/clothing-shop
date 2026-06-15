@@ -1,4 +1,5 @@
 import { ProductRepository } from '../../../domain/repositories/product.repository';
+import { CacheService } from '../../../infrastructure/caching/cache.service';
 import { Product, ProductFilter } from '../../../domain/entities/product.entity';
 
 export interface GetProductsRequest {
@@ -16,7 +17,10 @@ export interface GetProductsResponse {
 }
 
 export class GetProductsUseCase {
-  constructor(private productRepository: ProductRepository) {}
+  constructor(
+    private productRepository: ProductRepository,
+    private cacheService: CacheService
+  ) {}
 
   async execute(request: GetProductsRequest): Promise<GetProductsResponse> {
     // Parse pagination parameters (limit and offset) with defaults from schema

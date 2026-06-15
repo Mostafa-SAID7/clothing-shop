@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { GetProductsUseCase, GetProductByIdUseCase } from '../../application/use-cases';
 import { ResponseFormatter } from '../utils/response-formatter';
+import { QueryParser } from '../utils/query-parser';
 import { paginationSchema } from '../../shared/dto/pagination.dto';
 import { AppError } from '../../domain/errors';
 import { ValidationError } from '../../domain/errors';
