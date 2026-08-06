@@ -51,11 +51,11 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
   const goToProduct = () => navigate(`/product/${product.slug}`);
 
   return (
-    <Card className="overflow-hidden group border border-border/60 hover:shadow-md transition-shadow duration-200 cursor-pointer">
+    <Card className="rounded-[var(--radius-md)] overflow-hidden group border border-border/60 shadow-lift-sm hover:shadow-lift-md transition-shadow duration-200 cursor-pointer">
       {/* Image */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-muted" onClick={goToProduct}>
+      <div className="relative aspect-[3/4] overflow-hidden bg-muted rounded-t-[var(--radius-md)]" onClick={goToProduct}>
         {!imgLoaded && (
-          <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
+          <Skeleton className="absolute inset-0 w-full h-full rounded-t-[var(--radius-md)] rounded-b-none" />
         )}
         <img
           src={product.image}
@@ -77,12 +77,12 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
         </div>
         {/* Wishlist */}
         <button
-          className="absolute top-2 end-2 h-8 w-8 rounded-full bg-background/80 backdrop-blur flex items-center justify-center hover:bg-background transition-colors"
+          className="absolute top-2 end-2 h-8 w-8 rounded-[var(--radius-pill)] bg-background/80 backdrop-blur flex items-center justify-center hover:bg-background transition-colors"
           onClick={handleWishlist}
           aria-label={t.wishlist}
         >
           <Heart
-            className={`h-4 w-4 transition-colors ${isWishlisted ? "fill-red-500 text-red-500" : "text-muted-foreground"}`}
+            className={`h-4 w-4 transition-colors ${isWishlisted ? "fill-[color:var(--color-wishlist)] text-[color:var(--color-wishlist)]" : "text-muted-foreground"}`}
           />
         </button>
         {/* Quick add on hover */}
@@ -101,7 +101,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
         <h3 className="font-semibold text-sm leading-snug line-clamp-1 mb-1.5">{product.name}</h3>
         {/* Rating */}
         <div className="flex items-center gap-1 mb-2">
-          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+          <Star className="h-3 w-3 fill-[color:var(--color-rating)] text-[color:var(--color-rating)]" />
           <span className="text-xs text-muted-foreground">{product.rating} ({product.reviewCount})</span>
         </div>
         {/* Price */}
@@ -117,7 +117,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
             <span
               key={c.name}
               title={c.name}
-              className="h-3 w-3 rounded-full border border-border/50"
+              className="h-3 w-3 rounded-[var(--radius-pill)] border border-border/50"
               style={{ backgroundColor: c.hex }}
             />
           ))}
@@ -132,17 +132,17 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
 
 export function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-xl border border-border/60 bg-card">
-      <Skeleton className="aspect-[3/4] w-full rounded-none" />
+    <div className="overflow-hidden rounded-[var(--radius-md)] border border-border/60 bg-card">
+      <Skeleton className="aspect-[3/4] w-full rounded-t-[var(--radius-md)] rounded-b-none" />
       <div className="p-3 sm:p-4 space-y-2.5">
         <Skeleton className="h-2.5 w-16" />
         <Skeleton className="h-4 w-3/4" />
         <Skeleton className="h-3 w-24" />
         <Skeleton className="h-4 w-20" />
         <div className="flex gap-1.5 pt-1">
-          <Skeleton className="h-3 w-3 rounded-full" />
-          <Skeleton className="h-3 w-3 rounded-full" />
-          <Skeleton className="h-3 w-3 rounded-full" />
+          <Skeleton className="h-3 w-3 rounded-[var(--radius-pill)]" />
+          <Skeleton className="h-3 w-3 rounded-[var(--radius-pill)]" />
+          <Skeleton className="h-3 w-3 rounded-[var(--radius-pill)]" />
         </div>
       </div>
     </div>

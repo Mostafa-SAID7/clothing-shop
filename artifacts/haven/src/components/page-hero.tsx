@@ -33,7 +33,7 @@ export function PageHero({
   const subColor  = light ? "text-white/70" : "text-muted-foreground";
 
   return (
-    <section className={`relative overflow-hidden ${className}`}>
+    <section className={`relative overflow-hidden grain ${className}`}>
       {/* Background image */}
       {bgImage && (
         <>
@@ -44,10 +44,7 @@ export function PageHero({
             className="absolute inset-0 w-full h-full object-cover object-center"
             loading="eager"
           />
-          <div
-            className="absolute inset-0"
-            style={{ background: `rgba(0,0,0,${overlayOpacity})` }}
-          />
+          <div className="absolute inset-0 cinematic-overlay" />
         </>
       )}
 
@@ -66,7 +63,7 @@ export function PageHero({
         >
           {badge && (
             <motion.span
-              className={`inline-block text-[11px] font-semibold uppercase tracking-widest mb-5 border rounded-full px-3.5 py-1 ${
+              className={`inline-block text-[11px] font-semibold uppercase tracking-widest mb-5 border rounded-[var(--radius-pill)] px-3.5 py-1 ${
                 light
                   ? "text-white/70 border-white/30 bg-white/10 backdrop-blur"
                   : "text-primary border-primary/30 bg-primary/8"

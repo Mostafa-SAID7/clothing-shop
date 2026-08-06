@@ -1,36 +1,60 @@
-# [Project name]
+# Clothing Shop
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A full-stack e-commerce app for a clothing shop, with a React + Vite frontend and an Express 5 backend following clean architecture.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- **Frontend** (port 5173): `cd frontend && pnpm run dev`
+- **Backend API** (port 3001): `cd backend && pnpm run dev`
+- Both run automatically via the configured Replit workflows.
+
+### Database
+- `cd backend && pnpm run db:push` — push schema changes to the dev database
+- `cd backend && pnpm run db:studio` — open Drizzle Studio to inspect data
+- `DATABASE_URL` is runtime-managed by Replit (auto-provisioned PostgreSQL)
+
+### Auth & Secrets
+- `JWT_SECRET` / `JWT_REFRESH_SECRET` — JWT signing keys (have in-code fallback defaults for dev)
+- `STRIPE_SECRET_KEY` — required only when processing real payments
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- **Frontend**: React 18, Vite 5, Tailwind CSS, shadcn/ui, Tanstack Query, Wouter, Framer Motion
+- **Backend**: Express 5, TypeScript, Drizzle ORM + PostgreSQL, Zod validation, Pino logging
+- **Auth**: JWT (access + refresh tokens), bcrypt password hashing
+- **Payments**: Stripe checkout sessions
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `backend/src/domain/` — entities, repository interfaces, service interfaces
+- `backend/src/application/use-cases/` — business logic / use cases
+- `backend/src/infrastructure/` — DB connection, repository impls, Stripe/auth services
+- `backend/src/presentation/` — Express routes, controllers, Zod request schemas
+- `backend/src/infrastructure/database/schema.ts` — source of truth for DB schema
+- `frontend/src/` — React pages and components
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- 4-layer clean architecture in the backend (Domain → Application → Infrastructure → Presentation)
+- Dependency injection container pattern (`backend/src/infrastructure/container/`)
+- Drizzle ORM with `db:push` (schema-first, no migration files in dev)
+- Orval codegen planned for generating typed API hooks from an OpenAPI spec
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+An e-commerce clothing shop with product catalog browsing, user registration/login, shopping cart, and Stripe-powered checkout.
+
+## What's implemented vs. in-progress
+
+### ✅ Working
+- Server boots and connects to the database
+- User registration and login endpoints (JWT auth)
+- Database schema (users, products, carts, orders, addresses, inventory)
+
+### 🚧 In progress (from original repo)
+- Product listing endpoint (`GET /api/products`) — use case wiring incomplete
+- Cart management
+- Order workflow
 
 ## User preferences
 
@@ -38,8 +62,10 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `JWT_SECRET` / `JWT_REFRESH_SECRET` have in-code fallback defaults — the server starts without them, but set real values before going to production.
+- `STRIPE_SECRET_KEY` is only loaded at payment time; the server starts fine without it.
+- `DATABASE_URL` is runtime-managed by Replit — do not set it manually.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- See `backend/README.md` for the full backend architecture overview and next steps.

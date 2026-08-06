@@ -1,0 +1,1 @@
+- [GitHub import: artifacts not registered](github-import-artifacts.md) — imported repos have artifact.toml on disk but empty listArtifacts(); must delete + recreate to register; also covers Tailwind v3→v4 CSS fix.
