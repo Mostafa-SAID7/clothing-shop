@@ -1,0 +1,414 @@
+import { createContext, useContext, useEffect, useState } from "react";
+
+export type Lang = "en" | "ar";
+
+export const translations = {
+  en: {
+    brand: "HAVEN",
+    tagline: "Timeless style for the modern individual",
+    nav: { home: "Home", shop: "Shop", about: "About", contact: "Contact" },
+    search: "Search products...",
+    categories: {
+      All: "All", "T-Shirts": "T-Shirts", Jeans: "Jeans", Hoodies: "Hoodies", Jackets: "Jackets",
+    },
+    newArrival: "New",
+    sale: "Sale",
+    addToCart: "Add to Cart",
+    wishlist: "Wishlist",
+    viewAll: "View All",
+    shopNow: "Shop Now",
+    explore: "Explore",
+    home: {
+      heroTitle: "HAVEN",
+      heroSubtitle: "Elevate your wardrobe with timeless pieces crafted for the modern individual.",
+      heroBadge: "New Collection · 2025",
+      promos: [
+        { iconId: "truck", text: "Free Shipping on $50+" },
+        { iconId: "rotate-ccw", text: "Easy 30-Day Returns" },
+        { iconId: "sparkles", text: "Premium Quality" },
+        { iconId: "shield-check", text: "Secure Checkout" },
+      ],
+      shopByCategory: "Shop by Category",
+      newArrivals: "New Arrivals",
+      newArrivalsSubtitle: "The latest drops added to our collection",
+      featured: "Featured Collection",
+      featuredSubtitle: "Handpicked favorites by our stylists",
+      trending: "Trending Now",
+      trendingSubtitle: "What our customers are loving",
+      featuredBannerTitle: "The New Essentials",
+      featuredBannerSubtitle: "Discover our curated selection of must-have pieces for the season.",
+    },
+    cart: {
+      title: "Your Bag",
+      items: "items",
+      empty: "Your bag is empty",
+      emptySubtitle: "Add something you love",
+      total: "Total",
+      checkout: "Checkout",
+      continueShopping: "Continue Shopping",
+      subtotal: "Subtotal",
+      free: "Free",
+      shipping: "Shipping",
+      shippingNote: "Free on orders over $50",
+    },
+    checkout: {
+      title: "Checkout",
+      email: "Email Address",
+      fullName: "Full Name",
+      address: "Street Address",
+      city: "City",
+      postalCode: "Postal Code",
+      country: "Country",
+      proceedPayment: "Pay with Stripe",
+      processing: "Redirecting to Stripe...",
+      orderSummary: "Order Summary",
+      subtotal: "Subtotal",
+      shipping: "Shipping",
+      tax: "Tax (10%)",
+      total: "Total",
+      size: "Size",
+      color: "Color",
+      quantity: "Qty",
+      emptyCart: "Your bag is empty",
+      shippingInfo: "Shipping Information",
+      freeShipping: "FREE",
+      freeShippingNote: "Free shipping on orders over $50",
+    },
+    success: {
+      title: "Order Confirmed!",
+      subtitle: "Thank you for your purchase. We'll send a confirmation email with tracking details shortly.",
+      continueShopping: "Continue Shopping",
+      orderNumber: "Order #",
+    },
+    auth: {
+      login: "Sign In",
+      register: "Create Account",
+      email: "Email Address",
+      password: "Password",
+      confirmPassword: "Confirm Password",
+      fullName: "Full Name",
+      loginBtn: "Sign In",
+      registerBtn: "Create Account",
+      loginSwitch: "Don't have an account?",
+      registerSwitch: "Already have an account?",
+      signUp: "Sign up",
+      signIn: "Sign in",
+      profile: "Profile",
+      orders: "My Orders",
+      logout: "Sign Out",
+    },
+    product: {
+      relatedProducts: "You May Also Like",
+      sizeGuide: "Size Guide",
+      sizeGuideTitle: "Size Guide",
+      inStock: "In Stock",
+      outOfStock: "Out of Stock",
+      reviews: "reviews",
+      description: "Description",
+      details: "Details & Care",
+      selectSize: "Select Size",
+      selectColor: "Select Color",
+      quantity: "Quantity",
+      notFound: "Product Not Found",
+      notFoundSubtitle: "The product you're looking for doesn't exist.",
+      backToShop: "Back to Shop",
+      tags: "Tags",
+      addedToCart: "Added to bag!",
+      sizeTable: {
+        size: "Size", chest: "Chest", waist: "Waist", hips: "Hips",
+        XS: ["XS", "32–33″", "26–27″", "34–35″"],
+        S:  ["S",  "34–35″", "28–29″", "36–37″"],
+        M:  ["M",  "36–37″", "30–31″", "38–39″"],
+        L:  ["L",  "38–39″", "32–33″", "40–41″"],
+        XL: ["XL", "40–42″", "34–36″", "42–44″"],
+        XXL:["XXL","44–46″", "38–40″", "46–48″"],
+      },
+    },
+    about: {
+      heroTitle: "Our Story",
+      heroSubtitle: "Fashion that empowers, style that endures",
+      missionTitle: "Our Mission",
+      missionText: "At HAVEN, we believe fashion is more than clothing — it's a form of self-expression. We curate premium collections that blend timeless elegance with modern trends, making high-quality fashion accessible to everyone.",
+      valuesTitle: "Our Values",
+      values: [
+        { iconId: "leaf", title: "Sustainability", desc: "Eco-friendly practices and ethical sourcing in every collection." },
+        { iconId: "sparkles", title: "Quality", desc: "Premium materials with meticulous attention to detail." },
+        { iconId: "users", title: "Inclusivity", desc: "Fashion for everybody — all shapes, sizes, and styles." },
+        { iconId: "zap", title: "Innovation", desc: "Constantly evolving with the freshest trends and silhouettes." },
+      ],
+      statsTitle: "HAVEN in Numbers",
+      stats: [
+        { value: "10K+", label: "Happy Customers" },
+        { value: "500+", label: "Products" },
+        { value: "50+", label: "Brand Partners" },
+        { value: "4.9★", label: "Average Rating" },
+      ],
+    },
+    contact: {
+      heroTitle: "Get in Touch",
+      heroSubtitle: "We'd love to hear from you",
+      formTitle: "Send a Message",
+      name: "Your Name",
+      email: "Email Address",
+      subject: "Subject",
+      message: "Message",
+      send: "Send Message",
+      sending: "Sending...",
+      successMsg: "Message sent! We'll be in touch soon.",
+      infoTitle: "Contact Info",
+      info: [
+        { iconId: "map-pin", label: "Address", value: "123 Fashion Street, Style City, SC 10001" },
+        { iconId: "phone", label: "Phone", value: "+1 (555) 234-5678" },
+        { iconId: "mail", label: "Email", value: "hello@haven.style" },
+        { iconId: "clock", label: "Hours", value: "Mon–Fri, 9am – 6pm" },
+      ],
+    },
+    notFound: {
+      code: "404",
+      title: "Page Not Found",
+      subtitle: "Looks like this page went out of style.",
+      cta: "Back to Shop",
+    },
+    footer: {
+      tagline: "Elevate your wardrobe with timeless fashion.",
+      shop: "Shop",
+      company: "Company",
+      links: {
+        newArrivals: "New Arrivals", tshirts: "T-Shirts", jeans: "Jeans",
+        hoodies: "Hoodies", jackets: "Jackets", about: "About Us",
+        contact: "Contact", privacy: "Privacy Policy", terms: "Terms of Service",
+      },
+      newsletterTitle: "Stay in the loop",
+      newsletterPlaceholder: "your@email.com",
+      newsletterBtn: "Subscribe",
+      rights: "All rights reserved.",
+    },
+  },
+  ar: {
+    brand: "هيفن",
+    tagline: "أناقة خالدة للإنسان العصري",
+    nav: { home: "الرئيسية", shop: "المتجر", about: "من نحن", contact: "تواصل" },
+    search: "ابحث...",
+    categories: {
+      All: "الكل", "T-Shirts": "تي شيرت", Jeans: "جينز", Hoodies: "هودي", Jackets: "جاكيت",
+    },
+    newArrival: "جديد",
+    sale: "تخفيض",
+    addToCart: "أضف للحقيبة",
+    wishlist: "المفضلة",
+    viewAll: "عرض الكل",
+    shopNow: "تسوق الآن",
+    explore: "استكشف",
+    home: {
+      heroTitle: "هيفن",
+      heroSubtitle: "ارتقِ بخزانتك مع قطع خالدة مصنوعة للإنسان العصري.",
+      heroBadge: "مجموعة جديدة · 2025",
+      promos: [
+        { iconId: "truck", text: "شحن مجاني على $50+" },
+        { iconId: "rotate-ccw", text: "إرجاع سهل خلال 30 يوماً" },
+        { iconId: "sparkles", text: "جودة فائقة" },
+        { iconId: "shield-check", text: "دفع آمن" },
+      ],
+      shopByCategory: "تسوق حسب الفئة",
+      newArrivals: "وصل حديثاً",
+      newArrivalsSubtitle: "أحدث ما أضفناه لمجموعتنا",
+      featured: "المجموعة المميزة",
+      featuredSubtitle: "مختارات يدوية من قِبل مصمّمينا",
+      trending: "الأكثر رواجاً",
+      trendingSubtitle: "ما يحبه عملاؤنا",
+      featuredBannerTitle: "الأساسيات الجديدة",
+      featuredBannerSubtitle: "اكتشف تشكيلتنا المنتقاة من القطع الضرورية للموسم.",
+    },
+    cart: {
+      title: "حقيبتك",
+      items: "قطع",
+      empty: "حقيبتك فارغة",
+      emptySubtitle: "أضف ما يعجبك",
+      total: "الإجمالي",
+      checkout: "الدفع",
+      continueShopping: "مواصلة التسوق",
+      subtotal: "المجموع الفرعي",
+      free: "مجاناً",
+      shipping: "الشحن",
+      shippingNote: "مجاني عند الطلب فوق $50",
+    },
+    checkout: {
+      title: "الدفع",
+      email: "البريد الإلكتروني",
+      fullName: "الاسم الكامل",
+      address: "عنوان الشارع",
+      city: "المدينة",
+      postalCode: "الرمز البريدي",
+      country: "الدولة",
+      proceedPayment: "الدفع عبر Stripe",
+      processing: "جارٍ التحويل إلى Stripe...",
+      orderSummary: "ملخص الطلب",
+      subtotal: "المجموع الفرعي",
+      shipping: "الشحن",
+      tax: "الضريبة (10%)",
+      total: "الإجمالي",
+      size: "المقاس",
+      color: "اللون",
+      quantity: "الكمية",
+      emptyCart: "حقيبتك فارغة",
+      shippingInfo: "معلومات الشحن",
+      freeShipping: "مجاناً",
+      freeShippingNote: "شحن مجاني عند الطلب فوق $50",
+    },
+    success: {
+      title: "تم تأكيد الطلب!",
+      subtitle: "شكراً لشرائك. سنرسل بريداً إلكترونياً بتفاصيل التتبع قريباً.",
+      continueShopping: "مواصلة التسوق",
+      orderNumber: "طلب #",
+    },
+    auth: {
+      login: "تسجيل الدخول",
+      register: "إنشاء حساب",
+      email: "البريد الإلكتروني",
+      password: "كلمة المرور",
+      confirmPassword: "تأكيد كلمة المرور",
+      fullName: "الاسم الكامل",
+      loginBtn: "دخول",
+      registerBtn: "إنشاء حساب",
+      loginSwitch: "ليس لديك حساب؟",
+      registerSwitch: "لديك حساب؟",
+      signUp: "سجّل",
+      signIn: "ادخل",
+      profile: "الملف الشخصي",
+      orders: "طلباتي",
+      logout: "خروج",
+    },
+    product: {
+      relatedProducts: "قد يعجبك أيضاً",
+      sizeGuide: "دليل المقاسات",
+      sizeGuideTitle: "دليل المقاسات",
+      inStock: "متوفر",
+      outOfStock: "غير متوفر",
+      reviews: "تقييمات",
+      description: "الوصف",
+      details: "التفاصيل والعناية",
+      selectSize: "اختر المقاس",
+      selectColor: "اختر اللون",
+      quantity: "الكمية",
+      notFound: "المنتج غير موجود",
+      notFoundSubtitle: "المنتج الذي تبحث عنه غير موجود.",
+      backToShop: "العودة للمتجر",
+      tags: "الوسوم",
+      addedToCart: "أضيف للحقيبة!",
+      sizeTable: {
+        size: "المقاس", chest: "الصدر", waist: "الخصر", hips: "الوركان",
+        XS: ["XS", "٨٣–٨٤ سم", "٦٦–٦٩ سم", "٨٦–٨٩ سم"],
+        S:  ["S",  "٨٦–٨٩ سم", "٧١–٧٤ سم", "٩١–٩٤ سم"],
+        M:  ["M",  "٩١–٩٤ سم", "٧٦–٧٩ سم", "٩٦–٩٩ سم"],
+        L:  ["L",  "٩٦–٩٩ سم", "٨١–٨٤ سم", "١٠١–١٠٤ سم"],
+        XL: ["XL", "١٠١–١٠٧ سم", "٨٦–٩١ سم", "١٠٧–١١٢ سم"],
+        XXL:["XXL","١١٢–١١٧ سم", "٩٧–١٠٢ سم", "١١٧–١٢٢ سم"],
+      },
+    },
+    about: {
+      heroTitle: "قصتنا",
+      heroSubtitle: "موضة تمنحك القوة، وأناقة تدوم",
+      missionTitle: "رسالتنا",
+      missionText: "في هيفن، نؤمن بأن الموضة أكثر من مجرد ملابس — إنها تعبير عن الذات. نقدّم مجموعات تجمع بين الأناقة الخالدة والاتجاهات العصرية.",
+      valuesTitle: "قيمنا",
+      values: [
+        { iconId: "leaf", title: "الاستدامة", desc: "ممارسات صديقة للبيئة في كل مجموعة." },
+        { iconId: "sparkles", title: "الجودة", desc: "أجود المواد مع الاهتمام بكل التفاصيل." },
+        { iconId: "users", title: "الشمولية", desc: "الموضة للجميع — كل الأشكال والأساليب." },
+        { iconId: "zap", title: "الابتكار", desc: "نتطور دائماً لنقدّم أحدث الاتجاهات." },
+      ],
+      statsTitle: "هيفن بالأرقام",
+      stats: [
+        { value: "+10K", label: "عميل سعيد" },
+        { value: "+500", label: "منتج" },
+        { value: "+50", label: "شريك تجاري" },
+        { value: "4.9★", label: "متوسط التقييم" },
+      ],
+    },
+    contact: {
+      heroTitle: "تواصل معنا",
+      heroSubtitle: "يسعدنا سماعك",
+      formTitle: "أرسل رسالة",
+      name: "اسمك",
+      email: "البريد الإلكتروني",
+      subject: "الموضوع",
+      message: "الرسالة",
+      send: "إرسال",
+      sending: "جارٍ الإرسال...",
+      successMsg: "تم الإرسال! سنتواصل قريباً.",
+      infoTitle: "معلومات التواصل",
+      info: [
+        { iconId: "map-pin", label: "العنوان", value: "١٢٣ شارع الموضة، مدينة الأناقة" },
+        { iconId: "phone", label: "الهاتف", value: "٥٦٧٨-٢٣٤ (٥٥٥) ١+" },
+        { iconId: "mail", label: "البريد", value: "hello@haven.style" },
+        { iconId: "clock", label: "ساعات العمل", value: "الإثنين–الجمعة، ٩ص – ٦م" },
+      ],
+    },
+    notFound: {
+      code: "404",
+      title: "الصفحة غير موجودة",
+      subtitle: "يبدو أن هذه الصفحة خرجت عن الموضة.",
+      cta: "العودة للمتجر",
+    },
+    footer: {
+      tagline: "ارتقِ بخزانتك مع أزياء خالدة.",
+      shop: "المتجر",
+      company: "الشركة",
+      links: {
+        newArrivals: "وصل حديثاً", tshirts: "تي شيرت", jeans: "جينز",
+        hoodies: "هودي", jackets: "جاكيت", about: "من نحن",
+        contact: "تواصل معنا", privacy: "سياسة الخصوصية", terms: "شروط الخدمة",
+      },
+      newsletterTitle: "ابقَ على اطلاع",
+      newsletterPlaceholder: "بريدك@example.com",
+      newsletterBtn: "اشترك",
+      rights: "جميع الحقوق محفوظة.",
+    },
+  },
+};
+
+interface LangContextType {
+  lang: Lang;
+  toggleLang: () => void;
+  t: typeof translations.en;
+  isRTL: boolean;
+}
+
+const LangContext = createContext<LangContextType>({
+  lang: "en",
+  toggleLang: () => {},
+  t: translations.en,
+  isRTL: false,
+});
+
+export function LangProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLang] = useState<Lang>(() => (localStorage.getItem("sh-lang") as Lang) || "en");
+  const isRTL = lang === "ar";
+  const t = translations[lang];
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRTL ? "rtl" : "ltr";
+    document.documentElement.style.setProperty(
+      "--app-font-sans",
+      isRTL ? "'Cairo', sans-serif" : "'Inter', sans-serif"
+    );
+    localStorage.setItem("sh-lang", lang);
+  }, [lang, isRTL]);
+
+  const toggleLang = () => {
+    document.body.classList.add("lang-switching");
+    setTimeout(() => {
+      setLang((l) => (l === "en" ? "ar" : "en"));
+      setTimeout(() => document.body.classList.remove("lang-switching"), 30);
+    }, 160);
+  };
+
+  return (
+    <LangContext.Provider value={{ lang, toggleLang, t, isRTL }}>
+      {children}
+    </LangContext.Provider>
+  );
+}
+
+export const useLang = () => useContext(LangContext);

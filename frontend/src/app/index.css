@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── TYPOGRAPHY & FONTS ──────────────────────────────────── */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 98%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  a {
+    @apply text-accent hover:text-accent/80 transition-colors;
+  }
+
+  code {
+    @apply bg-muted px-2 py-1 rounded font-mono text-sm;
+  }
+
+  pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto;
+  }
+}
+
+/* ── CUSTOM SCROLLBAR ──────────────────────────────────────── */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+}
+
+html.dark * {
+  scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted));
+  border-radius: 4px;
+  border: 2px solid hsl(var(--background));
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground));
+}
+
+*::-webkit-scrollbar-corner {
+  background: hsl(var(--background));
+}
+
+/* ── LANGUAGE TRANSITION ───────────────────────────────────── */
+body {
+  transition: opacity 0.15s ease;
+}
+
+body.lang-switching {
+  opacity: 0;
+}
+
+/* ── SMOOTH THEME TRANSITION ──────────────────────────── */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.25s ease,
+    fill 0.25s ease !important;
+  transition-delay: 0s !important;
+}
+
+/* ── ANIMATIONS ────────────────────────────────────────────── */
+@layer utilities {
+  /* Hide ugly search cancel button in Chrome */
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  /* Placeholder styling for contentEditable div */
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Focus ring */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent;
+  }
+
+  /* Hover elevate effect */
+  .hover-elevate {
+    @apply transition-transform hover:scale-105 hover:shadow-lg;
+  }
+
+  /* Disabled state */
+  .disabled-state {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+
+  /* Container padding */
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Flex center */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* Grid center */
+  .grid-center {
+    @apply grid place-items-center;
+  }
+
+  /* Truncate text */
+  .truncate-line {
+    @apply truncate;
+  }
+
+  .truncate-lines-2 {
+    @apply line-clamp-2;
+  }
+
+  .truncate-lines-3 {
+    @apply line-clamp-3;
+  }
+
+  /* Smooth scroll */
+  .smooth-scroll {
+    @apply scroll-smooth;
+  }
+
+  /* Blur effect */
+  .blur-effect {
+    backdrop-filter: blur(10px);
+  }
+
+  .blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  .blur-md {
+    backdrop-filter: blur(12px);
+  }
+
+  .blur-lg {
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* ── COMPONENT STYLES ────────────────────────────────────── */
+@layer components {
+  /* Button base styles */
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Card base styles */
+  .card-base {
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  }
+
+  /* Input base styles */
+  .input-base {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  /* Badge base styles */
+  .badge-base {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+  }
+}
+
+/* ── RESPONSIVE UTILITIES ────────────────────────────────── */
+@layer utilities {
+  /* Hide on mobile */
+  .hide-mobile {
+    @apply hidden md:block;
+  }
+
+  /* Show only on mobile */
+  .show-mobile {
+    @apply md:hidden;
+  }
+
+  /* Container max width */
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Section padding */
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Grid responsive */
+  .grid-responsive {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* ── PRINT STYLES ────────────────────────────────────────── */
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  a {
+    @apply text-black underline;
+  }
+
+  .no-print {
+    @apply hidden;
+  }
+}
