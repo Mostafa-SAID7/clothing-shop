@@ -1,3 +1,50 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+<!-- Gradient definitions for depth -->
+<defs>
+  <!-- Dark background gradient -->
+  <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+  </linearGradient>
+  
+  <!-- White H gradient for dimension -->
+  <linearGradient id="hGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+    <stop offset="50%" style="stop-color:#f5f5f5;stop-opacity:1" />
+    <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:1" />
+  </linearGradient>
+  
+  <!-- Inner shadow filter -->
+  <filter id="innerShadow">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+    <feOffset in="SourceGraphic" dx="0" dy="1" />
+  </filter>
+</defs>
+
+<!-- Rounded square background with gradient -->
+<rect width="180" height="180" rx="40" fill="url(#bgGradient)"/>
+
+<!-- Subtle inner border for polish -->
+<rect x="1.5" y="1.5" width="177" height="177" rx="38.5" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.08"/>
+
+<!-- "H" Letter - Modern and bold -->
+<g transform="translate(40, 28)">
+  <!-- Left vertical bar of H (with slight curve for modern feel) -->
+  <rect x="0" y="0" width="14" height="124" rx="4" fill="url(#hGradient)"/>
+  
+  <!-- Right vertical bar of H -->
+  <rect x="86" y="0" width="14" height="124" rx="4" fill="url(#hGradient)"/>
+  
+  <!-- Horizontal crossbar in the middle of H -->
+  <rect x="10" y="54" width="76" height="14" rx="4" fill="url(#hGradient)"/>
+  
+  <!-- Subtle shadow under crossbar for depth -->
+  <rect x="10" y="54" width="76" height="14" rx="4" fill="#000000" opacity="0.1" filter="url(#innerShadow)"/>
+</g>
+
+<!-- Top shine/gloss effect for premium feel -->
+<ellipse cx="60" cy="45" rx="50" ry="35" fill="#ffffff" opacity="0.06"/>
+
+<!-- Optional: Subtle bottom shadow for depth -->
+<ellipse cx="90" cy="155" rx="45" ry="15" fill="#000000" opacity="0.15" filter="url(#innerShadow)"/>
 </svg>
