@@ -9,8 +9,10 @@ on:
       - main
       - develop
     paths:
-      - '**/package.json'
-      - '**/pnpm-lock.yaml'
+      - 'backend/package.json'
+      - 'backend/pnpm-lock.yaml'
+      - 'frontend/package.json'
+      - 'frontend/pnpm-lock.yaml'
   workflow_dispatch:
 
 permissions:
@@ -21,47 +23,33 @@ jobs:
   audit-backend:
     name: 🔍 Backend Dependency Audit
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Install dependencies
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install backend dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Audit backend dependencies
-        run: pnpm --filter clothing-shop-backend audit --audit-level=high
-        continue-on-error: false
+      - name: Audit for high/critical vulnerabilities
+        run: pnpm audit --audit-level=high
 
   audit-frontend:
     name: 🔍 Frontend Dependency Audit
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Install dependencies
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Audit frontend dependencies
-        run: pnpm --filter clothing-shop-frontend audit --audit-level=high
-        continue-on-error: false
+      - name: Audit for high/critical vulnerabilities
+        run: pnpm audit --audit-level=high

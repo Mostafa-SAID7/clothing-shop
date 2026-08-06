@@ -22,94 +22,105 @@ permissions:
 
 jobs:
   # ──────────────────────────────────────────────────────────────
-  # 1. BACKEND: Typecheck + Build
+  # 1. BACKEND: Install → Typecheck → Build
+  # Each package has its own pnpm-lock.yaml (no root lockfile),
+  # so we install from within each package directory.
   # ──────────────────────────────────────────────────────────────
   backend:
     name: 🔧 Backend (Node / TypeScript)
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: backend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
+      # No "version:" key — pnpm/action-setup reads the version from
+      # the root package.json "packageManager": "pnpm@9.15.4" field.
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Get pnpm store directory
         id: pnpm-cache
+        working-directory: .
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache pnpm store
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backend/pnpm-lock.yaml', 'pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-backend-
 
-      - name: Install workspace dependencies
+      - name: Install backend dependencies
         run: pnpm install --frozen-lockfile
 
       - name: TypeScript typecheck
-        run: pnpm --filter clothing-shop-backend typecheck
+        run: pnpm typecheck
 
       - name: Production build
-        run: pnpm --filter clothing-shop-backend build
+        run: pnpm build
 
   # ──────────────────────────────────────────────────────────────
-  # 2. FRONTEND: Typecheck + Build
+  # 2. FRONTEND: Install → Typecheck → Build
   # ──────────────────────────────────────────────────────────────
   frontend:
     name: 🎨 Frontend (React / Vite)
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: frontend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Get pnpm store directory
         id: pnpm-cache
+        working-directory: .
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache pnpm store
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontend/pnpm-lock.yaml', 'pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-frontend-
 
-      - name: Install workspace dependencies
+      - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
       - name: TypeScript typecheck
-        run: pnpm --filter clothing-shop-frontend typecheck
+        run: pnpm typecheck
 
       - name: Production build
         env:
           VITE_API_URL: /api
           VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
-        run: pnpm --filter clothing-shop-frontend build
+        run: pnpm build
 
   # ──────────────────────────────────────────────────────────────
-  # 3. CI STATUS GATE — both jobs must pass for a PR to merge
+  # 3. CI STATUS GATE — required status check for branch protection
+  # Both jobs must succeed before a PR can merge.
   # ──────────────────────────────────────────────────────────────
   ci-success:
     name: ✅ All CI Checks Passed
@@ -117,10 +128,16 @@ jobs:
     needs: [backend, frontend]
     if: always()
     steps:
-      - name: Evaluate CI result
+      - name: Check all job outcomes
+        env:
+          BACKEND: ${{ needs.backend.result }}
+          FRONTEND: ${{ needs.frontend.result }}
         run: |
-          if [[ "${{ needs.backend.result }}" != "success" || "${{ needs.frontend.result }}" != "success" ]]; then
+          echo "Backend  result: $BACKEND"
+          echo "Frontend result: $FRONTEND"
+          if [[ "$BACKEND" == "success" && "$FRONTEND" == "success" ]]; then
+            echo "✅ All CI checks passed."
+          else
             echo "❌ One or more CI jobs failed."
             exit 1
           fi
-          echo "✅ All CI jobs passed."
