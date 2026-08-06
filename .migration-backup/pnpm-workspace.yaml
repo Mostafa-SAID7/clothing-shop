@@ -1,6 +1,0 @@
-packages:
-  - "backend"
-  - "frontend"
-  - "backend/*"
-  - "frontend/*"
-

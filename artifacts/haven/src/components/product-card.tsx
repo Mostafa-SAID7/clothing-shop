@@ -51,7 +51,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
   const goToProduct = () => navigate(`/product/${product.slug}`);
 
   return (
-    <Card className="rounded-[var(--radius-md)] overflow-hidden group border border-border/60 shadow-lift-sm hover:shadow-lift-md transition-shadow duration-200 cursor-pointer">
+    <Card className="rounded-[var(--radius-md)] overflow-hidden group border-card shadow-lift-sm hover:shadow-lift-md hover:-translate-y-[2px] transition-all duration-[var(--duration-base)] ease-[var(--ease-out-expo)] cursor-pointer">
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden bg-muted rounded-t-[var(--radius-md)]" onClick={goToProduct}>
         {!imgLoaded && (
@@ -61,7 +61,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
           src={product.image}
           alt={product.name}
           onLoad={() => setImgLoaded(true)}
-          className={`object-cover w-full h-full group-hover:scale-105 transition-all duration-500 ${
+          className={`object-cover w-full h-full group-hover:scale-[1.06] transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-expo)] ${
             imgLoaded ? "opacity-100" : "opacity-0"
           }`}
           loading="lazy"
@@ -86,8 +86,8 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
           />
         </button>
         {/* Quick add on hover */}
-        <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-200 p-2">
-          <Button className="w-full h-9 text-xs font-semibold" onClick={handleQuickAdd}>
+        <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-[var(--duration-base)] ease-[var(--ease-out-expo)] p-2">
+          <Button className="w-full h-10 text-xs" onClick={handleQuickAdd}>
             {t.addToCart}
           </Button>
         </div>
@@ -132,7 +132,7 @@ export function ProductCard({ product, isWishlisted, onToggleWishlist }: Product
 
 export function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-md)] border border-border/60 bg-card">
+    <div className="overflow-hidden rounded-[var(--radius-md)] border-card bg-card">
       <Skeleton className="aspect-[3/4] w-full rounded-t-[var(--radius-md)] rounded-b-none" />
       <div className="p-3 sm:p-4 space-y-2.5">
         <Skeleton className="h-2.5 w-16" />
