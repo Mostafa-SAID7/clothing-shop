@@ -171,10 +171,10 @@ export default function Home() {
       </section>
 
       {/* Wave: light new arrivals → dark featured banner */}
-      <WaveDivider fill="hsl(var(--foreground))" variant="cinematic" size="lg" />
+      <WaveDivider fill="#0a0a0a" variant="cinematic" size="lg" />
 
       {/* ── FEATURED BANNER ──────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-foreground grain">
+      <section className="relative overflow-hidden bg-[#0a0a0a] grain">
         <img
           src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80"
           alt="Featured collection"
