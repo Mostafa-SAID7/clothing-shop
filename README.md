@@ -173,14 +173,62 @@ This repository is optimized for single-project monorepo deployment on **Vercel*
 
 ---
 
-## 🌿 GitFlow & Branching Strategy
+## 🌿 GitFlow & Conventional Commits Workflow
 
-We follow the standard **GitFlow** model for feature delivery and releases:
+We strictly adhere to the **GitFlow** branching strategy and **Conventional Commits** standard to maintain clean repository history and reliable automated deployments.
 
-- `main`: Production-ready releases.
-- `develop`: Integration branch for completed feature branches.
-- `feature/*`: Specific feature enhancements (e.g. `feature/stripe-webhooks`).
-- `bugfix/*` / `hotfix/*`: Quick patches applied directly for bug fixes.
+### 🔀 Branching Strategy
+
+```
+    main      ─────────────────● (Production Releases)
+                               ▲
+                               │  (Hotfixes / Release PRs)
+    develop   ──────●──────────●──────────● (Integration)
+                    │                     ▲
+                    └───────┐             │
+                            ▼             │
+    feature/*               ●─────────────┘ (Feature Branches)
+```
+
+| Branch | Purpose | Merge Target |
+| :--- | :--- | :--- |
+| `main` | Production-ready stable codebase. Auto-deploys to Vercel production environment. | `-` |
+| `develop` | Integration branch for current sprint features. Auto-deploys to Staging. | `main` |
+| `feature/<name>` | Isolated development of new functionality (e.g., `feature/stripe-webhooks`). | `develop` |
+| `bugfix/<name>` | Resolving non-critical bugs found during QA. | `develop` |
+| `hotfix/<name>` | Urgent patch applied directly for production issues. | `main` & `develop` |
+
+---
+
+### 📝 Conventional Commits Format
+
+Every commit message follow the structure: `<type>(<scope>): <short summary>`
+
+#### Standard Commit Types:
+- `feat`: A new feature for the user (e.g., `feat(auth): implement refresh token rotation`)
+- `fix`: A bug fix (e.g., `fix(db): enable SSL mode for serverless postgres pool`)
+- `docs`: Documentation changes only (e.g., `docs(readme): add GitFlow guidelines`)
+- `refactor`: Code change that neither fixes a bug nor adds a feature
+- `style`: Formatting, missing semi-colons, white-space
+- `chore`: Updating build tasks, package manager configs (e.g., `chore(deps): update drizzle-orm`)
+
+#### Git Workflow Steps for Feature Development:
+
+```bash
+# 1. Checkout latest integration branch
+git checkout develop
+git pull origin develop
+
+# 2. Create feature branch
+git checkout -b feature/cart-persistency
+
+# 3. Work & Commit with Conventional Commits
+git add .
+git commit -m "feat(cart): implement localStorage synchronization hook"
+
+# 4. Push & Open Pull Request
+git push origin feature/cart-persistency
+```
 
 ---
 
