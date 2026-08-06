@@ -1,8 +1,6 @@
 import React from "react";
 
 interface WaveDividerProps {
-  /** Line stroke color or Tailwind color class (defaults to subtle border color) */
-  strokeColor?: string;
   /** Mirror the wave horizontally for variety */
   flip?: boolean;
   /** Height scale */
@@ -12,24 +10,23 @@ interface WaveDividerProps {
   className?: string;
 }
 
-/** Pure curve line paths (stroke only, fill=none) */
-const LINE_PATHS: Record<NonNullable<WaveDividerProps["variant"]>, string> = {
+/** Section mask wave paths (fill=currentColor fills to bottom edge 100) */
+const PATHS: Record<NonNullable<WaveDividerProps["variant"]>, string> = {
   gentle:
-    "M0,50 C240,30 480,70 720,50 C960,30 1200,65 1440,48",
+    "M0,55 C240,35 480,75 720,55 C960,35 1200,70 1440,52 L1440,100 L0,100 Z",
   organic:
-    "M0,50 C160,20 340,78 540,48 C740,18 920,72 1100,42 C1260,18 1380,58 1440,48",
+    "M0,45 C160,15 340,73 540,43 C740,13 920,67 1100,37 C1260,13 1380,53 1440,43 L1440,100 L0,100 Z",
   cinematic:
-    "M0,50 C200,90 440,10 720,50 C1000,90 1220,10 1440,50",
+    "M0,35 C200,85 440,5 720,45 C1000,85 1220,5 1440,45 L1440,100 L0,100 Z",
 };
 
 const SIZE_CLASSES: Record<NonNullable<WaveDividerProps["size"]>, string> = {
-  sm: "h-[16px] md:h-[24px] lg:h-[32px]",
-  md: "h-[24px] md:h-[36px] lg:h-[48px]",
-  lg: "h-[32px] md:h-[48px] lg:h-[64px]",
+  sm: "h-[20px] md:h-[32px] lg:h-[44px]",
+  md: "h-[32px] md:h-[52px] lg:h-[72px]",
+  lg: "h-[48px] md:h-[76px] lg:h-[104px]",
 };
 
 export function WaveDivider({
-  strokeColor = "hsl(var(--border))",
   flip = false,
   size = "md",
   variant = "organic",
@@ -37,7 +34,7 @@ export function WaveDivider({
 }: WaveDividerProps) {
   return (
     <div
-      className={`w-full overflow-hidden leading-none block relative z-10 pointer-events-none opacity-40 my-2 ${className}`}
+      className={`w-full overflow-hidden leading-none block -mb-[1px] relative z-10 pointer-events-none text-background dark:text-[hsl(0_0%_6%)] ${className}`}
     >
       <svg
         className={`block w-full ${SIZE_CLASSES[size]}`}
@@ -46,13 +43,7 @@ export function WaveDivider({
         preserveAspectRatio="none"
         aria-hidden
       >
-        <path
-          d={LINE_PATHS[variant]}
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
+        <path d={PATHS[variant]} fill="currentColor" />
       </svg>
     </div>
   );
