@@ -64,13 +64,13 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-sm mb-4">{f.newsletterTitle}</h4>
             <p className="text-sm text-muted-foreground mb-3">Stay updated on new arrivals and special offers.</p>
-            <div className="flex p-1 bg-background border border-subtle rounded-full shadow-sm">
+            <div className="flex p-1 bg-background border border-subtle rounded-[var(--radius-pill)] shadow-sm">
               <input
                 type="email"
                 placeholder={f.newsletterPlaceholder}
                 className="flex-1 min-w-0 bg-transparent px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none"
               />
-              <button className="h-9 px-5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity shrink-0 whitespace-nowrap">
+              <button className="h-9 px-5 rounded-[var(--radius-pill)] bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity shrink-0 whitespace-nowrap">
                 {f.newsletterBtn}
               </button>
             </div>
