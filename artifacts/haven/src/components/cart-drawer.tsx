@@ -111,7 +111,7 @@ export function CartDrawer() {
                       {/* Remove button */}
                       <button
                         onClick={() => removeFromCart(item)}
-                        className="text-muted-foreground hover:text-destructive transition-colors p-0.5 rounded shrink-0 mt-0.5"
+                        className="text-muted-foreground hover:text-destructive transition-colors p-0.5 rounded-[var(--radius-sm)] shrink-0 mt-0.5"
                         aria-label="Remove item"
                       >
                         <Trash2 className="h-3.5 w-3.5" />

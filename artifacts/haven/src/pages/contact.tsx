@@ -132,9 +132,9 @@ export default function ContactPage() {
                     variants={fadeUp(0.06 * i)}
                     initial="hidden"
                     animate="show"
-                    className="flex gap-3 p-4 rounded-xl border border-border/60 bg-muted/20 hover:bg-muted/40 transition-colors"
+                    className="flex gap-3 p-4 rounded-[var(--radius-lg)] border border-border/60 bg-muted/20 hover:bg-muted/40 transition-colors"
                   >
-                    <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <div className="h-9 w-9 rounded-[var(--radius-md)] bg-primary/10 flex items-center justify-center shrink-0">
                       <Icon className="h-4 w-4 text-primary" />
                     </div>
                     <div className="min-w-0">
@@ -151,7 +151,7 @@ export default function ContactPage() {
               variants={fadeUp(0.3)}
               initial="hidden"
               animate="show"
-              className="rounded-2xl overflow-hidden border border-border/60 shadow-sm"
+              className="rounded-[var(--radius-xl)] overflow-hidden border border-border/60 shadow-sm"
             >
               <iframe
                 title="HAVEN Store Location — SoHo, New York"

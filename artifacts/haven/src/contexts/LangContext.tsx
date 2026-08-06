@@ -391,7 +391,7 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dir = isRTL ? "rtl" : "ltr";
     document.documentElement.style.setProperty(
       "--app-font-sans",
-      isRTL ? "'Cairo', sans-serif" : "'Inter', sans-serif"
+      "'Jost', sans-serif"
     );
     localStorage.setItem("sh-lang", lang);
   }, [lang, isRTL]);

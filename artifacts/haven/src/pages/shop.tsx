@@ -146,7 +146,7 @@ export default function ShopPage() {
         <div className="flex items-center justify-between mb-6">
           <p className="text-sm text-muted-foreground">
             {loading ? (
-              <span className="inline-block w-44 h-4 bg-muted rounded animate-pulse" />
+              <span className="inline-block w-44 h-4 bg-muted rounded-[var(--radius-md)] animate-pulse" />
             ) : filteredProducts.length > 0 ? (
               <>
                 Showing {(safePage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(safePage * ITEMS_PER_PAGE, filteredProducts.length)}{" "}

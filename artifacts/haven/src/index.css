@@ -2,105 +2,115 @@
 
 /* ── Map shadcn/ui CSS variables to Tailwind v4 theme tokens ── */
 @theme inline {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-destructive: hsl(var(--destructive));
+  --color-background:            hsl(var(--background));
+  --color-foreground:            hsl(var(--foreground));
+  --color-card:                  hsl(var(--card));
+  --color-card-foreground:       hsl(var(--card-foreground));
+  --color-popover:               hsl(var(--popover));
+  --color-popover-foreground:    hsl(var(--popover-foreground));
+  --color-primary:               hsl(var(--primary));
+  --color-primary-foreground:    hsl(var(--primary-foreground));
+  --color-secondary:             hsl(var(--secondary));
+  --color-secondary-foreground:  hsl(var(--secondary-foreground));
+  --color-muted:                 hsl(var(--muted));
+  --color-muted-foreground:      hsl(var(--muted-foreground));
+  --color-accent:                hsl(var(--accent));
+  --color-accent-foreground:     hsl(var(--accent-foreground));
+  --color-destructive:           hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-  
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Georgia", serif;
-  --font-mono: "Menlo", monospace;
-  
+  --color-border:                hsl(var(--border));
+  --color-input:                 hsl(var(--input));
+  --color-ring:                  hsl(var(--ring));
+  --color-rating:                hsl(var(--rating));
+  --color-wishlist:              hsl(var(--wishlist));
+
+  /* ── Centralised font ── */
+  --font-sans:  "Jost", system-ui, sans-serif;
+  --font-serif: "Jost", Georgia, serif;
+  --font-mono:  "Menlo", monospace;
+
+  /* ── Centralised border-radius scale ── */
   --radius-pill: 9999px;
-  --radius-sm: 0px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  
-  --shadow-lift-sm: 0 2px 8px -2px rgba(85, 60, 40, 0.08), 0 1px 3px -1px rgba(85, 60, 40, 0.04);
-  --shadow-lift-md: 0 6px 16px -4px rgba(85, 60, 40, 0.12), 0 4px 8px -2px rgba(85, 60, 40, 0.06);
-  --shadow-lift-lg: 0 12px 32px -8px rgba(85, 60, 40, 0.16), 0 8px 16px -4px rgba(85, 60, 40, 0.08);
-  --shadow-lift-xl: 0 24px 48px -12px rgba(85, 60, 40, 0.25), 0 12px 24px -8px rgba(85, 60, 40, 0.12);
-  
-  --color-rating: hsl(var(--rating));
-  --color-wishlist: hsl(var(--wishlist));
+  --radius-sm:   0px;
+  --radius-md:   6px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+
+  /* ── Cinematic shadow scale ── */
+  --shadow-lift-sm:  0 2px 8px -2px rgba(85,60,40,.08), 0 1px 3px -1px rgba(85,60,40,.04);
+  --shadow-lift-md:  0 6px 20px -4px rgba(85,60,40,.14), 0 4px 8px -2px rgba(85,60,40,.07);
+  --shadow-lift-lg:  0 14px 36px -8px rgba(85,60,40,.18), 0 8px 16px -4px rgba(85,60,40,.09);
+  --shadow-lift-xl:  0 28px 56px -12px rgba(85,60,40,.28), 0 14px 28px -8px rgba(85,60,40,.13);
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
-    --background: 40 20% 97%;
-    --foreground: 0 0% 12%;
-    --card: 40 20% 98%;
-    --card-foreground: 0 0% 12%;
-    --popover: 40 20% 98%;
-    --popover-foreground: 0 0% 12%;
-    --primary: 0 0% 12%;
-    --primary-foreground: 40 20% 97%;
-    --secondary: 40 15% 92%;
-    --secondary-foreground: 0 0% 15%;
-    --muted: 40 12% 90%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 40 20% 97%;
-    --destructive: 0 84.2% 60.2%;
+    --background:            40 20% 97%;
+    --foreground:            0 0% 10%;
+    --card:                  40 20% 98%;
+    --card-foreground:       0 0% 10%;
+    --popover:               40 20% 98%;
+    --popover-foreground:    0 0% 10%;
+    --primary:               0 0% 10%;
+    --primary-foreground:    40 20% 97%;
+    --secondary:             40 15% 92%;
+    --secondary-foreground:  0 0% 14%;
+    --muted:                 40 12% 90%;
+    --muted-foreground:      0 0% 40%;
+    --accent:                0 0% 10%;
+    --accent-foreground:     40 20% 97%;
+    --destructive:           0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 84%;
-    --input: 0 0% 84%;
-    --ring: 0 0% 12%;
-    --radius: 0rem;
-    --rating: 38 92% 50%;
-    --wishlist: 350 80% 58%;
-    
-    --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
-    --duration-base: 280ms;
-    --section-gap-y: 6rem;
-    --section-gap-y-sm: 4rem;
-    --text-shadow-hero: 0 4px 24px rgba(0,0,0,0.6), 0 2px 12px rgba(0,0,0,0.4);
+    --border:                0 0% 82%;
+    --input:                 0 0% 82%;
+    --ring:                  0 0% 10%;
+    --radius:                0rem;
+    --rating:                38 92% 50%;
+    --wishlist:              350 80% 58%;
+
+    /* ── Motion & spacing tokens ── */
+    --ease-out-expo:      cubic-bezier(0.22, 1, 0.36, 1);
+    --duration-base:      280ms;
+    --section-gap-y:      5.5rem;
+    --section-gap-y-sm:   3.5rem;
+    --text-shadow-hero:   0 4px 28px rgba(0,0,0,.65), 0 2px 12px rgba(0,0,0,.4);
+    --text-shadow-subtle: 0 1px 4px rgba(0,0,0,.2);
+
+    /* ── Centralised border opacities ── */
+    --border-subtle-alpha:  40%;
+    --border-card-alpha:    60%;
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 40 10% 94%;
-    --card: 0 0% 7%;
-    --card-foreground: 40 10% 94%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 40 10% 94%;
-    --primary: 40 10% 94%;
-    --primary-foreground: 0 0% 6%;
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 40 10% 94%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 40 10% 94%;
-    --accent-foreground: 0 0% 6%;
-    --destructive: 0 62.8% 30.6%;
+    --background:            0 0% 6%;
+    --foreground:            40 10% 94%;
+    --card:                  0 0% 8%;
+    --card-foreground:       40 10% 94%;
+    --popover:               0 0% 8%;
+    --popover-foreground:    40 10% 94%;
+    --primary:               40 10% 94%;
+    --primary-foreground:    0 0% 6%;
+    --secondary:             0 0% 14%;
+    --secondary-foreground:  40 10% 94%;
+    --muted:                 0 0% 13%;
+    --muted-foreground:      0 0% 58%;
+    --accent:                40 10% 94%;
+    --accent-foreground:     0 0% 6%;
+    --destructive:           0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 40 10% 94%;
-    --rating: 38 85% 55%;
-    --wishlist: 350 80% 58%;
+    --border:                0 0% 22%;
+    --input:                 0 0% 22%;
+    --ring:                  40 10% 94%;
+    --rating:                38 85% 55%;
+    --wishlist:              350 80% 58%;
   }
 
+  /* Default border colour applies the card-alpha level */
   * {
-    border-color: color-mix(in srgb, var(--color-border) 60%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
   }
 
   html {
@@ -109,6 +119,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
     transition: opacity 0.15s ease;
   }
 
@@ -118,44 +129,47 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
   h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
   h2 { @apply text-3xl md:text-4xl; }
   h3 { @apply text-2xl md:text-3xl; }
   h4 { @apply text-xl md:text-2xl; }
-  p { @apply leading-relaxed; }
-  a { @apply text-accent hover:opacity-80 transition-opacity; }
+  p  { @apply leading-relaxed; }
+  a  { @apply text-accent hover:opacity-80 transition-opacity; }
   code { @apply bg-muted px-2 py-1 rounded font-mono text-sm; }
-  pre { @apply bg-muted p-4 rounded-lg overflow-x-auto; }
+  pre  { @apply bg-muted p-4 rounded-lg overflow-x-auto; }
 }
 
+/* ── Scrollbar ── */
 * {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--muted)) hsl(var(--background));
 }
-
-html.dark * {
-  scrollbar-color: hsl(var(--muted)) hsl(var(--background));
-}
-
-*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar       { width: 7px; height: 7px; }
 *::-webkit-scrollbar-track { background: hsl(var(--background)); }
 *::-webkit-scrollbar-thumb {
   background-color: hsl(var(--muted));
-  border-radius: 4px;
+  border-radius: var(--radius-pill);
   border: 2px solid hsl(var(--background));
 }
 *::-webkit-scrollbar-thumb:hover { background-color: hsl(var(--muted-foreground)); }
-*::-webkit-scrollbar-corner { background: hsl(var(--background)); }
+*::-webkit-scrollbar-corner       { background: hsl(var(--background)); }
 
+/* ── Theme transition ── */
 html.theme-transitioning,
 html.theme-transitioning *,
 html.theme-transitioning *::before,
 html.theme-transitioning *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.25s ease, fill 0.25s ease !important;
+  transition:
+    background-color 0.3s ease,
+    border-color     0.3s ease,
+    color            0.25s ease,
+    fill             0.25s ease !important;
   transition-delay: 0s !important;
 }
 
+/* ── Form reset ── */
 @layer utilities {
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
@@ -166,6 +180,7 @@ html.theme-transitioning *::after {
     pointer-events: none;
   }
 
+  /* ── Texture ── */
   .grain {
     position: relative;
   }
@@ -175,93 +190,159 @@ html.theme-transitioning *::after {
     inset: 0;
     pointer-events: none;
     mix-blend-mode: overlay;
-    opacity: 0.04;
+    opacity: 0.045;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
+  /* ── Cinematic overlays ── */
   .vignette {
-    box-shadow: inset 0 0 120px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 140px rgba(0,0,0,.55);
   }
-
   .cinematic-overlay {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.85) 100%);
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,.06) 0%,
+      rgba(0,0,0,.35) 55%,
+      rgba(0,0,0,.82) 100%
+    );
+  }
+  .cinematic-overlay-top {
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,.06) 0%,
+      rgba(0,0,0,.35) 55%,
+      rgba(0,0,0,.82) 100%
+    );
   }
 
-  .text-shadow-hero {
-    text-shadow: var(--text-shadow-hero);
+  /* ── Typography extras ── */
+  .text-shadow-hero   { text-shadow: var(--text-shadow-hero); }
+  .text-shadow-subtle { text-shadow: var(--text-shadow-subtle); }
+  .text-balance       { text-wrap: balance; }
+  .text-pretty        { text-wrap: pretty; }
+
+  /* ── Section rhythm ── */
+  .section-padding    { padding-top: var(--section-gap-y);    padding-bottom: var(--section-gap-y); }
+  .section-padding-sm { padding-top: var(--section-gap-y-sm); padding-bottom: var(--section-gap-y-sm); }
+
+  /* ── Centralised container ── */
+  .container-max     { @apply max-w-7xl mx-auto; }
+  .container-padding { @apply px-4 sm:px-6 lg:px-8; }
+  .section-inner     { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16; }
+
+  /* ── Centralised tinted section ── */
+  .section-tinted {
+    background-color: color-mix(in srgb, var(--color-muted) 30%, transparent);
+    border-top:    1px solid color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
   }
 
-  .section-padding {
-    padding-top: var(--section-gap-y);
-    padding-bottom: var(--section-gap-y);
-  }
-  
-  .section-padding-sm {
-    padding-top: var(--section-gap-y-sm);
-    padding-bottom: var(--section-gap-y-sm);
-  }
-
+  /* ── Centralised borders (use these instead of ad-hoc border-border/XX) ── */
   .border-subtle {
-    border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) var(--border-subtle-alpha), transparent);
   }
-
   .border-card {
-    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
+  }
+  .border-t-subtle {
+    border-top: 1px solid color-mix(in srgb, var(--color-border) var(--border-subtle-alpha), transparent);
+  }
+  .border-b-subtle {
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) var(--border-subtle-alpha), transparent);
   }
 
+  /* ── Centralised icon block ── */
+  .icon-block {
+    @apply h-12 w-12 flex items-center justify-center;
+    border-radius: var(--radius-lg);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+  .icon-block-sm {
+    @apply h-9 w-9 flex items-center justify-center;
+    border-radius: var(--radius-md);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  /* ── Centralised stat card ── */
+  .stat-card {
+    @apply text-center p-7;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--color-primary) 6%, transparent),
+      color-mix(in srgb, var(--color-primary) 12%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  /* ── Misc layout helpers ── */
+  .flex-center   { @apply flex items-center justify-center; }
+  .grid-center   { @apply grid place-items-center; }
+  .hide-mobile   { @apply hidden md:block; }
+  .show-mobile   { @apply md:hidden; }
+  .grid-responsive { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6; }
+
+  /* ── Typography helpers ── */
   .section-eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground;
   }
-
   .gradient-text {
     @apply bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent;
   }
-  .disabled-state {
-    @apply opacity-50 cursor-not-allowed pointer-events-none;
-  }
-  .container-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-  .grid-center {
-    @apply grid place-items-center;
-  }
-  .truncate-line { @apply truncate; }
+
+  /* ── State helpers ── */
+  .disabled-state  { @apply opacity-50 cursor-not-allowed pointer-events-none; }
+  .truncate-line   { @apply truncate; }
   .truncate-lines-2 { @apply line-clamp-2; }
   .truncate-lines-3 { @apply line-clamp-3; }
-  .smooth-scroll { @apply scroll-smooth; }
-  .blur-effect { backdrop-filter: blur(10px); }
-  .blur-sm { backdrop-filter: blur(4px); }
-  .blur-md { backdrop-filter: blur(12px); }
-  .blur-lg { backdrop-filter: blur(20px); }
-  
-  .hide-mobile { @apply hidden md:block; }
-  .show-mobile { @apply md:hidden; }
-  .container-max { @apply max-w-7xl mx-auto; }
-  .grid-responsive { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6; }
-  .text-balance { text-wrap: balance; }
-  .text-pretty { text-wrap: pretty; }
+
+  /* ── Backdrop blur (named to avoid conflict with Tailwind blur-* filter utilities) ── */
+  .backdrop-blur-effect    { backdrop-filter: blur(10px); }
+  .backdrop-blur-effect-sm { backdrop-filter: blur(4px); }
+  .backdrop-blur-effect-md { backdrop-filter: blur(12px); }
+  .backdrop-blur-effect-lg { backdrop-filter: blur(20px); }
 }
 
 @layer components {
   .btn-base {
-    @apply inline-flex items-center justify-center rounded-[var(--radius-sm)] font-semibold tracking-wide transition-opacity focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-[0.88];
+    @apply inline-flex items-center justify-center font-semibold tracking-wide transition-opacity
+           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-[0.88];
+    border-radius: var(--radius-sm);
   }
+
   .card-base {
-    @apply rounded-[var(--radius-md)] border-card bg-card text-card-foreground shadow-lift-sm;
+    @apply bg-card text-card-foreground shadow-lift-sm;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
   }
+
   .input-base {
-    @apply flex h-10 w-full rounded-[var(--radius-sm)] border-subtle bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply flex h-10 w-full bg-background px-3 py-2 text-sm
+           placeholder:text-muted-foreground
+           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--color-border) var(--border-subtle-alpha), transparent);
   }
+
   .badge-base {
-    @apply inline-flex items-center rounded-[var(--radius-pill)] px-3 py-1 text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium;
+    border-radius: var(--radius-pill);
+  }
+
+  /* ── Value card (about / features) ── */
+  .value-card {
+    @apply bg-background text-center p-6 transition-all duration-200;
+    border-radius: var(--radius-xl);
+    border: 1px solid color-mix(in srgb, var(--color-border) var(--border-card-alpha), transparent);
+  }
+  .value-card:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    box-shadow: var(--shadow-lift-md);
   }
 }
 
 @media print {
   body { @apply bg-white text-black; }
-  a { @apply text-black underline; }
+  a    { @apply text-black underline; }
   .no-print { @apply hidden; }
 }

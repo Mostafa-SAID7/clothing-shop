@@ -24,7 +24,7 @@ export default function SuccessPage() {
         <div className="text-center max-w-md w-full">
           {/* Icon */}
           <div className="relative inline-flex mb-6">
-            <div className="h-24 w-24 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+            <div className="h-24 w-24 rounded-[var(--radius-pill)] bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
               <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
             </div>
           </div>
@@ -42,8 +42,8 @@ export default function SuccessPage() {
               { icon: Package, label: "Order\nProcessing" },
               { icon: ShoppingBag, label: "Ready for\nShipping" },
             ].map(({ icon: Icon, label }) => (
-              <div key={label} className="bg-muted/50 rounded-2xl p-4 flex flex-col items-center gap-2">
-                <div className="h-9 w-9 rounded-full bg-background border border-border flex items-center justify-center">
+              <div key={label} className="bg-muted/50 rounded-[var(--radius-xl)] p-4 flex flex-col items-center gap-2">
+                <div className="h-9 w-9 rounded-[var(--radius-pill)] bg-background border border-border flex items-center justify-center">
                   <Icon className="h-4 w-4 text-primary" />
                 </div>
                 <span className="text-xs text-muted-foreground text-center whitespace-pre-line leading-snug">{label}</span>
