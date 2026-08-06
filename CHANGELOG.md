@@ -1,0 +1,48 @@
+# [2.1.0](https://github.com/Mostafa-SAID7/clothing-shop/compare/v2.0.0...v2.1.0) (2026-08-06)
+
+
+### Bug Fixes
+
+* Add builds+routes to root vercel.json - was empty causing 404 NOT_FOUND on all routes ([d9a8e72](https://github.com/Mostafa-SAID7/clothing-shop/commit/d9a8e72e7dcd977bf3cb9c8c992b185990c950c3))
+* Add root API endpoint and update Vercel configuration for proper Express.js deployment ([6cea5bf](https://github.com/Mostafa-SAID7/clothing-shop/commit/6cea5bf6c9752e9617eaf48bae538a1565cecbf1))
+* Correct Vercel configuration - root vercel.json with proper backend paths ([8882722](https://github.com/Mostafa-SAID7/clothing-shop/commit/888272205e540f415b5f745d7fa5df4f6bc9a3fc))
+* Delete invalid pnpm-workspace.yaml that caused 'packages field missing or empty' error on Vercel ([c143f21](https://github.com/Mostafa-SAID7/clothing-shop/commit/c143f21f17654e5c75f18ccee6dffb7bfbbfe636))
+* **deploy:** pin packageManager to pnpm@9.15.4 in package.json to fix Vercel fetch compatibility ([a161499](https://github.com/Mostafa-SAID7/clothing-shop/commit/a16149906f9748198d211b13791b3b94a16a8466))
+* **deploy:** update .npmrc fetch retry configuration ([e5256db](https://github.com/Mostafa-SAID7/clothing-shop/commit/e5256db341f4c31a23d2caf0ed645e5cda7ac2b2))
+* **deps:** add .npmrc with node-linker=hoisted to resolve Vercel node fetch URLSearchParams error ([96450c3](https://github.com/Mostafa-SAID7/clothing-shop/commit/96450c37e82df6d4b55b06e44f8494e5477097e1))
+* **frontend:** set base to ./ in vite.config.ts and target frontend/dist in vercel.json routes to eliminate asset fallback MIME errors ([e1b3f5f](https://github.com/Mostafa-SAID7/clothing-shop/commit/e1b3f5fa7fdd32d327d4d44d574044eb1e4140de))
+* package.json & package-lock.json to reduce vulnerabilities ([02a00fe](https://github.com/Mostafa-SAID7/clothing-shop/commit/02a00fe54c026f96b822427176424aed6b77430d))
+* Remove .env files from Git and update .gitignore - never commit secrets ([d2ad6d6](https://github.com/Mostafa-SAID7/clothing-shop/commit/d2ad6d6b6e1fb27d067431e5c382d1964911d8e6))
+* Remove hardcoded secrets from netlify.toml and .env.example to pass Netlify security scan ([0734331](https://github.com/Mostafa-SAID7/clothing-shop/commit/0734331d4d6924d18fe1c56f887c4facab1302f9))
+* Replace bcrypt (native C++ binary) with bcryptjs (pure JS) - fixes FUNCTION_INVOCATION_FAILED 500 on Vercel serverless ([4b0bb6c](https://github.com/Mostafa-SAID7/clothing-shop/commit/4b0bb6cdb928a0468d80860e717d434977093d8b))
+* Resolve all Vercel deployment failures - proper serverless config + api handler + lazy Stripe init + DB crash fix ([d77d4e9](https://github.com/Mostafa-SAID7/clothing-shop/commit/d77d4e9eca568a048b8f8a936307e0dcf00c8cb7))
+* Resolve netlify.toml duplicate key error in build.environment ([a11c163](https://github.com/Mostafa-SAID7/clothing-shop/commit/a11c16391e14d7136e3110c8948cd227a71563eb))
+* resolve process.env issues in client component and improve Statsig provider ([148d74b](https://github.com/Mostafa-SAID7/clothing-shop/commit/148d74bb21d25710f6350dfff367dca4e44dfcfa))
+* Resolve Vercel 404 issue - fix directory and configuration conflicts ([e2afbff](https://github.com/Mostafa-SAID7/clothing-shop/commit/e2afbff19b72f047eb281dacab992936873c4cba))
+* Simplify Vercel configuration - use Root Directory setting instead of build commands ([ba5d519](https://github.com/Mostafa-SAID7/clothing-shop/commit/ba5d5199b40c4b7a59cbb941d8742b87a057fac9))
+* update Statsig to use new @statsig/react-bindings API and fix TypeScript errors ([504e057](https://github.com/Mostafa-SAID7/clothing-shop/commit/504e057a8bbc50c63a1748170c7a955ef5633ddd))
+* Update Vercel configuration to properly export Express app as serverless function ([caf30a7](https://github.com/Mostafa-SAID7/clothing-shop/commit/caf30a7c31f560e2d27eac65eb259c37eb032fee))
+* upgrade next to 15.5.6 and postcss to 8.5.6 to address security vulnerabilities ([810efbc](https://github.com/Mostafa-SAID7/clothing-shop/commit/810efbcfa4154c0caaaa7cb10a5a052f5ee74640))
+* **vercel:** add explicit static asset routing for frontend built JavaScript chunks and web manifest ([00a2a27](https://github.com/Mostafa-SAID7/clothing-shop/commit/00a2a27c2709c3c58667ceef783bd6c0e55bbf00))
+* **vercel:** remove legacy builds array so vercel builds from root pnpm workspace cleanly ([a64d7b8](https://github.com/Mostafa-SAID7/clothing-shop/commit/a64d7b8ef250fb7d47665197523fa053d7423a90))
+* **vercel:** remove legacy builds property to enable modern Vercel zero-config monorepo compilation ([11cc732](https://github.com/Mostafa-SAID7/clothing-shop/commit/11cc732015ae412710fbbd96b35385b8c0fcbe96))
+
+
+### Features
+
+* add complete DevOps infrastructure with Docker, K8s, scripts, and IDE configs ([6b00408](https://github.com/Mostafa-SAID7/clothing-shop/commit/6b00408195ebfa6b15d4400a8e670827537848b8))
+* add comprehensive CI/CD workflows and enhanced issue templates ([902a8ce](https://github.com/Mostafa-SAID7/clothing-shop/commit/902a8cee2454aaa0eead8e427661642fda1fae31))
+* add GitHub profile setup guide and contribution tracking workflows ([f196ddd](https://github.com/Mostafa-SAID7/clothing-shop/commit/f196ddd7c0ef9bc80a70a82747c87e9534e9af39))
+* add Netlify deployment configuration and workflow ([ce54fb9](https://github.com/Mostafa-SAID7/clothing-shop/commit/ce54fb95e6812bd79c636bcaddc52051df672b94))
+* add pnpm-workspace.yaml with esbuild configuration ([39d5612](https://github.com/Mostafa-SAID7/clothing-shop/commit/39d5612d3b028cc585705ff664358bde627ee71d))
+* add Statsig feature flags integration with examples and documentation ([74082c1](https://github.com/Mostafa-SAID7/clothing-shop/commit/74082c11d922c8751bbc5de3592b8469ee36f7bc))
+* add Vercel notification workflow for deployment status updates ([aa74806](https://github.com/Mostafa-SAID7/clothing-shop/commit/aa74806a12f853cb9970373dc7d3564da4caab2e))
+* Complete frontend and backend configuration with styling and fixes ([2606fe3](https://github.com/Mostafa-SAID7/clothing-shop/commit/2606fe3aef9856d9e46c4307b32571bea4958866))
+* Database migration applied, Supabase PostgreSQL configured, ready for production deployment ([6f617f0](https://github.com/Mostafa-SAID7/clothing-shop/commit/6f617f0b04fbd2a5852799b25dcb575c31b85f7c))
+* enhance .github with comprehensive community files and automation ([6994269](https://github.com/Mostafa-SAID7/clothing-shop/commit/6994269f6760f76da22594b7e57525d128c67d10))
+* implement Drizzle database connection infrastructure and configure pnpm workspace and Vercel routing ([4c26c1d](https://github.com/Mostafa-SAID7/clothing-shop/commit/4c26c1d5ce2293c058de635e76406f50bdc2c314))
+* initialize frontend project with TypeScript, dependency management, and GitHub CI/CD workflows ([a6b3c64](https://github.com/Mostafa-SAID7/clothing-shop/commit/a6b3c64a5171c795d2312d95fc1247d35682a41a))
+* initialize project monorepo structure with pnpm workspaces and TypeScript configurations ([86caffc](https://github.com/Mostafa-SAID7/clothing-shop/commit/86caffcc2892f61835044b0fd8f9be9402a1a721))
+* reorganize DevOps structure with complete automation and monitoring ([dc1f75c](https://github.com/Mostafa-SAID7/clothing-shop/commit/dc1f75c0009925371c3e4bf00d36284c6160a621))
+* restructure project with clean architecture - organize files by feature and domain ([e500bf8](https://github.com/Mostafa-SAID7/clothing-shop/commit/e500bf8c936da92363dd3ffb92495f1eb639ae85))
+* scrollbar fix, animated 404, product reviews, contact map, cookie banner, per-page SEO ([0813759](https://github.com/Mostafa-SAID7/clothing-shop/commit/0813759f6eae379e3ca57229de3c146156d3e467))
