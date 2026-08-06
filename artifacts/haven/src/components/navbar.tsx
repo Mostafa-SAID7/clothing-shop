@@ -40,14 +40,14 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border/60">
+    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-subtle" style={{ boxShadow: "0 1px 0 0 hsl(var(--border) / 0.4)", borderTop: "none", borderLeft: "none", borderRight: "none" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-14 flex items-center justify-between gap-4">
 
           {/* Logo */}
           <button
             onClick={() => navigate("/")}
-            className="font-black text-xl tracking-widest uppercase select-none hover:opacity-75 transition-opacity shrink-0"
+            className="font-black text-xl uppercase select-none hover:opacity-75 transition-opacity shrink-0 tracking-[0.25em]"
             aria-label={t.brand}
           >
             {t.brand}
@@ -59,13 +59,20 @@ export function Navbar() {
               <button
                 key={link.href}
                 onClick={() => navigate(link.href)}
-                className={`px-3 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
+                className={`relative px-3 py-1.5 text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "text-foreground bg-muted"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {link.label}
+                {isActive(link.href) && (
+                  <motion.div
+                    layoutId="nav-underline"
+                    className="absolute left-3 right-3 bottom-0 h-[1.5px] bg-primary"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
               </button>
             ))}
           </nav>

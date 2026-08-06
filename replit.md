@@ -1,71 +1,70 @@
-# Clothing Shop
+# HAVEN Fashion Store
 
-A full-stack e-commerce app for a clothing shop, with a React + Vite frontend and an Express 5 backend following clean architecture.
+A full-stack e-commerce app — React + Vite frontend, Express 5 API backend, PostgreSQL via Drizzle ORM, Stripe checkout, and JWT auth.
+
+## Project structure
+
+```
+artifacts/
+  haven/          — React 18 + Vite frontend (the storefront UI)
+  api-server/     — Express 5 REST API (currently: health route; products/auth/stripe pending)
+lib/
+  db/             — Drizzle ORM schema and PostgreSQL client
+  api-zod/        — Shared Zod schemas (request/response types)
+  api-spec/       — OpenAPI spec (source for orval codegen)
+  api-client-react/ — Generated React Query hooks (orval output)
+scripts/          — Post-merge and utility scripts
+```
 
 ## Run & Operate
 
-- **Frontend** (port 5173): `cd frontend && pnpm run dev`
-- **Backend API** (port 3001): `cd backend && pnpm run dev`
-- Both run automatically via the configured Replit workflows.
+Both services start automatically via Replit workflows:
+
+- **Frontend** (`artifacts/haven`): `pnpm --filter @workspace/haven run dev`
+- **Backend API** (`artifacts/api-server`): `pnpm --filter @workspace/api-server run dev`
 
 ### Database
-- `cd backend && pnpm run db:push` — push schema changes to the dev database
-- `cd backend && pnpm run db:studio` — open Drizzle Studio to inspect data
-- `DATABASE_URL` is runtime-managed by Replit (auto-provisioned PostgreSQL)
+- `pnpm --filter @workspace/db run push` — push schema to the database
+- `DATABASE_URL` must be set (Replit built-in PostgreSQL or external, e.g. Supabase)
 
-### Auth & Secrets
-- `JWT_SECRET` / `JWT_REFRESH_SECRET` — JWT signing keys (have in-code fallback defaults for dev)
-- `STRIPE_SECRET_KEY` — required only when processing real payments
+### Typecheck
+- `pnpm run typecheck` — checks all workspace packages
 
 ## Stack
 
-- **Frontend**: React 18, Vite 5, Tailwind CSS, shadcn/ui, Tanstack Query, Wouter, Framer Motion
-- **Backend**: Express 5, TypeScript, Drizzle ORM + PostgreSQL, Zod validation, Pino logging
-- **Auth**: JWT (access + refresh tokens), bcrypt password hashing
-- **Payments**: Stripe checkout sessions
+- **Frontend**: React 19, Vite 7, Tailwind CSS v4, shadcn/ui (Radix), TanStack Query, Wouter, Framer Motion
+- **Backend**: Express 5, TypeScript, Drizzle ORM + PostgreSQL, Zod, Pino logging
+- **Auth**: JWT (access + refresh tokens) — routes not yet wired in api-server
+- **Payments**: Stripe checkout sessions — routes not yet wired in api-server
 
-## Where things live
+## Required secrets
 
-- `backend/src/domain/` — entities, repository interfaces, service interfaces
-- `backend/src/application/use-cases/` — business logic / use cases
-- `backend/src/infrastructure/` — DB connection, repository impls, Stripe/auth services
-- `backend/src/presentation/` — Express routes, controllers, Zod request schemas
-- `backend/src/infrastructure/database/schema.ts` — source of truth for DB schema
-- `frontend/src/` — React pages and components
+| Secret | Purpose |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `STRIPE_SECRET_KEY` | Stripe payments |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook verification |
+| `JWT_SECRET` | JWT access token signing |
+| `JWT_REFRESH_SECRET` | JWT refresh token signing |
 
-## Architecture decisions
-
-- 4-layer clean architecture in the backend (Domain → Application → Infrastructure → Presentation)
-- Dependency injection container pattern (`backend/src/infrastructure/container/`)
-- Drizzle ORM with `db:push` (schema-first, no migration files in dev)
-- Orval codegen planned for generating typed API hooks from an OpenAPI spec
-
-## Product
-
-An e-commerce clothing shop with product catalog browsing, user registration/login, shopping cart, and Stripe-powered checkout.
-
-## What's implemented vs. in-progress
+## What's working vs. pending
 
 ### ✅ Working
-- Server boots and connects to the database
-- User registration and login endpoints (JWT auth)
-- Database schema (users, products, carts, orders, addresses, inventory)
+- Frontend storefront UI (all pages: home, shop, product detail, cart, about, contact, checkout, success)
+- API server health endpoint (`GET /api/healthz`)
+- Database schema defined in `lib/db/src/schema/`
+- Shared Zod types and API client codegen pipeline
 
-### 🚧 In progress (from original repo)
-- Product listing endpoint (`GET /api/products`) — use case wiring incomplete
-- Cart management
-- Order workflow
+### 🚧 Pending (follow-up task)
+- Live product, auth, cart, and Stripe routes in `artifacts/api-server`
+- Database provisioning and schema push
+- Frontend wired to live API (currently uses static data in `artifacts/haven/src/lib/data.ts`)
+
+## Gotchas
+
+- Framer Motion `ease` cubic-bezier arrays must be cast as `[number, number, number, number]` tuples to satisfy the Framer Motion v12 type definitions.
+- The frontend uses `import.meta.env.BASE_URL` as the Wouter router base — do not use root-relative API URLs; prefix with the base path.
 
 ## User preferences
 
 _Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-- `JWT_SECRET` / `JWT_REFRESH_SECRET` have in-code fallback defaults — the server starts without them, but set real values before going to production.
-- `STRIPE_SECRET_KEY` is only loaded at payment time; the server starts fine without it.
-- `DATABASE_URL` is runtime-managed by Replit — do not set it manually.
-
-## Pointers
-
-- See `backend/README.md` for the full backend architecture overview and next steps.

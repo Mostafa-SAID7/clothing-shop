@@ -7,7 +7,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-muted/30 mt-auto shadow-lift-sm">
+    <footer className="border-t border-subtle bg-muted/30 dark:bg-[hsl(0_0%_6%)] backdrop-blur-sm mt-auto shadow-lift-sm pt-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
@@ -64,13 +64,13 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-sm mb-4">{f.newsletterTitle}</h4>
             <p className="text-sm text-muted-foreground mb-3">Stay updated on new arrivals and special offers.</p>
-            <div className="flex gap-2">
+            <div className="flex p-1 bg-background border border-subtle rounded-full shadow-sm">
               <input
                 type="email"
                 placeholder={f.newsletterPlaceholder}
-                className="flex h-9 w-full rounded-[var(--radius-sm)] border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                className="flex-1 min-w-0 bg-transparent px-4 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none"
               />
-              <button className="h-9 px-4 rounded-[var(--radius-sm)] bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shrink-0 whitespace-nowrap">
+              <button className="h-9 px-5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity shrink-0 whitespace-nowrap">
                 {f.newsletterBtn}
               </button>
             </div>
