@@ -64,7 +64,7 @@ export default function CheckoutPage() {
       <Layout>
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="text-center space-y-4 px-4">
-            <div className="h-20 w-20 mx-auto rounded-full bg-muted flex items-center justify-center">
+            <div className="h-20 w-20 mx-auto rounded-[var(--radius-pill)] bg-muted flex items-center justify-center">
               <ShoppingBag className="h-9 w-9 text-muted-foreground/40" />
             </div>
             <h2 className="text-2xl font-bold">{c.emptyCart}</h2>
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   {error && (
-                    <div className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">
+                    <div className="text-sm text-destructive bg-destructive/10 rounded-[var(--radius-lg)] px-3 py-2">
                       {error}
                     </div>
                   )}
@@ -140,7 +140,7 @@ export default function CheckoutPage() {
                 { icon: Package, label: "Easy 30-day returns" },
                 { icon: Shield, label: "256-bit SSL security" },
               ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-border/60">
+                <div key={label} className="flex flex-col items-center gap-1.5 p-3 rounded-[var(--radius-lg)] border border-border/60">
                   <Icon className="h-4 w-4 text-primary" />
                   <span>{label}</span>
                 </div>
@@ -161,9 +161,9 @@ export default function CheckoutPage() {
                 <div className="space-y-3 max-h-64 overflow-y-auto scrollbar-thin pe-1">
                   {cart.map((item) => (
                     <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-3">
-                      <div className="relative h-16 w-16 rounded-lg overflow-hidden bg-muted shrink-0">
+                      <div className="relative h-16 w-16 rounded-[var(--radius-lg)] overflow-hidden bg-muted shrink-0">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        <Badge className="absolute -top-1 -end-1 h-4 w-4 p-0 flex items-center justify-center text-[9px] rounded-full">
+                        <Badge className="absolute -top-1 -end-1 h-4 w-4 p-0 flex items-center justify-center text-[9px] rounded-[var(--radius-pill)]">
                           {item.quantity}
                         </Badge>
                       </div>

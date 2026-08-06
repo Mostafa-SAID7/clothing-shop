@@ -83,7 +83,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-full hidden sm:flex overflow-hidden"
+              className="h-9 w-9 rounded-[var(--radius-pill)] hidden sm:flex overflow-hidden"
               onClick={toggleLang}
               aria-label="Toggle language"
             >
@@ -105,7 +105,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-full overflow-hidden"
+              className="h-9 w-9 rounded-[var(--radius-pill)] overflow-hidden"
               onClick={toggleTheme}
               aria-label="Toggle theme"
             >
@@ -132,10 +132,10 @@ export function Navbar() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-9 w-9 rounded-full hidden sm:flex p-0"
+                    className="h-9 w-9 rounded-[var(--radius-pill)] hidden sm:flex p-0"
                     aria-label="Account menu"
                   >
-                    <div className="h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold select-none">
+                    <div className="h-7 w-7 rounded-[var(--radius-pill)] bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold select-none">
                       {(user.name?.[0] ?? user.email?.[0] ?? "U").toUpperCase()}
                     </div>
                   </Button>
@@ -159,7 +159,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 rounded-full hidden sm:flex"
+                className="h-9 w-9 rounded-[var(--radius-pill)] hidden sm:flex"
                 onClick={() => openModal("login")}
                 aria-label={t.auth.login}
               >
@@ -171,7 +171,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-full md:hidden"
+              className="h-9 w-9 rounded-[var(--radius-pill)] md:hidden"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Menu"
             >

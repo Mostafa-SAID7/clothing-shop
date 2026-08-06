@@ -32,9 +32,9 @@ export function CookieBanner() {
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="fixed bottom-4 left-4 right-4 z-50 max-w-2xl mx-auto"
         >
-          <div className="bg-background border border-border rounded-2xl shadow-xl p-4 sm:p-5">
+          <div className="bg-background border border-border rounded-[var(--radius-xl)] shadow-xl p-4 sm:p-5">
             <div className="flex gap-3 items-start">
-              <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="h-9 w-9 rounded-[var(--radius-lg)] bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                 <Cookie className="h-4 w-4 text-primary" />
               </div>
 
