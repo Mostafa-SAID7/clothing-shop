@@ -6,20 +6,23 @@
       "dest": "backend/api/index.ts"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/assets/(.*)",
-      "dest": "frontend/assets/$1"
+      "dest": "frontend/dist/assets/$1"
     },
     {
       "src": "/manifest.webmanifest",
-      "dest": "frontend/manifest.webmanifest"
+      "dest": "frontend/dist/manifest.webmanifest"
     },
     {
       "src": "/favicon.svg",
-      "dest": "frontend/favicon.svg"
+      "dest": "frontend/dist/favicon.svg"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/index.html"
+      "dest": "frontend/dist/index.html"
     }
   ]
 }
