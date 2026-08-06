@@ -1,0 +1,114 @@
+CLOTHING SHOP - PROJECT STRUCTURE
+==================================
+
+clothing-shop/
+│
+├── .git/                                    # Git repository files
+├── .github/                                 # GitHub configuration
+│   ├── workflows/
+│   │   └── build.yml                       # CI/CD build workflow
+│   ├── PULL_REQUEST_TEMPLATE.md             # PR template
+│   └── ISSUE_TEMPLATE/
+│       ├── bug_report.md                   # Bug report template
+│       └── feature_request.md              # Feature request template
+│
+├── frontend/                                # React frontend application
+│   ├── src/                                # Source code
+│   │   ├── components/                    # React components
+│   │   ├── hooks/                         # Custom hooks
+│   │   ├── lib/                           # Utilities
+│   │   ├── types/                         # TypeScript types
+│   │   ├── App.tsx                        # Main component
+│   │   └── main.tsx                       # Entry point
+│   ├── public/                            # Static assets
+│   ├── index.html                         # HTML entry point
+│   ├── package.json                       # Dependencies
+│   ├── vite.config.ts                     # Vite configuration
+│   ├── components.json                    # shadcn/ui config
+│   └── tsconfig.json                      # TypeScript config
+│
+├── docs/                                    # Documentation
+│   ├── SETUP.md                            # Setup and installation guide
+│   ├── PROJECT_STRUCTURE.md                # Project structure overview
+│   └── DEVELOPMENT.md                      # Development guidelines
+│
+├── .gitignore                              # Git ignore patterns
+├── README.md                               # Project overview
+├── LICENSE                                 # MIT License
+├── CONTRIBUTING.md                         # Contribution guidelines
+└── STRUCTURE.txt                           # This file
+
+QUICK START
+===========
+
+1. Navigate to frontend:
+   cd frontend
+
+2. Install dependencies:
+   npm install
+
+3. Start development server:
+   npm run dev
+
+4. Build for production:
+   npm run build
+
+5. Type checking:
+   npm run typecheck
+
+KEY DIRECTORIES
+===============
+
+frontend/   - All frontend code (React, TypeScript, Vite)
+docs/       - Project documentation and guides
+.github/    - GitHub workflows and templates
+
+ROOT FILES
+==========
+
+README.md              - Main project documentation
+LICENSE                - MIT License
+CONTRIBUTING.md        - Guidelines for contributors
+.gitignore             - Git ignore rules
+
+PROJECT FEATURES
+================
+
+✓ React 19.1.0
+✓ Vite for fast builds
+✓ TypeScript for type safety
+✓ Tailwind CSS for styling
+✓ Radix UI components
+✓ React Hook Form
+✓ React Query
+✓ Framer Motion
+✓ GitHub workflows
+✓ Complete documentation
+✓ Contributing guidelines
+
+DEVELOPMENT
+===========
+
+Read docs/SETUP.md for detailed setup instructions
+Read docs/DEVELOPMENT.md for coding guidelines
+Read docs/PROJECT_STRUCTURE.md for folder organization
+
+CI/CD
+=====
+
+Automated GitHub Actions workflow in .github/workflows/build.yml
+Runs on push to main/develop and pull requests
+Includes type checking and build verification
+
+GITHUB TEMPLATES
+================
+
+Issue templates:
+  - Bug Report
+  - Feature Request
+
+Pull Request template:
+  - Comprehensive PR review checklist
+
+Created: 2024
+Version: 1.0.0
