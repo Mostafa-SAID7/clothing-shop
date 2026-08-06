@@ -1,99 +1,130 @@
-# Clothing Shop
+# 🛍️ Haven — Modern E-Commerce Platform
 
-A modern e-commerce frontend application built with React, Vite, and Tailwind CSS.
+[![CI Pipeline](https://github.com/Mostafa-SAID7/clothing-shop/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Mostafa-SAID7/clothing-shop/actions/workflows/ci.yml)
+[![GitFlow Enforced](https://img.shields.io/badge/GitFlow-Enforced-blue.svg)](docs/GITFLOW.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node Version](https://img.shields.io/badge/node-%3E%3D24.0.0-brightgreen.svg)](package.json)
+[![pnpm Workspace](https://img.shields.io/badge/pnpm-workspace-orange.svg)](pnpm-workspace.yaml)
 
-## Project Structure
+A state-of-the-art, full-stack clothing e-commerce web application featuring high-performance React 19 UI, express backend micro-services, Stripe payments, and PostgreSQL persistence with Drizzle ORM.
+
+---
+
+## ✨ Features & Visual Aesthetics
+
+- 🎨 **Modern Design System**: Responsive layout, custom glassmorphism effects, smooth animations powered by Framer Motion & Tailwind CSS v4.
+- ⚡ **Lightning Fast Frontend**: Built with Vite 7, React 19, Radix UI primitives, and React Query v5.
+- 🛒 **Full Shopping Experience**: Dynamic catalog filtering, cart management, checkout with Stripe integration, and Order tracking.
+- 🔐 **Secure Backend**: Express server architecture, JWT-based authentication, and pure JS bcrypt security.
+- 🌊 **Strict GitFlow Workflow**: Automated branch enforcement and Conventional Commits CI checks.
+
+---
+
+## 🏗️ Monorepo Architecture
 
 ```
 clothing-shop/
-├── frontend/          # React frontend application
-├── docs/             # Documentation
-├── .github/          # GitHub workflows and configurations
-│   └── workflows/    # CI/CD workflows
-├── README.md         # This file
-├── LICENSE           # License information
-└── .gitignore        # Git ignore patterns
+├── 📁 backend/                # Node.js & Express REST API (Drizzle ORM, Stripe, JWT)
+│   ├── api/                   # Vercel serverless function entrypoints
+│   └── src/                   # Backend application source code
+├── 📁 frontend/               # React 19 + Vite frontend application
+│   ├── public/                # Static assets, branding icons, and favicon
+│   └── src/                   # React components, pages, and hooks
+├── 📁 docs/                   # Comprehensive project documentation & guides
+│   ├── BRANDING.md            # Branding and color tokens guide
+│   ├── DESIGN_SYSTEM.md       # Complete design system & component guidelines
+│   ├── DEVELOPMENT.md         # Developer onboarding & guidelines
+│   ├── GITFLOW.md             # GitFlow branching strategy reference
+│   └── PROJECT_STRUCTURE.md   # Architectural breakdown
+└── 📁 .github/                # CI/CD workflows, ISSUE templates, security rules
 ```
 
-## Getting Started
+---
 
-### Prerequisites
+## ⚡ Quick Start & Development
 
-- Node.js (v18 or higher)
-- npm or pnpm
+### 1. Prerequisites
+- **Node.js**: `v24.x` recommended (minimum `>=18.x`)
+- **pnpm**: `>=9.x` (or `npm`)
 
-### Installation
-
-Navigate to the frontend directory and install dependencies:
+### 2. Installation
+Clone the repository and install workspace dependencies:
 
 ```bash
-cd frontend
-npm install
-# or
+git clone https://github.com/Mostafa-SAID7/clothing-shop.git
+cd clothing-shop
+
+# Install all workspace dependencies
 pnpm install
 ```
 
-### Development
+### 3. Running Locally
 
 Start the development server:
 
 ```bash
-npm run dev
-# or
+# Start frontend dev server (runs at http://localhost:5173)
+cd frontend
+pnpm dev
+
+# Start backend dev server (runs at http://localhost:3001)
+cd ../backend
 pnpm dev
 ```
 
-The application will be available at `http://localhost:5173`
+---
 
-### Build
+## 🌊 GitFlow Branching Model
 
-Build for production:
+This repository strictly enforces the **GitFlow** branching strategy:
 
-```bash
-npm run build
-# or
-pnpm build
+```
+main (production releases) ────────────────────────── [v1.0.0] ─── [v2.0.0]
+    ▲                                                      ▲
+    │                                                      │
+develop (integration) ─────────────────────────────────────┴───────
+    ▲                   ▲
+    │                   │
+feature/auth        bugfix/cart-item
 ```
 
-### Type Checking
+- **`main`**: Production-ready code only. Changes enter via PRs from `release/*` or `hotfix/*`.
+- **`develop`**: Integration branch for new features. Pull Requests for `feature/*` target `develop`.
+- **Commit Convention**: We enforce [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`).
 
-Run TypeScript type checking:
+Detailed instructions are available in [docs/GITFLOW.md](docs/GITFLOW.md) and [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
-```bash
-npm run typecheck
-# or
-pnpm typecheck
-```
+---
 
-## Technology Stack
+## 📚 Documentation Index
 
-- **React** 19.1.0
-- **Vite** - Fast build tool and dev server
-- **TypeScript** - Type-safe JavaScript
-- **Tailwind CSS** - Utility-first CSS framework
-- **Radix UI** - Unstyled, accessible component library
-- **React Hook Form** - Performant form handling
-- **Wouter** - Lightweight router
-- **TanStack React Query** - Server state management
-- **Framer Motion** - Animation library
+Explore our in-depth guides in the [`docs/`](docs/) directory:
 
-## Project Features
+- 🎨 **[Design System](docs/DESIGN_SYSTEM.md)**: Visual aesthetics, typography, color palettes, and component rules.
+- 🏷️ **[Branding Guide](docs/BRANDING.md)**: Logo specifications, favicon system, and brand guidelines.
+- 🌊 **[GitFlow Model](docs/GITFLOW.md)**: Detailed release, hotfix, and feature branch workflows.
+- 🏗️ **[Project Architecture](docs/PROJECT_STRUCTURE.md)**: Monorepo layout and state management logic.
+- 🛠️ **[Setup & Development Guide](docs/SETUP.md)**: Step-by-step local environment configuration.
 
-- Responsive design with Tailwind CSS
-- Rich component library with Radix UI
-- Modern form handling with React Hook Form
-- Type-safe development with TypeScript
-- Fast development experience with Vite
-- Animation support with Framer Motion
+---
 
-## Documentation
+## 🛠️ Technology Stack
 
-See the [docs/](./docs/) folder for detailed documentation on various topics.
+| Domain | Technologies |
+|---|---|
+| **Frontend** | React 19, Vite 7, TypeScript, Tailwind CSS v4, Radix UI, Framer Motion, Wouter, React Query v5 |
+| **Backend** | Node.js 24, Express, Drizzle ORM, PostgreSQL, Stripe SDK, bcryptjs |
+| **DevOps / CI** | GitHub Actions, Vercel Serverless, pnpm Workspaces, Semantic Release |
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🤝 Contributing
 
-## Contributing
+We welcome contributions! Please review our [Contributing Guidelines](.github/CONTRIBUTING.md) and ensure all pull requests follow our GitFlow branch naming and Conventional Commit standards.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
+
+## 📄 License
+
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
+
