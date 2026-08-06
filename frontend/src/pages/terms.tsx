@@ -108,7 +108,7 @@ export default function TermsPage() {
               viewport={{ once: true, margin: "-40px" }}
             >
               <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
-                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-black shrink-0">
+                <span className="inline-flex items-center justify-center h-6 w-6 rounded-[var(--radius-pill)] bg-primary/10 text-primary text-xs font-black shrink-0">
                   {i + 1}
                 </span>
                 {sec.title}

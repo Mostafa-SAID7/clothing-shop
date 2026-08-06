@@ -184,10 +184,10 @@ export default function AboutPage() {
       </section>
 
       {/* Wave: light stats → dark CTA banner */}
-      <WaveDivider fill="#0a0a0a" variant="cinematic" size="lg" />
+      <WaveDivider fill="hsl(var(--primary))" variant="cinematic" size="lg" />
 
       {/* ── CTA BANNER ─── */}
-      <section className="relative overflow-hidden bg-[#0a0a0a] text-white">
+      <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="absolute inset-0 opacity-10">
           <img
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=70"

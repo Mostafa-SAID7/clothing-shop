@@ -26,7 +26,7 @@ export function CartDrawer() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full relative" aria-label={c.title}>
+        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-[var(--radius-pill)] relative" aria-label={c.title}>
           <ShoppingBag className="h-4 w-4" />
           <AnimatePresence>
             {totalItems > 0 && (
@@ -38,7 +38,7 @@ export function CartDrawer() {
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
                 className="absolute -top-1 -end-1"
               >
-                <Badge className="h-4 w-4 p-0 flex items-center justify-center text-[10px] rounded-full leading-none">
+                <Badge className="h-4 w-4 p-0 flex items-center justify-center text-[10px] rounded-[var(--radius-pill)] leading-none">
                   {totalItems > 9 ? "9+" : totalItems}
                 </Badge>
               </motion.span>
@@ -60,7 +60,7 @@ export function CartDrawer() {
             )}
           </SheetTitle>
           <SheetClose asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full shrink-0">
+            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-[var(--radius-pill)] shrink-0">
               <X className="h-4 w-4" />
             </Button>
           </SheetClose>
