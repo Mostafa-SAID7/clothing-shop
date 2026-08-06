@@ -1,5 +1,11 @@
 # See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# Environment Variables - NEVER commit these
+.env
+.env.local
+.env.*.local
+.env.production
+
 # compiled output
 dist
 tmp
@@ -47,3 +53,4 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
