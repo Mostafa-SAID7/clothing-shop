@@ -25,8 +25,8 @@
   --color-wishlist:              hsl(var(--wishlist));
 
   /* ── Centralised font ── */
-  --font-sans:  "Jost", system-ui, sans-serif;
-  --font-serif: "Jost", Georgia, serif;
+  --font-sans:  "Cairo", system-ui, sans-serif;
+  --font-serif: "Cairo", Georgia, serif;
   --font-mono:  "Menlo", monospace;
 
   /* ── Centralised border-radius scale ── */
