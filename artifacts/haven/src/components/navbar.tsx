@@ -59,7 +59,7 @@ export function Navbar() {
               <button
                 key={link.href}
                 onClick={() => navigate(link.href)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
                   isActive(link.href)
                     ? "text-foreground bg-muted"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -200,7 +200,7 @@ export function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => { navigate(link.href); setMenuOpen(false); }}
-                  className={`w-full text-start px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`w-full text-start px-3 py-2.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
                     isActive(link.href)
                       ? "text-foreground bg-muted"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"

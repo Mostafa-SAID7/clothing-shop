@@ -28,7 +28,7 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`h-3.5 w-3.5 ${star <= Math.round(rating) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"}`}
+            className={`h-3.5 w-3.5 ${star <= Math.round(rating) ? "fill-[color:var(--color-rating)] text-[color:var(--color-rating)]" : "text-muted-foreground/30"}`}
           />
         ))}
       </div>
@@ -49,7 +49,7 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
     >
       <div className="flex items-start gap-3">
         {/* Avatar */}
-        <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-primary font-bold text-xs">
+        <div className="h-9 w-9 rounded-[var(--radius-pill)] bg-primary/10 flex items-center justify-center shrink-0 text-primary font-bold text-xs">
           {review.initials}
         </div>
         <div className="flex-1 min-w-0">
@@ -67,7 +67,7 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
             {[1, 2, 3, 4, 5].map((s) => (
               <Star
                 key={s}
-                className={`h-3 w-3 ${s <= review.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/20"}`}
+                className={`h-3 w-3 ${s <= review.rating ? "fill-[color:var(--color-rating)] text-[color:var(--color-rating)]" : "text-muted-foreground/20"}`}
               />
             ))}
           </div>
@@ -189,7 +189,8 @@ export default function ProductDetail() {
 
           {/* ── IMAGE GALLERY ── */}
           <div className="flex flex-col gap-3">
-            <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
+            <div className="relative aspect-square overflow-hidden rounded-[var(--radius-lg)] bg-muted">
+              <div className="absolute inset-0 vignette pointer-events-none z-10" />
               {!imgLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-none" />}
               <AnimatePresence mode="wait" initial={false}>
                 <motion.img
@@ -210,13 +211,13 @@ export default function ProductDetail() {
                 <>
                   <button
                     onClick={() => { setImgLoaded(false); setActiveImg((i) => (i - 1 + product.images.length) % product.images.length); }}
-                    className="absolute start-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors"
+                    className="absolute start-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-[var(--radius-pill)] bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors z-20"
                   >
                     <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
                   </button>
                   <button
                     onClick={() => { setImgLoaded(false); setActiveImg((i) => (i + 1) % product.images.length); }}
-                    className="absolute end-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-[var(--radius-pill)] bg-background/80 backdrop-blur flex items-center justify-center shadow hover:bg-background transition-colors z-20"
                   >
                     <ChevronRight className="h-4 w-4 rtl:rotate-180" />
                   </button>
@@ -229,7 +230,7 @@ export default function ProductDetail() {
                   <button
                     key={i}
                     onClick={() => { setImgLoaded(false); setActiveImg(i); }}
-                    className={`shrink-0 h-20 w-20 rounded-xl overflow-hidden border-2 transition-all ${
+                    className={`shrink-0 h-20 w-20 rounded-[var(--radius-md)] overflow-hidden border-2 transition-all ${
                       i === activeImg ? "border-primary" : "border-transparent opacity-60 hover:opacity-100"
                     }`}
                   >
@@ -244,7 +245,7 @@ export default function ProductDetail() {
           <div className="flex flex-col gap-5">
             <div className="flex flex-wrap gap-1.5">
               {product.tags.map((tag) => (
-                <span key={tag} className="text-xs bg-muted text-muted-foreground px-2.5 py-0.5 rounded-full capitalize">
+                <span key={tag} className="text-xs bg-muted text-muted-foreground px-2.5 py-0.5 rounded-[var(--radius-pill)] capitalize">
                   {tag}
                 </span>
               ))}
@@ -286,7 +287,7 @@ export default function ProductDetail() {
                     <RadioGroupItem value={size} id={`sz-${size}`} className="sr-only" />
                     <Label
                       htmlFor={`sz-${size}`}
-                      className={`cursor-pointer flex h-10 min-w-[2.5rem] px-3 items-center justify-center rounded-lg border text-sm font-medium transition-all select-none ${
+                      className={`cursor-pointer flex h-10 min-w-[2.5rem] px-3 items-center justify-center rounded-[var(--radius-sm)] border text-sm font-medium transition-all select-none ${
                         selectedSize === size
                           ? "bg-primary text-primary-foreground border-primary"
                           : "border-border hover:border-primary/50"
@@ -311,11 +312,11 @@ export default function ProductDetail() {
                     <RadioGroupItem value={color.name} id={`col-${color.name}`} className="sr-only" />
                     <Label
                       htmlFor={`col-${color.name}`}
-                      className={`cursor-pointer flex items-center gap-2 h-10 px-3 rounded-lg border text-sm font-medium transition-all select-none ${
+                      className={`cursor-pointer flex items-center gap-2 h-10 px-3 rounded-[var(--radius-sm)] border text-sm font-medium transition-all select-none ${
                         selectedColor === color.name ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <span className="h-4 w-4 rounded-full border border-border/60 shrink-0" style={{ backgroundColor: color.hex }} />
+                      <span className="h-4 w-4 rounded-[var(--radius-pill)] border border-border/60 shrink-0" style={{ backgroundColor: color.hex }} />
                       {color.name}
                     </Label>
                   </div>
@@ -326,7 +327,7 @@ export default function ProductDetail() {
             {/* Quantity */}
             <div className="flex items-center gap-3">
               <Label className="font-semibold">{p.quantity}</Label>
-              <div className="flex items-center gap-0 border border-border rounded-lg overflow-hidden">
+              <div className="flex items-center gap-0 border border-border rounded-[var(--radius-sm)] overflow-hidden">
                 <button className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-40" onClick={() => setQuantity((q) => Math.max(1, q - 1))} disabled={quantity <= 1}>−</button>
                 <span className="w-10 text-center text-sm font-semibold tabular-nums">{quantity}</span>
                 <button className="h-10 w-10 flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-40" onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))} disabled={quantity >= product.stock}>+</button>
@@ -340,8 +341,8 @@ export default function ProductDetail() {
                 <ShoppingBag className="h-5 w-5" />
                 {t.addToCart}
               </Button>
-              <Button variant="outline" size="icon" className="h-12 w-12 shrink-0" onClick={handleWishlist} aria-label={t.wishlist}>
-                <Heart className={`h-5 w-5 transition-colors ${wishlisted ? "fill-red-500 text-red-500" : ""}`} />
+              <Button variant="outline" size="icon" className="h-12 w-12 shrink-0 rounded-[var(--radius-sm)]" onClick={handleWishlist} aria-label={t.wishlist}>
+                <Heart className={`h-5 w-5 transition-colors ${wishlisted ? "fill-[color:var(--color-wishlist)] text-[color:var(--color-wishlist)]" : ""}`} />
               </Button>
             </div>
 
@@ -396,11 +397,11 @@ export default function ProductDetail() {
               <div className="lg:col-span-1">
                 <div className="sticky top-24 space-y-4">
                   {/* Big score */}
-                  <div className="text-center py-6 rounded-2xl bg-muted/30 border border-border/50">
+                  <div className="text-center py-6 rounded-[var(--radius-lg)] bg-muted/30 border border-border/50">
                     <span className="text-6xl font-black leading-none">{product.rating}</span>
                     <div className="flex items-center justify-center gap-1 mt-2 mb-1">
                       {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className={`h-4 w-4 ${s <= Math.round(product.rating) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/25"}`} />
+                        <Star key={s} className={`h-4 w-4 ${s <= Math.round(product.rating) ? "fill-[color:var(--color-rating)] text-[color:var(--color-rating)]" : "text-muted-foreground/25"}`} />
                       ))}
                     </div>
                     <p className="text-sm text-muted-foreground">{product.reviewCount.toLocaleString()} reviews</p>
@@ -413,10 +414,10 @@ export default function ProductDetail() {
                       return (
                         <div key={star} className="flex items-center gap-2 text-xs">
                           <span className="w-3 text-right text-muted-foreground shrink-0">{star}</span>
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400 shrink-0" />
-                          <div className="flex-1 bg-muted rounded-full h-1.5 overflow-hidden">
+                          <Star className="h-3 w-3 fill-[color:var(--color-rating)] text-[color:var(--color-rating)] shrink-0" />
+                          <div className="flex-1 bg-muted rounded-[var(--radius-pill)] h-1.5 overflow-hidden">
                             <motion.div
-                              className="h-full bg-yellow-400 rounded-full"
+                              className="h-full bg-[color:var(--color-rating)] rounded-[var(--radius-pill)]"
                               initial={{ width: 0 }}
                               whileInView={{ width: `${pct}%` }}
                               viewport={{ once: true }}
@@ -482,7 +483,7 @@ export default function ProductDetail() {
 
       {/* ── SIZE GUIDE MODAL ── */}
       <Dialog open={showSizeGuide} onOpenChange={setShowSizeGuide}>
-        <DialogContent className="sm:max-w-lg w-[95vw] rounded-2xl">
+        <DialogContent className="sm:max-w-lg w-[95vw] rounded-[var(--radius-lg)]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Ruler className="h-4 w-4" /> {p.sizeGuideTitle}

@@ -74,7 +74,7 @@ export function CartDrawer() {
               <p className="font-semibold text-base">{c.empty}</p>
               <p className="text-sm text-muted-foreground">{c.emptySubtitle}</p>
               <SheetClose asChild>
-                <Button variant="outline" size="sm" className="mt-2" onClick={() => navigate("/shop")}>
+                <Button variant="outline" size="sm" className="mt-2 rounded-[var(--radius-sm)]" onClick={() => navigate("/shop")}>
                   {c.continueShopping}
                 </Button>
               </SheetClose>
@@ -93,7 +93,7 @@ export function CartDrawer() {
                 >
                   {/* Product image */}
                   <button
-                    className="h-20 w-20 rounded-xl overflow-hidden bg-muted shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="h-20 w-20 rounded-[var(--radius-md)] overflow-hidden bg-muted shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => navigate(`/product/${item.slug}`)}
                   >
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -123,14 +123,14 @@ export function CartDrawer() {
                     <div className="flex items-center justify-between mt-2.5">
                       <div className="flex items-center gap-1">
                         <button
-                          className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                          className="h-7 w-7 rounded-[var(--radius-sm)] border border-border flex items-center justify-center hover:bg-muted transition-colors"
                           onClick={() => updateQuantity(item, item.quantity - 1)}
                         >
                           <Minus className="h-3 w-3" />
                         </button>
                         <span className="w-6 text-center text-sm tabular-nums font-medium">{item.quantity}</span>
                         <button
-                          className="h-7 w-7 rounded-md border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                          className="h-7 w-7 rounded-[var(--radius-sm)] border border-border flex items-center justify-center hover:bg-muted transition-colors"
                           onClick={() => updateQuantity(item, item.quantity + 1)}
                         >
                           <Plus className="h-3 w-3" />
@@ -154,7 +154,7 @@ export function CartDrawer() {
           >
             {/* Shipping progress */}
             {!shippingFree ? (
-              <div className="text-xs text-muted-foreground bg-muted rounded-lg px-3 py-2 flex items-center gap-2">
+              <div className="text-xs text-muted-foreground bg-muted rounded-[var(--radius-sm)] px-3 py-2 flex items-center gap-2">
                 <Package className="h-3.5 w-3.5 shrink-0 text-primary" />
                 Add{" "}
                 <span className="font-semibold text-foreground mx-0.5">{formatPrice(50 - subtotal)}</span>
@@ -162,7 +162,7 @@ export function CartDrawer() {
                 <span className="font-semibold text-foreground">{c.free}</span> shipping
               </div>
             ) : (
-              <div className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/40 rounded-lg px-3 py-2 flex items-center gap-2">
+              <div className="text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/40 rounded-[var(--radius-sm)] px-3 py-2 flex items-center gap-2">
                 <Package className="h-3.5 w-3.5 shrink-0" />
                 <span className="font-medium">You've unlocked free shipping!</span>
               </div>

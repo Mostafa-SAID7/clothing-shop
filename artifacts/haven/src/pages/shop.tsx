@@ -119,7 +119,7 @@ export default function ShopPage() {
               variant={onlyNew ? "default" : "outline"}
               size="sm"
               onClick={() => setOnlyNew((v) => !v)}
-              className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
+              className="whitespace-nowrap h-9 rounded-[var(--radius-pill)] px-4 shrink-0"
             >
               {t.home.newArrivals}
             </Button>
@@ -129,7 +129,7 @@ export default function ShopPage() {
                 variant={selectedCategory === cat ? "default" : "outline"}
                 size="sm"
                 onClick={() => setSelectedCategory((prev) => (prev === cat ? "All" : cat))}
-                className="whitespace-nowrap h-9 rounded-full px-4 shrink-0"
+                className="whitespace-nowrap h-9 rounded-[var(--radius-pill)] px-4 shrink-0"
               >
                 {t.categories[cat as keyof typeof t.categories] ?? cat}
               </Button>

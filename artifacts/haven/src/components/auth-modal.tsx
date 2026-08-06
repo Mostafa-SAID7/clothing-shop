@@ -86,11 +86,11 @@ export function AuthModal() {
               exit={{ opacity: 0, scale: 0.88, y: 28 }}
               transition={{ type: "spring", duration: 0.45, bounce: 0.18 }}
             >
-              <div className="bg-background rounded-2xl shadow-2xl overflow-hidden border border-border/60">
+              <div className="bg-background rounded-[var(--radius-lg)] shadow-lift-lg overflow-hidden border border-border/60">
                 {/* Header */}
                 <div className="bg-gradient-to-br from-primary/8 to-primary/12 px-6 py-5 flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center shrink-0">
+                    <div className="h-9 w-9 rounded-[var(--radius-pill)] bg-primary flex items-center justify-center shrink-0">
                       <span className="text-primary-foreground text-xs font-black tracking-widest">H</span>
                     </div>
                     <div>
@@ -102,7 +102,7 @@ export function AuthModal() {
                   </div>
                   <button
                     onClick={closeModal}
-                    className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted"
+                    className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-[var(--radius-sm)] hover:bg-muted"
                     aria-label="Close"
                   >
                     <X className="h-4 w-4" />
@@ -111,12 +111,12 @@ export function AuthModal() {
 
                 {/* Tab switcher */}
                 <div className="px-6 pt-4">
-                  <div className="flex bg-muted rounded-xl p-1 gap-1">
+                  <div className="flex bg-muted rounded-[var(--radius-sm)] p-1 gap-1">
                     {(["login", "register"] as const).map((tab) => (
                       <button
                         key={tab}
                         onClick={() => { setActiveTab(tab); setError(""); }}
-                        className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
+                        className={`flex-1 py-2 text-sm font-medium rounded-[var(--radius-sm)] transition-all ${
                           activeTab === tab
                             ? "bg-background shadow-sm text-foreground"
                             : "text-muted-foreground hover:text-foreground"

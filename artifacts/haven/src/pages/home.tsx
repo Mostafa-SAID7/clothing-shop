@@ -31,14 +31,14 @@ export default function Home() {
   return (
     <Layout>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative h-[75vh] min-h-[520px] overflow-hidden">
+      <section className="relative h-[75vh] min-h-[520px] overflow-hidden grain">
         <img
           src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85"
           alt="Haven collection"
           className="absolute inset-0 w-full h-full object-cover object-top"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-e from-black/70 via-black/40 to-transparent" />
+        <div className="absolute inset-0 cinematic-overlay" />
         <div className="relative z-10 h-full flex flex-col justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
           <Badge
             variant="outline"
@@ -46,7 +46,7 @@ export default function Home() {
           >
             {h.heroBadge}
           </Badge>
-          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black text-white leading-none tracking-tight">
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black text-white leading-none tracking-tight text-shadow-hero">
             {h.heroTitle}
           </h1>
           <p className="mt-4 text-white/70 text-lg max-w-md leading-relaxed">{h.heroSubtitle}</p>
@@ -103,7 +103,7 @@ export default function Home() {
               <button
                 key={cat}
                 onClick={() => navigate(`/shop?cat=${cat}`)}
-                className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group relative aspect-[3/4] overflow-hidden rounded-[var(--radius-md)] bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <img
                   src={meta.image}
@@ -112,7 +112,8 @@ export default function Home() {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                <div className="absolute bottom-0 start-0 end-0 p-4 text-start">
+                <div className="absolute inset-0 vignette pointer-events-none z-10" />
+                <div className="absolute bottom-0 start-0 end-0 p-4 text-start z-20">
                   <p className="text-white font-bold text-xl leading-tight mb-0.5">
                     {t.categories[cat as keyof typeof t.categories]}
                   </p>
@@ -160,13 +161,14 @@ export default function Home() {
       </section>
 
       {/* ── FEATURED BANNER ──────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gray-950">
+      <section className="relative overflow-hidden bg-gray-950 grain">
         <img
           src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80"
           alt="Featured collection"
           className="absolute inset-0 w-full h-full object-cover opacity-40 object-center"
           loading="lazy"
         />
+        <div className="absolute inset-0 vignette pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-start">
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-white/60 mb-4 border border-white/20 rounded-full px-3 py-1">
             {h.featured}
