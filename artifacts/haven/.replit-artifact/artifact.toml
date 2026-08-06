@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "HAVEN Fashion Store"
+description = "A premium clothing e-commerce storefront with product browsing, cart, checkout with Stripe, auth, and multilingual support. Built with React, Vite, Tailwind, and wouter."
+version = "1.0.0"
+id = "artifacts/haven"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24062
+
+[services.development]
+run = "pnpm --filter @workspace/haven run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/haven", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/haven/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24062"
+BASE_PATH = "/"
