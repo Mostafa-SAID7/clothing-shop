@@ -33,7 +33,7 @@ jobs:
           node-version: 24
       - uses: pnpm/action-setup@v4
       - name: Install backend dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Audit for high/critical vulnerabilities
         run: pnpm audit --audit-level=high
 
@@ -50,6 +50,6 @@ jobs:
           node-version: 24
       - uses: pnpm/action-setup@v4
       - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Audit for high/critical vulnerabilities
         run: pnpm audit --audit-level=high

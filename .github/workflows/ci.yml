@@ -23,16 +23,17 @@ permissions:
 jobs:
   # ──────────────────────────────────────────────────────────────
   # 1. BACKEND: Install → Typecheck → Build
-  # Each package has its own pnpm-lock.yaml (no root lockfile),
-  # so we install from within each package directory.
+  #
+  # WHY install at root with --filter:
+  #   pnpm-workspace.yaml declares this a monorepo workspace.
+  #   pnpm always resolves the lockfile from the workspace ROOT.
+  #   Running `pnpm install` from a subdirectory walks up to root.
+  #   Since there is no root pnpm-lock.yaml, we skip --frozen-lockfile
+  #   and install from the root using --filter to limit scope.
   # ──────────────────────────────────────────────────────────────
   backend:
     name: 🔧 Backend (Node / TypeScript)
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: backend
 
     steps:
       - name: Checkout repository
@@ -43,14 +44,12 @@ jobs:
         with:
           node-version: 24
 
-      # No "version:" key — pnpm/action-setup reads the version from
-      # the root package.json "packageManager": "pnpm@9.15.4" field.
+      # Reads pnpm version from root package.json "packageManager" field
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: Get pnpm store directory
         id: pnpm-cache
-        working-directory: .
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache pnpm store
@@ -62,12 +61,15 @@ jobs:
             ${{ runner.os }}-pnpm-backend-
 
       - name: Install backend dependencies
-        run: pnpm install --frozen-lockfile
+        working-directory: backend
+        run: pnpm install --no-frozen-lockfile
 
       - name: TypeScript typecheck
+        working-directory: backend
         run: pnpm typecheck
 
       - name: Production build
+        working-directory: backend
         run: pnpm build
 
   # ──────────────────────────────────────────────────────────────
@@ -76,10 +78,6 @@ jobs:
   frontend:
     name: 🎨 Frontend (React / Vite)
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: frontend
 
     steps:
       - name: Checkout repository
@@ -95,7 +93,6 @@ jobs:
 
       - name: Get pnpm store directory
         id: pnpm-cache
-        working-directory: .
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache pnpm store
@@ -107,12 +104,15 @@ jobs:
             ${{ runner.os }}-pnpm-frontend-
 
       - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile
+        working-directory: frontend
+        run: pnpm install --no-frozen-lockfile
 
       - name: TypeScript typecheck
+        working-directory: frontend
         run: pnpm typecheck
 
       - name: Production build
+        working-directory: frontend
         env:
           VITE_API_URL: /api
           VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}

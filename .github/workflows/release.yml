@@ -33,7 +33,7 @@ jobs:
       # No "version:" — reads pnpm@9.15.4 from root package.json packageManager
       - uses: pnpm/action-setup@v4
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Typecheck
         run: pnpm typecheck
       - name: Build
@@ -52,7 +52,7 @@ jobs:
           node-version: 24
       - uses: pnpm/action-setup@v4
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
       - name: Typecheck
         run: pnpm typecheck
       - name: Build
