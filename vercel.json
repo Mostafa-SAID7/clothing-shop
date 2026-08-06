@@ -1,5 +1,15 @@
 {
   "version": 2,
+  "installCommand": "npm install -g pnpm@9.15.4 && pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm --filter clothing-shop-frontend build",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "backend/api/index.ts": {
+      "runtime": "nodejs20.x",
+      "memory": 512,
+      "maxDuration": 30
+    }
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -9,20 +19,8 @@
       "handle": "filesystem"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "frontend/dist/assets/$1"
-    },
-    {
-      "src": "/manifest.webmanifest",
-      "dest": "frontend/dist/manifest.webmanifest"
-    },
-    {
-      "src": "/favicon.svg",
-      "dest": "frontend/dist/favicon.svg"
-    },
-    {
       "src": "/(.*)",
-      "dest": "frontend/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }

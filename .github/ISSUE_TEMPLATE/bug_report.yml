@@ -1,0 +1,88 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior
+title: "[BUG]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Fill in the details below to help us investigate quickly.
+
+  - type: dropdown
+    id: service
+    attributes:
+      label: 🔍 Affected Service
+      description: Which part of the application is affected?
+      options:
+        - Frontend (React / Vite / UI)
+        - Backend API (Express / Node.js)
+        - Database (PostgreSQL / Drizzle ORM)
+        - Authentication (JWT)
+        - Payments (Stripe)
+        - Deployment / Vercel / CI
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📝 Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: "When I click 'Add to cart', the item disappears instead of being added..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 🔁 Steps to Reproduce
+      description: Exact steps to reproduce the behavior.
+      placeholder: |
+        1. Go to the Shop page
+        2. Click on any product
+        3. Click "Add to Cart"
+        4. See error: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: ✅ Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: ❌ Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 🪵 Error Logs / Stack Trace
+      description: Paste any error output from the browser console, server logs, or Vercel logs.
+      render: shell
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 🔥 Severity
+      options:
+        - Critical (production is broken / data loss)
+        - High (major feature broken)
+        - Medium (partial functionality broken)
+        - Low (cosmetic / minor inconvenience)
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: 🌐 Environment
+      description: e.g. "Vercel Production", "Local dev (localhost:5173)", "Staging"
+      placeholder: Vercel Production

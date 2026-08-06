@@ -1,0 +1,66 @@
+# Label definitions for the clothing-shop repository
+# Used by actions/labeler@v5 — must use `changed-files` schema
+
+# ─── Services ───────────────────────────────────────────
+frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'frontend/**/*'
+          - 'frontend/src/**/*'
+
+backend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'backend/**/*'
+          - 'backend/src/**/*'
+          - 'backend/api/**/*'
+
+# ─── Infrastructure / Config ────────────────────────────
+database:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'backend/src/infrastructure/database/**/*'
+          - 'backend/drizzle/**/*'
+          - 'MIGRATION.sql'
+          - 'backend/drizzle.config.ts'
+
+ci/cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**/*'
+          - 'vercel.json'
+          - 'netlify.toml'
+          - '.releaserc.json'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/package.json'
+          - '**/pnpm-lock.yaml'
+          - 'pnpm-workspace.yaml'
+
+# ─── Documentation ──────────────────────────────────────
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**/*'
+          - '*.md'
+          - 'CHANGELOG.md'
+
+# ─── Areas ──────────────────────────────────────────────
+authentication:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'backend/src/**/auth*'
+          - 'backend/src/**/jwt*'
+          - 'frontend/src/**/auth*'
+          - 'frontend/src/**/login*'
+
+payments:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'backend/src/**/stripe*'
+          - 'backend/src/**/payment*'
+          - 'backend/src/**/checkout*'
+          - 'frontend/src/**/stripe*'
+          - 'frontend/src/**/checkout*'

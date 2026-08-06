@@ -1,0 +1,67 @@
+name: 🌊 GitFlow Branch Enforcement
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  statuses: write
+
+jobs:
+  enforce-gitflow:
+    name: Validate Branch & Commit Convention
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate branch naming convention
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          BASE="${{ github.base_ref }}"
+
+          echo "Source branch: $BRANCH"
+          echo "Target branch: $BASE"
+
+          # Valid branch patterns
+          VALID_BRANCH="^(main|develop|feature\/.+|bugfix\/.+|hotfix\/.+|release\/.+|chore\/.+|docs\/.+|refactor\/.+)$"
+
+          if ! echo "$BRANCH" | grep -qE "$VALID_BRANCH"; then
+            echo "❌ Branch '$BRANCH' does not follow GitFlow naming convention."
+            echo "   Valid patterns: feature/, bugfix/, hotfix/, release/, chore/, docs/, refactor/"
+            exit 1
+          fi
+
+          # Enforce correct merge targets
+          if echo "$BRANCH" | grep -qE "^feature/|^bugfix/|^docs/|^chore/|^refactor/"; then
+            if [[ "$BASE" != "develop" ]]; then
+              echo "❌ Branch '$BRANCH' must target 'develop', not '$BASE'."
+              exit 1
+            fi
+          fi
+
+          if echo "$BRANCH" | grep -qE "^hotfix/"; then
+            if [[ "$BASE" != "main" && "$BASE" != "develop" ]]; then
+              echo "❌ Hotfix branch '$BRANCH' must target 'main' or 'develop'."
+              exit 1
+            fi
+          fi
+
+          echo "✅ Branch naming and merge target are valid."
+
+      - name: Validate PR title follows Conventional Commits
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          PATTERN="^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\(.+\))?: .{1,100}$"
+
+          if ! echo "$TITLE" | grep -qE "$PATTERN"; then
+            echo "❌ PR title '$TITLE' does not follow Conventional Commits format."
+            echo "   Expected: feat(scope): short description"
+            echo "   Valid types: feat, fix, docs, style, refactor, perf, test, chore, ci, build, revert"
+            exit 1
+          fi
+
+          echo "✅ PR title follows Conventional Commits format."

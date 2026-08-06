@@ -1,0 +1,126 @@
+name: CI — Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+# Cancel any in-progress run for the same branch/PR to save minutes
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ──────────────────────────────────────────────────────────────
+  # 1. BACKEND: Typecheck + Build
+  # ──────────────────────────────────────────────────────────────
+  backend:
+    name: 🔧 Backend (Node / TypeScript)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-backend-${{ hashFiles('backend/pnpm-lock.yaml', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-backend-
+
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript typecheck
+        run: pnpm --filter clothing-shop-backend typecheck
+
+      - name: Production build
+        run: pnpm --filter clothing-shop-backend build
+
+  # ──────────────────────────────────────────────────────────────
+  # 2. FRONTEND: Typecheck + Build
+  # ──────────────────────────────────────────────────────────────
+  frontend:
+    name: 🎨 Frontend (React / Vite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-frontend-${{ hashFiles('frontend/pnpm-lock.yaml', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-frontend-
+
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript typecheck
+        run: pnpm --filter clothing-shop-frontend typecheck
+
+      - name: Production build
+        env:
+          VITE_API_URL: /api
+          VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+        run: pnpm --filter clothing-shop-frontend build
+
+  # ──────────────────────────────────────────────────────────────
+  # 3. CI STATUS GATE — both jobs must pass for a PR to merge
+  # ──────────────────────────────────────────────────────────────
+  ci-success:
+    name: ✅ All CI Checks Passed
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: always()
+    steps:
+      - name: Evaluate CI result
+        run: |
+          if [[ "${{ needs.backend.result }}" != "success" || "${{ needs.frontend.result }}" != "success" ]]; then
+            echo "❌ One or more CI jobs failed."
+            exit 1
+          fi
+          echo "✅ All CI jobs passed."

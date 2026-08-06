@@ -6,9 +6,9 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "tsx watch src/main.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node dist/main.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "npx tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",

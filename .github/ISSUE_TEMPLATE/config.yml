@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/Mostafa-SAID7/clothing-shop/tree/main/docs
+    about: Read the full project documentation before filing an issue.
+  - name: 💬 Discussions
+    url: https://github.com/Mostafa-SAID7/clothing-shop/discussions
+    about: Ask a question or start a discussion here.

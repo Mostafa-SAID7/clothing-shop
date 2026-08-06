@@ -1,0 +1,86 @@
+name: 🚀 Release
+
+on:
+  push:
+    branches:
+      - main
+
+# Only one release job can run at a time
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  # ──────────────────────────────────────────────────────────────
+  # Run full CI first — do NOT release if CI is broken
+  # ──────────────────────────────────────────────────────────────
+  ci-gate:
+    name: 🔧 CI Gate Before Release
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  # ──────────────────────────────────────────────────────────────
+  # Semantic Versioning Release using semantic-release
+  # Reads conventional commits to bump version:
+  #   feat → minor bump (1.x.0)
+  #   fix  → patch bump (1.0.x)
+  #   BREAKING CHANGE → major bump (x.0.0)
+  # ──────────────────────────────────────────────────────────────
+  release:
+    name: 📦 Create Semantic Release
+    runs-on: ubuntu-latest
+    needs: ci-gate
+    if: needs.ci-gate.result == 'success'
+
+    outputs:
+      released: ${{ steps.release.outputs.released }}
+      version: ${{ steps.release.outputs.version }}
+      tag: ${{ steps.release.outputs.tag }}
+
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install release tooling
+        run: pnpm add -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
+
+      - name: Run semantic-release
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx semantic-release
+          echo "released=true" >> $GITHUB_OUTPUT
+
+  # ──────────────────────────────────────────────────────────────
+  # Notify on release completion (summary step)
+  # ──────────────────────────────────────────────────────────────
+  notify:
+    name: 🔔 Release Summary
+    runs-on: ubuntu-latest
+    needs: release
+    if: always()
+    steps:
+      - name: Print release outcome
+        run: |
+          echo "Release job status: ${{ needs.release.result }}"
+          echo "Version: ${{ needs.release.outputs.version }}"
+          echo "Tag: ${{ needs.release.outputs.tag }}"

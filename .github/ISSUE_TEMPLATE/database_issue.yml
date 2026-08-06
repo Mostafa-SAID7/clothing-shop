@@ -1,0 +1,38 @@
+name: 🗃️ Database / Migration Issue
+description: Report a database schema problem, migration failure, or data issue
+title: "[DB]: "
+labels: ["database", "needs-triage"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      options:
+        - Migration failure (drizzle-kit push / migrate)
+        - Schema mismatch
+        - Query error / data integrity
+        - Performance / slow query
+        - Connection / pool issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📝 Description
+      description: Describe the database issue in detail.
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: 🪵 Error Output
+      render: shell
+
+  - type: textarea
+    id: schema
+    attributes:
+      label: 📐 Relevant Schema / Query
+      description: Paste the relevant Drizzle schema definition or SQL query.
+      render: typescript
