@@ -2,7 +2,6 @@ name: 🔒 Security Audit
 
 on:
   schedule:
-    # Every Monday at 08:00 UTC
     - cron: '0 8 * * 1'
   push:
     branches:
@@ -23,33 +22,27 @@ jobs:
   audit-backend:
     name: 🔍 Backend Dependency Audit
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
       - uses: pnpm/action-setup@v4
-      - name: Install backend dependencies
+      - name: Install workspace dependencies
         run: pnpm install --no-frozen-lockfile
       - name: Audit for high/critical vulnerabilities
-        run: pnpm audit --audit-level=high
+        run: pnpm --filter clothing-shop-backend audit --audit-level=high
 
   audit-frontend:
     name: 🔍 Frontend Dependency Audit
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
       - uses: pnpm/action-setup@v4
-      - name: Install frontend dependencies
+      - name: Install workspace dependencies
         run: pnpm install --no-frozen-lockfile
       - name: Audit for high/critical vulnerabilities
-        run: pnpm audit --audit-level=high
+        run: pnpm --filter clothing-shop-frontend audit --audit-level=high
