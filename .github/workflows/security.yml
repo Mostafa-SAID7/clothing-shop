@@ -1,0 +1,48 @@
+name: 🔒 Security Audit
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'backend/package.json'
+      - 'backend/pnpm-lock.yaml'
+      - 'frontend/package.json'
+      - 'frontend/pnpm-lock.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  audit-backend:
+    name: 🔍 Backend Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Audit for high/critical vulnerabilities
+        run: pnpm --filter clothing-shop-backend audit --audit-level=high
+
+  audit-frontend:
+    name: 🔍 Frontend Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Audit for high/critical vulnerabilities
+        run: pnpm --filter clothing-shop-frontend audit --audit-level=high

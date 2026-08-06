@@ -1,40 +1,66 @@
-## Description
+## 📌 Summary
 
-Please include a summary of the changes and related context. Include any relevant motivation and context.
+<!-- A clear, concise description of what this PR does and why. -->
 
-Fixes # (issue number, if applicable)
+Closes # <!-- Link the issue this PR resolves, e.g.: Closes #42 -->
 
-## Type of Change
+---
 
-Please delete options that are not relevant.
+## 🔀 GitFlow Compliance
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
+- [ ] **Source branch** follows naming convention:
+  - `feature/<name>` → targets `develop`
+  - `bugfix/<name>` → targets `develop`
+  - `hotfix/<name>` → targets `main` (then cherry-picked to `develop`)
+  - `release/<version>` → targets `main`
+- [ ] **All commit messages** follow [Conventional Commits](https://www.conventionalcommits.org/):
+  - `feat(scope): description`
+  - `fix(scope): description`
+  - `chore(scope): description`
+  - `docs(scope): description`
 
-## How Has This Been Tested?
+---
 
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce.
+## 🔬 Type of Change
 
-- [ ] Test A
-- [ ] Test B
+- [ ] 🚀 **New Feature** — non-breaking change adding functionality
+- [ ] 🐛 **Bug Fix** — non-breaking fix for incorrect behavior
+- [ ] 💥 **Breaking Change** — fix or feature that changes existing behavior
+- [ ] ⚡ **Performance** — code change that improves performance
+- [ ] ♻️ **Refactor** — code change that neither fixes a bug nor adds a feature
+- [ ] 📝 **Documentation** — docs-only changes
+- [ ] ⚙️ **CI/CD / Infrastructure** — changes to workflows, build scripts, or deployment config
+- [ ] 📦 **Dependencies** — updating or adding dependencies
 
-## Checklist
+---
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests passed locally with my changes
-- [ ] Any dependent changes have been merged and published
+## 🧪 Testing Done
 
-## Screenshots (if applicable)
+Describe what was tested and how:
 
-Add screenshots for UI changes.
+- [ ] `pnpm --filter clothing-shop-backend typecheck` passes locally
+- [ ] `pnpm --filter clothing-shop-backend build` passes locally
+- [ ] `pnpm --filter clothing-shop-frontend typecheck` passes locally
+- [ ] `pnpm --filter clothing-shop-frontend build` passes locally
+- [ ] Manually tested in browser at `http://localhost:5173`
+- [ ] API endpoints tested via curl / Postman / Thunder Client
 
-## Additional Notes
+---
 
-Add any other context or notes about the PR here.
+## 📸 Screenshots / Demo (if UI changes)
+
+<!-- Drag & drop screenshots or a screen recording here -->
+
+---
+
+## ⚠️ Breaking Changes / Migration Notes
+
+<!-- If this introduces a breaking change or requires a DB migration, describe it here.
+     Include: what breaks, how to migrate, any SQL to run, any env vars added. -->
+None
+
+---
+
+## 🔗 Related Issues / PRs
+
+<!-- Link related issues or PRs -->

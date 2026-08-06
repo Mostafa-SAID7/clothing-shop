@@ -1,0 +1,94 @@
+name: 🚀 Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  # ──────────────────────────────────────────────────────────────
+  # CI gates — install from workspace root, filter per package
+  # ──────────────────────────────────────────────────────────────
+  backend-ci:
+    name: 🔧 Backend CI Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Typecheck
+        run: pnpm --filter clothing-shop-backend typecheck
+      - name: Build
+        run: pnpm --filter clothing-shop-backend build
+
+  frontend-ci:
+    name: 🎨 Frontend CI Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: Install workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Typecheck
+        run: pnpm --filter clothing-shop-frontend typecheck
+      - name: Build
+        env:
+          VITE_API_URL: /api
+          VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+        run: pnpm --filter clothing-shop-frontend build
+
+  # ──────────────────────────────────────────────────────────────
+  # Semantic Release — only runs after both CI gates pass
+  # Reads conventional commits to auto-bump semver:
+  #   feat     → minor bump  (1.x.0)
+  #   fix      → patch bump  (1.0.x)
+  #   BREAKING → major bump  (x.0.0)
+  # ──────────────────────────────────────────────────────────────
+  release:
+    name: 📦 Semantic Release
+    runs-on: ubuntu-latest
+    needs: [backend-ci, frontend-ci]
+    if: needs.backend-ci.result == 'success' && needs.frontend-ci.result == 'success'
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install semantic-release and plugins
+        run: |
+          npm install -g \
+            semantic-release \
+            @semantic-release/changelog \
+            @semantic-release/git \
+            @semantic-release/github
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

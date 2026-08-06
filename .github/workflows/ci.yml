@@ -1,0 +1,161 @@
+name: CI — Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+# Cancel any in-progress run for the same branch/PR to save minutes
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ──────────────────────────────────────────────────────────────
+  # INSTALL — single shared install from workspace root
+  # This resolves all workspace packages (backend + frontend)
+  # using the root pnpm-workspace.yaml.
+  # The pnpm store is cached so parallel jobs reuse it.
+  # ──────────────────────────────────────────────────────────────
+  install:
+    name: 📦 Install Workspace Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # Reads pnpm version from root package.json "packageManager" field
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install all workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+
+  # ──────────────────────────────────────────────────────────────
+  # BACKEND: Typecheck + Build
+  # Runs after install; uses --filter to scope to backend package
+  # ──────────────────────────────────────────────────────────────
+  backend:
+    name: 🔧 Backend (Node / TypeScript)
+    runs-on: ubuntu-latest
+    needs: install
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Restore pnpm store cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.install.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install all workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: TypeScript typecheck
+        run: pnpm --filter clothing-shop-backend typecheck
+
+      - name: Production build
+        run: pnpm --filter clothing-shop-backend build
+
+  # ──────────────────────────────────────────────────────────────
+  # FRONTEND: Typecheck + Build
+  # ──────────────────────────────────────────────────────────────
+  frontend:
+    name: 🎨 Frontend (React / Vite)
+    runs-on: ubuntu-latest
+    needs: install
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Restore pnpm store cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.install.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install all workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: TypeScript typecheck
+        run: pnpm --filter clothing-shop-frontend typecheck
+
+      - name: Production build
+        env:
+          VITE_API_URL: /api
+          VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+        run: pnpm --filter clothing-shop-frontend build
+
+  # ──────────────────────────────────────────────────────────────
+  # CI STATUS GATE — required status check for branch protection
+  # ──────────────────────────────────────────────────────────────
+  ci-success:
+    name: ✅ All CI Checks Passed
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: always()
+    steps:
+      - name: Check all job outcomes
+        env:
+          BACKEND: ${{ needs.backend.result }}
+          FRONTEND: ${{ needs.frontend.result }}
+        run: |
+          echo "Backend  result: $BACKEND"
+          echo "Frontend result: $FRONTEND"
+          if [[ "$BACKEND" == "success" && "$FRONTEND" == "success" ]]; then
+            echo "✅ All CI checks passed."
+          else
+            echo "❌ One or more CI jobs failed."
+            exit 1
+          fi
