@@ -17,12 +17,14 @@ if (!databaseUrl) {
 
 
 // Configure connection pool for production scalability
+const isProduction = process.env.NODE_ENV === "production" || !!process.env.VERCEL;
+
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 20, // Maximum number of clients in the pool
-  idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-  connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection cannot be established
-  maxUses: 7500, // Close (and replace) a connection after it has been used 7500 times
+  connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PRISMA_DATABASE_URL,
+  ssl: databaseUrl?.includes("sslmode=require") || isProduction ? { rejectUnauthorized: false } : false,
+  max: 10, // Max connections for serverless environments
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
 });
 
 // Handle pool errors
