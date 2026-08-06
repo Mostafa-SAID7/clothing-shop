@@ -23,11 +23,9 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Path mapping */
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/app/*"]
-    },
-    "types": ["vite/client"]
+      "@/*": ["./src/app/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"]

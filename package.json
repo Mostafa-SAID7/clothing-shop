@@ -1,0 +1,8 @@
+{
+  "name": "clothing-shop-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter clothing-shop-backend build && pnpm --filter clothing-shop-frontend build"
+  }
+}
