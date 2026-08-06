@@ -87,8 +87,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Wave: dark promo → light categories */}
-      <WaveDivider fill="hsl(var(--background))" variant="cinematic" size="lg" />
+      {/* Wave: promo → categories divider */}
+      <WaveDivider variant="cinematic" size="sm" />
 
       {/* ── SHOP BY CATEGORY ─────────────────────────────────── */}
       <section className="section-inner">
@@ -137,8 +137,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Wave: light categories → tinted new arrivals */}
-      <WaveDivider fill="hsl(var(--muted))" variant="gentle" size="sm" />
+      {/* Wave: categories → new arrivals divider */}
+      <WaveDivider variant="gentle" size="sm" />
 
       {/* ── NEW ARRIVALS ─────────────────────────────────────── */}
       <section className="section-tinted">
@@ -170,8 +170,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Wave: light new arrivals → dark featured banner */}
-      <WaveDivider fill="hsl(var(--primary))" variant="cinematic" size="lg" />
+      {/* Wave: new arrivals → featured banner divider */}
+      <WaveDivider variant="cinematic" size="sm" />
 
       {/* ── FEATURED BANNER ──────────────────────────────────── */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground grain">
@@ -203,8 +203,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Wave: dark featured banner → light trending */}
-      <WaveDivider fill="hsl(var(--background))" flip variant="organic" size="lg" />
+      {/* Wave: featured banner → trending divider */}
+      <WaveDivider flip variant="organic" size="sm" />
 
       {/* ── TRENDING NOW ─────────────────────────────────────── */}
       <section className="section-inner">

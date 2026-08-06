@@ -1,42 +1,35 @@
 import React from "react";
 
 interface WaveDividerProps {
-  /** CSS color value — must match the background of the section AFTER the wave */
-  fill?: string;
+  /** Line stroke color or Tailwind color class (defaults to subtle border color) */
+  strokeColor?: string;
   /** Mirror the wave horizontally for variety */
   flip?: boolean;
-  /** Height scale: sm = subtle, md = standard, lg = dramatic */
+  /** Height scale */
   size?: "sm" | "md" | "lg";
   /** Wave shape */
   variant?: "gentle" | "organic" | "cinematic";
   className?: string;
 }
 
-/**
- * Each path fills from the wave curve DOWN to the bottom edge of the viewBox (0 0 1440 100).
- * Place between a DARK section and a LIGHT section (or vice-versa) for best visual impact.
- * fill = the background colour of the section that immediately follows.
- */
-const PATHS: Record<NonNullable<WaveDividerProps["variant"]>, string> = {
-  /** Very gentle ripple — good for light-to-light tinted transitions */
+/** Pure curve line paths (stroke only, fill=none) */
+const LINE_PATHS: Record<NonNullable<WaveDividerProps["variant"]>, string> = {
   gentle:
-    "M0,75 C240,55 480,95 720,75 C960,55 1200,90 1440,72 L1440,100 L0,100 Z",
-  /** Natural organic flow — good for most transitions */
+    "M0,50 C240,30 480,70 720,50 C960,30 1200,65 1440,48",
   organic:
-    "M0,60 C160,30 340,88 540,58 C740,28 920,82 1100,52 C1260,28 1380,68 1440,58 L1440,100 L0,100 Z",
-  /** Bold cinematic sweep — best for hero / banner dark↔light transitions */
+    "M0,50 C160,20 340,78 540,48 C740,18 920,72 1100,42 C1260,18 1380,58 1440,48",
   cinematic:
-    "M0,45 C200,95 440,8 720,55 C1000,102 1220,12 1440,55 L1440,100 L0,100 Z",
+    "M0,50 C200,90 440,10 720,50 C1000,90 1220,10 1440,50",
 };
 
 const SIZE_CLASSES: Record<NonNullable<WaveDividerProps["size"]>, string> = {
-  sm: "h-[28px] md:h-[44px] lg:h-[60px]",
-  md: "h-[44px] md:h-[70px] lg:h-[96px]",
-  lg: "h-[60px] md:h-[96px] lg:h-[128px]",
+  sm: "h-[16px] md:h-[24px] lg:h-[32px]",
+  md: "h-[24px] md:h-[36px] lg:h-[48px]",
+  lg: "h-[32px] md:h-[48px] lg:h-[64px]",
 };
 
 export function WaveDivider({
-  fill = "currentColor",
+  strokeColor = "hsl(var(--border))",
   flip = false,
   size = "md",
   variant = "organic",
@@ -44,7 +37,7 @@ export function WaveDivider({
 }: WaveDividerProps) {
   return (
     <div
-      className={`w-full overflow-hidden leading-none block -mb-[2px] relative z-10 pointer-events-none ${className}`}
+      className={`w-full overflow-hidden leading-none block relative z-10 pointer-events-none opacity-40 my-2 ${className}`}
     >
       <svg
         className={`block w-full ${SIZE_CLASSES[size]}`}
@@ -53,7 +46,13 @@ export function WaveDivider({
         preserveAspectRatio="none"
         aria-hidden
       >
-        <path d={PATHS[variant]} fill={fill} />
+        <path
+          d={LINE_PATHS[variant]}
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
       </svg>
     </div>
   );

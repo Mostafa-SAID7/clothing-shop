@@ -45,8 +45,8 @@ export default function AboutPage() {
         className="min-h-[260px] sm:min-h-[320px]"
       />
 
-      {/* Wave: dark hero → light mission */}
-      <WaveDivider fill="hsl(var(--background))" variant="cinematic" size="lg" />
+      {/* Wave divider */}
+      <WaveDivider variant="cinematic" size="sm" />
 
       {/* ── MISSION ─── */}
       <section className="section-inner">
@@ -105,8 +105,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Wave: light mission → tinted values */}
-      <WaveDivider fill="hsl(var(--muted))" variant="gentle" size="sm" />
+      {/* Wave divider */}
+      <WaveDivider variant="gentle" size="sm" />
 
       {/* ── VALUES ─── */}
       <section className="section-tinted">
@@ -148,8 +148,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Wave: tinted values → light stats */}
-      <WaveDivider fill="hsl(var(--background))" flip variant="gentle" size="sm" />
+      {/* Wave divider */}
+      <WaveDivider flip variant="gentle" size="sm" />
 
       {/* ── STATS ─── */}
       <section className="section-inner">
@@ -183,8 +183,8 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Wave: light stats → dark CTA banner */}
-      <WaveDivider fill="hsl(var(--primary))" variant="cinematic" size="lg" />
+      {/* Wave divider */}
+      <WaveDivider variant="cinematic" size="sm" />
 
       {/* ── CTA BANNER ─── */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
